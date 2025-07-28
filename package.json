@@ -12,7 +12,19 @@
     "lint": "pnpm run lint:eslint && pnpm run lint:stylelint",
     "format": "prettier '**/*.{js,jsx,ts,tsx,json,css,scss,md}' --write",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "precommit": "lint-staged",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{css,scss}": [
+      "stylelint --fix --allow-empty-input"
+    ]
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
@@ -45,6 +57,8 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-storybook": "9.0.18",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "prettier": "3.0.0",
     "react-hook-form": "^7.61.1",
     "react-redux": "^9.2.0",
