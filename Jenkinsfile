@@ -20,6 +20,18 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Check shell') {
+          steps {
+            script {
+              sh '''
+                echo "Shell version info:"
+                sh --version || echo "sh --version not supported"
+                echo "ls -l /bin/sh:"
+                ls -l /bin/sh || echo "/bin/sh not found"
+              '''
+            }
+          }
+        }
         stage('Unit tests') {
              steps {
                 echo "Preparing started..."
