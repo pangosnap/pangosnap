@@ -2,8 +2,7 @@
 FROM node:20.11-alpine AS dependencies
 WORKDIR /app
 
-# Устанавливаем pnpm глобально (без corepack)
-RUN npm install -g pnpm
+RUN npm install -g pnpm@latest
 
 COPY package.json pnpm-lock.yaml ./
 
@@ -13,12 +12,11 @@ RUN pnpm install --frozen-lockfile
 FROM node:20.11-alpine AS builder
 WORKDIR /app
 
-RUN npm install -g pnpm
-
-COPY . .
+RUN npm install -g pnpm@latest
 
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY --from=dependencies /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY . .
 
 RUN pnpm run build:production
 
@@ -27,7 +25,8 @@ FROM node:20.11-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-RUN npm install -g pnpm
+# Если нужно запускать через pnpm, то оставить
+RUN npm install -g pnpm@latest
 
 COPY --from=builder /app/ ./
 
