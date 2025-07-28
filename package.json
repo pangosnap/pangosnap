@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:production": "pnpm run build",
     "start": "next start",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "lint:stylelint": "stylelint \"/*.{css,scss}\" --fix --allow-empty-input",
+    "lint:stylelint": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
     "lint": "pnpm run lint:eslint && pnpm run lint:stylelint",
-    "format": "prettier \"./*.{js,jsx,ts,tsx,json,css,scss,md}\" --write"
+    "format": "prettier '**/*.{js,jsx,ts,tsx,json,css,scss,md}' --write"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
