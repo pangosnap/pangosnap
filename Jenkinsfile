@@ -20,31 +20,19 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Check shell') {
+        stage('Unit tests') {
           steps {
+            echo "Preparing started..."
             script {
-              sh '''
-                echo "Shell version info:"
-                sh --version || echo "sh --version not supported"
-                echo "ls -l /bin/sh:"
-                ls -l /bin/sh || echo "/bin/sh not found"
-              '''
+              sh(script: '''
+                export NVM_DIR="$HOME/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                nvm use --lts
+                pnpm install
+                pnpm test
+              ''', shell: '/bin/bash')
             }
           }
-        }
-        stage('Unit tests') {
-             steps {
-                echo "Preparing started..."
-                  script {
-                      sh '''
-                         export NVM_DIR="$HOME/.nvm"
-                         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                         nvm use --lts
-                         pnpm install
-                         pnpm test
-                      '''
-                  }
-             }
         }
         stage('Build docker image') {
             steps {
