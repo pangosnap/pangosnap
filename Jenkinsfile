@@ -28,15 +28,8 @@ pipeline {
                          export NVM_DIR="$HOME/.nvm"
                          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                          nvm use --lts
-
-                         corepack enable
-                         if ! command -v pnpm >/dev/null; then
-                         echo "❌ pnpm is not installed or not available"
-                         exit 1
-                         fi
-
-                         pnpm install
-                         pnpm test
+                         yarn install
+                         yarn test
                       '''
                   }
              }

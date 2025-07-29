@@ -1,34 +1,46 @@
-# Устанавливаем зависимости
-FROM node:20.11-alpine AS dependencies
+# Этап 1: Установка зависимостей
+FROM node:22.17.1-alpine as dependencies
 WORKDIR /app
 
-# Включаем поддержку pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Устанавливаем pnpm
+RUN npm install -g pnpm@10.13.1
 
-# Копируем необходимые файлы
-COPY package.json pnpm-lock.yaml ./
+# Копируем только package.json и pnpm-lock.yaml
+COPY package.json ./
+COPY pnpm-lock.yaml ./
 
 # Устанавливаем зависимости
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
-# Билдим приложение
-FROM node:20.11-alpine AS builder
+# Этап 2: Сборка
+FROM node:22.17.1-alpine as builder
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@latest --activate
 
+# Устанавливаем pnpm
+RUN npm install -g pnpm@10.13.1
+
+# Копируем все файлы проекта
 COPY . .
-COPY --from=dependencies /app/node_modules ./node_modules
-COPY --from=dependencies /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
+# Копируем node_modules из предыдущего этапа
+COPY --from=dependencies /app/node_modules ./node_modules
+
+# Билдим проект
 RUN pnpm run build:production
 
-# Стейдж запуска
-FROM node:20.11-alpine AS runner
+# Этап 3: Запуск
+FROM node:22.17.1-alpine as runner
 WORKDIR /app
 ENV NODE_ENV=production
-RUN corepack enable && corepack prepare pnpm@latest --activate
 
-COPY --from=builder /app/ ./
+# Устанавливаем pnpm
+RUN npm install -g pnpm@10.13.1
 
+# Копируем всё из билдера
+COPY --from=builder /app .
+
+# Порт приложения
 EXPOSE 3000
+
+# Запуск
 CMD ["pnpm", "start"]
