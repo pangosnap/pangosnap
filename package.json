@@ -12,6 +12,7 @@
     "lint": "pnpm run lint:eslint && pnpm run lint:stylelint",
     "format": "prettier '**/*.{js,jsx,ts,tsx,json,css,scss,md}' --write",
     "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "precommit": "lint-staged",
     "prepare": "husky"
   },
@@ -28,6 +29,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
+    "@storybook/nextjs": "^9.0.18",
     "next": "15.4.3",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -39,7 +41,6 @@
     "@it-incubator/stylelint-config": "^2.0.0",
     "@storybook/addon-a11y": "9.0.18",
     "@storybook/addon-docs": "9.0.18",
-    "@storybook/addon-vitest": "9.0.18",
     "@types/node": "^20",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -59,16 +60,12 @@
     "eslint-plugin-storybook": "9.0.18",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
+    "playwright": "^1.54.1",
     "prettier": "3.0.0",
     "react-hook-form": "^7.61.1",
     "react-redux": "^9.2.0",
     "storybook": "9.0.18",
     "stylelint": "^16.22.0",
-    "typescript": "^5",
-    "@storybook/nextjs-vite": "^9.0.18",
-    "vitest": "^3.2.4",
-    "@vitest/browser": "^3.2.4",
-    "playwright": "^1.54.1",
-    "@vitest/coverage-v8": "^3.2.4"
+    "typescript": "^5"
   }
 }
