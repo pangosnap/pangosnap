@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 
 import { Inter } from 'next/font/google'
 
-import '../styles'
+import '../styles/index.scss'
 
 const inter = Inter({ subsets: ['latin'] })
 

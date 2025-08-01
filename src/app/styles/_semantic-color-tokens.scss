@@ -1,0 +1,21 @@
+:root {
+  /* Основной цвет текста для светлой темы */
+  --color-text-primary: var(--color-dark-700); /* #0d0d0d — темный почти черный */
+  --color-text-primary-contrast: var(--color-light-100); /* #ffffff — для контраста */
+  --color-text-secondary: var(--color-dark-500); /* #171717 — чуть светлее основной */
+  --color-text-invalid: var(--color-accent-500); /* #397df6 — синий акцент */
+  --color-text-inactive: var(--color-dark-300); /* #333333 — серый для неактивных */
+  --color-text-disabled: var(--color-dark-100); /* #4c4c4c — более светлый для дизейблов */
+  --color-text-link: var(--color-accent-300); /* #4c8dff — цвет ссылок */
+}
+
+:root.dark-mode {
+  /* Основной цвет текста для тёмной темы */
+  --color-text-primary: var(--color-light-100); /* #ffffff — белый */
+  --color-text-primary-contrast: var(--color-dark-900); /* #000000 — для контраста */
+  --color-text-secondary: var(--color-light-300); /* #f7fbff — светлый для вторичного */
+  --color-text-invalid: var(--color-accent-700); /* #2f68cc — более темный акцент */
+  --color-text-inactive: var(--color-light-500); /* #edf3fa — для неактивных */
+  --color-text-disabled: var(--color-light-700); /* #d5dae0 — для дизейблов */
+  --color-text-link: var(--color-accent-100); /* #73a5ff — ссылки светлее */
+}

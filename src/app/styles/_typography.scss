@@ -1,0 +1,121 @@
+:root {
+  --font-family: 'Inter', sans-serif;
+
+  /* font-sizes */
+  --font-size-xs: 12px;
+  --font-size-s: 14px;
+  --font-size-m: 16px;
+  --font-size-l: 18px;
+  --font-size-xl: 22px;
+  --font-size-xxl: 28px;
+
+  /* line-heights */
+  --line-height-xs: 1.25;
+  --line-height-s: 1.3;
+  --line-height-m: 1.5;
+  --line-height-l: 1.7;
+
+  /* font-weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+}
+
+@mixin typography($fontSize, $lineHeight, $fontWeight) {
+  margin: 0;
+
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+  color: var(--color-text-primary);
+}
+
+.uik_typography-h1 {
+  @include typography(var(--font-size-xxl), var(--line-height-xs), var(--font-weight-bold));
+}
+
+.uik_typography-h2 {
+  @include typography(var(--font-size-xl), var(--line-height-xs), var(--font-weight-bold));
+}
+
+.uik_typography-h3 {
+  @include typography(var(--font-size-l), var(--line-height-xs), var(--font-weight-semi-bold));
+}
+
+.uik_typography-subtitle1 {
+  @include typography(var(--font-size-xxl), var(--line-height-xs), var(--font-weight-semi-bold));
+}
+
+// Текст 14px, medium (полужирный)
+.uik_typography-subtitle2 {
+  @include typography(var(--font-size-s), var(--line-height-l), var(--font-weight-medium));
+}
+
+// Текст 14px, жирный
+.uik_typography-subtitle2-bold {
+  @include typography(var(--font-size-s), var(--line-height-l), var(--font-weight-bold));
+}
+
+// Основной текст 16px, обычный
+.uik_typography-body1 {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-regular));
+}
+
+// Основной текст 16px, жирный
+.uik_typography-body1-bold {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-bold));
+}
+
+// Текст 14px, обычный
+.uik_typography-body2 {
+  @include typography(var(--font-size-s), var(--line-height-l), var(--font-weight-regular));
+}
+
+// Мелкий текст 12px, обычный
+.uik_typography-caption {
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-regular));
+
+  display: inline-block;
+  text-align: start;
+}
+
+// Мелкий текст 12px, semi-bold
+.uik_typography-caption-bold {
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-semi-bold));
+
+  display: inline-block;
+  text-align: start;
+}
+
+// Ссылки
+.uik_typography-link {
+  @include typography(inherit, inherit, inherit);
+
+  cursor: pointer;
+  color: var(--color-text-link);
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+// Мелкая ссылка 12px
+.uik_typography-caption-link {
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-regular));
+
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.uik_typography-error {
+  @include typography(var(--font-size-xs), var(--line-height-m), var(--font-weight-regular));
+
+  color: var(--color-danger-500);
+}
