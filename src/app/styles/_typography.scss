@@ -22,13 +22,13 @@
   --font-weight-bold: 700;
 }
 
-@mixin typography($fontSize, $lineHeight, $fontWeight) {
+@mixin typography($fontSize, $lineHeight, $fontWeight, $color: var(--color-text-primary)) {
   margin: 0;
 
   font-size: $fontSize;
   font-weight: $fontWeight;
   line-height: $lineHeight;
-  color: var(--color-text-primary);
+  color: $color;
 }
 
 .uik_typography-h1 {
@@ -40,7 +40,16 @@
 }
 
 .uik_typography-h3 {
-  @include typography(var(--font-size-l), var(--line-height-xs), var(--font-weight-semi-bold));
+  @include typography(var(--font-size-m), var(--line-height-xs), var(--font-weight-semi-bold));
+}
+
+.uik_typography-button-h3 {
+  @include typography(
+    var(--font-size-l),
+    var(--line-height-xs),
+    var(--font-weight-semi-bold),
+    inherit
+  );
 }
 
 .uik_typography-subtitle1 {
