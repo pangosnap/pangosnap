@@ -1,0 +1,29 @@
+.button {
+  display: inline-block;
+
+  box-sizing: border-box;
+  height: 36px;
+  padding: 6px 24px;
+
+  color: var(--color-light-100);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.primary {
+  background-color: var(--color-accent-500);
+}
+
+.secondary {
+  background-color: var(--color-dark-300);
+}
+
+.outlined {
+  border: 1px solid var(--color-accent-500);
+  color: var(--color-accent-500);
+}
+
+.text {
+  border: none;
+  color: var(--color-accent-500);
+}
