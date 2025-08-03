@@ -5,6 +5,7 @@
   --font-size-xs: 12px;
   --font-size-s: 14px;
   --font-size-m: 16px;
+  --font-size-md: 20px;
   --font-size-l: 18px;
   --font-size-xl: 22px;
   --font-size-xxl: 28px;
@@ -14,6 +15,7 @@
   --line-height-s: 1.3;
   --line-height-m: 1.5;
   --line-height-l: 1.7;
+  --line-height-xl: 1.8;
 
   /* font-weights */
   --font-weight-regular: 400;
@@ -33,6 +35,15 @@
 
 .uik_typography-h1 {
   @include typography(var(--font-size-xxl), var(--line-height-xs), var(--font-weight-bold));
+}
+
+.uik_typography-h1-modal {
+  @include typography(
+    var(--font-size-md),
+    var(--line-height-xl),
+    var(--font-weight-bold),
+    var(--color-light-100)
+  );
 }
 
 .uik_typography-h2 {

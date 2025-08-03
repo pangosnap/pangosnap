@@ -43,6 +43,11 @@ a {
   }
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
 * {
   scrollbar-color: var(--color-bg-action) transparent;
   scrollbar-width: thin;
