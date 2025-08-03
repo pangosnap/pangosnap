@@ -39,10 +39,18 @@ export const ButtonDisabled: Story = {
     disabled: true,
   },
 }
+export const FullWidth: Story = {
+  args: {
+    children: 'Button',
+    fullWidth: true,
+  },
+}
 export const ButtonAsLink: Story = {
   args: {
-    ...Primary.args,
-    children: <a href={'https://google.com'}>Google</a>,
+    variant: 'primary',
+    as: 'a',
+    href: 'https://google.com',
+    children: 'Button as Link',
   },
 }
 
