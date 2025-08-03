@@ -1,17 +1,28 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, ElementType } from 'react'
 
 import { clsx } from 'clsx'
 
 import s from './Button.module.scss'
 
-type Props = {
+type Props<T extends ElementType = 'button'> = {
+  as?: T
   variant?: 'primary' | 'secondary' | 'outlined' | 'text'
-} & ComponentPropsWithoutRef<'button'>
+  fullWidth?: boolean
+} & ComponentPropsWithoutRef<T>
 
-export const Button = ({ variant = 'primary', children, className, ...rest }: Props) => {
+export const Button = <T extends ElementType = 'button'>(props: Props<T>) => {
+  const { variant = 'primary', fullWidth, className, as: Component = 'button', ...rest } = props
+
   return (
-    <button className={clsx(s.button, s[variant], className)} type={'button'} {...rest}>
-      <h3 className={'uik_typography-button-h3'}>{children}</h3>
-    </button>
+    <Component
+      className={clsx(
+        s.button,
+        s[variant],
+        fullWidth && s.fullWidth,
+        className,
+        'uik_typography-button'
+      )}
+      {...rest}
+    />
   )
 }

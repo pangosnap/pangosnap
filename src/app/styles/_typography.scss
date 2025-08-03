@@ -43,10 +43,10 @@
   @include typography(var(--font-size-m), var(--line-height-xs), var(--font-weight-semi-bold));
 }
 
-.uik_typography-button-h3 {
+.uik_typography-button {
   @include typography(
     var(--font-size-m),
-    var(--line-height-xs),
+    var(--line-height-m),
     var(--font-weight-semi-bold),
     inherit
   );
