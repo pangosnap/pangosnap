@@ -1,3 +1,4 @@
+'use client'
 import { CheckBoxSelected } from '@/shared/icons/CheckBoxSelected'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 import * as LabelRadix from '@radix-ui/react-label'

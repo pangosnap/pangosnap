@@ -1,3 +1,5 @@
+'use client'
+
 import { type ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
 import { DeleteIcon } from '@/shared/icons/DeleteIcon'
