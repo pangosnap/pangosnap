@@ -1,23 +1,39 @@
-import { useState } from 'react'
-
 import { TextField } from './TextField'
+import EyeClosedIcon from '@/shared/icons/EyeClosedIcon'
+import EyeIcon from '@/shared/icons/EyeIcon'
+import { SearchIcon } from '@/shared/icons/SearchIcon'
 import { Meta, StoryObj } from '@storybook/nextjs'
 
-const meta = {
+const meta: Meta<typeof TextField> = {
   component: TextField,
   tags: ['autodocs'],
   argTypes: {
-    disabled: { control: 'boolean' },
-    fullWidth: { control: 'boolean' },
     type: {
+      control: 'select',
       options: ['text', 'password', 'search'],
-      control: { type: 'select' },
     },
-    label: { control: 'text' },
-    placeholder: { control: 'text' },
-    errorMessage: { control: 'text' },
-    onClearClick: { action: 'cleared' },
+    variant: {
+      control: 'select',
+      options: ['default', 'active', 'error', 'hover', 'focus', 'disabled'],
+    },
+    disabled: {
+      control: 'boolean',
+    },
   },
+  decorators: [
+    Story => (
+      <div
+        style={{
+          background: 'var(--color-dark-700)',
+          padding: '2rem',
+          borderRadius: '8px',
+          minHeight: '10vh',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
@@ -28,6 +44,7 @@ export const Default: Story = {
   args: {
     label: 'Email',
     placeholder: 'Epam@epam.com',
+    variant: 'default',
   },
 }
 
@@ -35,15 +52,7 @@ export const Active: Story = {
   args: {
     label: 'Email',
     placeholder: 'Epam@epam.com',
-    value: 'Epam@epam.com',
-  },
-}
-
-export const Error: Story = {
-  args: {
-    label: 'Email',
-    value: 'Epam@epam.com',
-    errorMessage: 'Error text',
+    variant: 'active',
   },
 }
 
@@ -51,83 +60,139 @@ export const Hover: Story = {
   args: {
     label: 'Email',
     placeholder: 'Epam@epam.com',
-  },
-  parameters: {
-    pseudo: { hover: true },
+    variant: 'hover',
   },
 }
 
 export const Focus: Story = {
   args: {
-    label: 'Email',
-    placeholder: 'Epam@epam.com',
+    label: 'Focus input',
+    placeholder: 'Focus state',
+    variant: 'focus',
   },
-  parameters: {
-    pseudo: { focus: true },
+}
+
+export const FocusWithPassword: Story = {
+  args: {
+    type: 'password',
+    label: 'Password with focus',
+    placeholder: 'Enter password',
+    variant: 'focus',
+    rightIcon: <EyeClosedIcon />,
+  },
+}
+
+export const Error: Story = {
+  args: {
+    label: 'Input with error',
+    placeholder: 'Epam@epam.com',
+    variant: 'error',
+    errorMessage: 'Error text',
   },
 }
 
 export const Disabled: Story = {
   args: {
-    label: 'Email',
+    label: 'Disabled input',
     placeholder: 'Epam@epam.com',
-    disabled: true,
+    variant: 'disabled',
   },
 }
 
-export const Password: Story = {
+export const SearchField: Story = {
   args: {
-    label: 'Password',
-    type: 'password',
-    placeholder: 'Enter password',
-  },
-}
-
-export const Search: Story = {
-  render: args => {
-    const [value, setValue] = useState('Search text')
-
-    return (
-      <TextField
-        {...args}
-        type={'search'}
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        onClearClick={() => setValue('')}
-      />
-    )
-  },
-  args: {
+    type: 'search',
     placeholder: 'Search...',
+    leftIcon: <SearchIcon />,
   },
 }
 
-export const AllStates = () => {
-  const [searchValue, setSearchValue] = useState('Search text')
+export const SearchFieldWithError: Story = {
+  args: {
+    type: 'search',
+    placeholder: 'Search...',
+    leftIcon: <SearchIcon />,
+    variant: 'error',
+    errorMessage: 'Error text',
+  },
+}
 
-  return (
-    <div style={{ display: 'grid', gap: '20px', maxWidth: '400px' }}>
-      <TextField label={'Email'} placeholder={'Placeholder text'} />
+export const PasswordFieldHidden: Story = {
+  args: {
+    type: 'password',
+    label: 'Password field',
+    placeholder: 'Enter password',
+    rightIcon: <EyeClosedIcon />,
+  },
+}
 
-      <TextField label={'Email state'} value={'Sample text'} />
+export const PasswordFieldVisible: Story = {
+  args: {
+    type: 'text',
+    label: 'Password visible',
+    placeholder: 'Password is visible',
+    rightIcon: <EyeIcon />,
+  },
+}
 
+export const WithLeftIcon: Story = {
+  args: {
+    label: 'With left icon',
+    placeholder: 'Has left icon',
+    leftIcon: <SearchIcon />,
+  },
+}
+
+export const WithRightIcon: Story = {
+  args: {
+    label: 'With right icon',
+    placeholder: 'Has right icon',
+    rightIcon: <EyeIcon />,
+  },
+}
+
+export const FullWidth: Story = {
+  args: {
+    label: 'Full width input',
+    placeholder: 'Takes all available width',
+  },
+  decorators: [
+    Story => (
+      <div style={{ width: '100%', maxWidth: '800px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+}
+
+export const AllStates: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
+      <TextField label={'Default'} placeholder={'Default'} variant={'default'} />
+      <TextField label={'Active'} placeholder={'Active'} variant={'active'} />
+      <TextField label={'Hover'} placeholder={'Hover'} variant={'hover'} />
+      <TextField label={'Focus'} placeholder={'Focus'} variant={'focus'} />
       <TextField
-        label={'Error s'}
-        value={'Invalid value'}
-        errorMessage={'This field is required'}
+        label={'Password focused'}
+        placeholder={'Enter password'}
+        type={'password'}
+        variant={'focus'}
+        rightIcon={<EyeClosedIcon />}
       />
-
-      <TextField label={'Disabled state'} placeholder={'Disabled field'} disabled />
-
-      <TextField label={'Password field'} type={'password'} value={'password123'} />
-
       <TextField
-        label={'Search field'}
+        label={'Error'}
+        placeholder={'Error'}
+        variant={'error'}
+        errorMessage={'Validation error'}
+      />
+      <TextField
+        placeholder={'Search error'}
         type={'search'}
-        value={searchValue}
-        onChange={e => setSearchValue(e.target.value)}
-        onClearClick={() => setSearchValue('')}
+        leftIcon={<SearchIcon />}
+        variant={'error'}
+        errorMessage={'Search error'}
       />
+      <TextField label={'Disabled'} placeholder={'Disabled'} variant={'disabled'} />
     </div>
-  )
+  ),
 }

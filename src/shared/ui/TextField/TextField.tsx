@@ -1,105 +1,95 @@
-import { type ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ComponentProps, ReactNode, useState } from 'react'
 
-import { DeleteIcon } from '@/shared/icons/DeleteIcon'
-import Eye from '@/shared/icons/Eye'
-import EyeClosed from '@/shared/icons/Eye-closed'
-import { SearchImg } from '@/shared/icons/Search'
+import { useGetId } from '@/shared/hooks/useGetId'
+import EyeClosedIcon from '@/shared/icons/EyeClosedIcon'
+import EyeIcon from '@/shared/icons/EyeIcon'
 import { clsx } from 'clsx'
 
 import s from './TextField.module.scss'
 
 export type TextFieldProps = {
   errorMessage?: string
-  fullWidth?: boolean
-  label?: string
-  name?: string
-  onClearClick?: () => void
-} & ComponentPropsWithoutRef<'input'>
+  label?: ReactNode
+  leftIcon?: ReactNode
+  rightIcon?: ReactNode
+  variant?: 'default' | 'active' | 'error' | 'hover' | 'focus' | 'disabled'
+  type?: 'text' | 'password' | 'search'
+} & ComponentProps<'input'>
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  (
-    {
-      className,
-      disabled,
-      errorMessage,
-      fullWidth,
-      label,
-      onClearClick,
-      type = 'text',
-      value,
-      ...rest
-    },
-    ref
-  ) => {
-    const [showPassword, setShowPassword] = useState(false)
-    const finalType = getFinalType(type, showPassword)
+export const TextField = ({
+  className,
+  errorMessage,
+  id,
+  leftIcon,
+  rightIcon,
+  type = 'text',
+  label,
+  variant = 'default',
+  disabled,
+  ...props
+}: TextFieldProps) => {
+  const [showPassword, setShowPassword] = useState(false)
+  const showError = Boolean(errorMessage)
+  const inputId = useGetId(id)
+  const isDisabled = disabled || variant === 'disabled'
 
-    const inputWrapperCN = clsx(
-      s.inputWrapper,
-      {
-        [s.error]: !!errorMessage,
-        [s.disabled]: disabled,
-        [s.fullWidth]: fullWidth,
-      },
-      className
-    )
-
-    const inputCN = clsx(s.textField, {
-      [s.disabled]: disabled,
-      [s.hasIcon]: type === 'search',
-    })
-
-    const labelCN = clsx('uik_typography-body2', {
-      'uik_typography-caption': disabled,
-    })
-
-    const searchImgCN = clsx(s.searchImg, {
-      [s.disabled]: disabled,
-    })
-
-    const eyeBtnCN = clsx(s.eyeBtn, {
-      [s.disabled]: disabled,
-    })
-
-    return (
-      <div className={s.container}>
-        {label && <label className={labelCN}>{label}</label>}
-
-        <div className={inputWrapperCN}>
-          {type === 'search' && <SearchImg className={searchImgCN} />}
-
-          <input
-            className={inputCN}
-            disabled={disabled}
-            ref={ref}
-            type={finalType}
-            value={value}
-            {...rest}
-          />
-
-          {type === 'search' && value && !disabled && (
-            <button className={s.deleteBtn} onClick={onClearClick} type={'button'}>
-              <DeleteIcon />
-            </button>
-          )}
-
-          {type === 'password' && !disabled && (
-            <button className={eyeBtnCN} onClick={() => setShowPassword(p => !p)} type={'button'}>
-              {showPassword ? <EyeClosed /> : <Eye />}
-            </button>
-          )}
-        </div>
-
-        {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
-      </div>
-    )
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
   }
-)
 
-const getFinalType = (type: ComponentPropsWithoutRef<'input'>['type'], showPassword: boolean) => {
-  if (type === 'password') {
+  const getInputType = () => {
+    if (type !== 'password') {
+      return type
+    }
+
     return showPassword ? 'text' : 'password'
   }
 
-  return type
+  const getRightIcon = () => {
+    if (type !== 'password') {
+      return rightIcon
+    }
+
+    return showPassword ? <EyeIcon /> : <EyeClosedIcon />
+  }
+
+  return (
+    <div className={clsx(s.box, className)}>
+      {label && (
+        <label className={clsx(s.label, isDisabled && s.disabled)} htmlFor={inputId}>
+          {label && <span className={s.labelText}>{label}</span>}
+        </label>
+      )}
+
+      <div className={s.inputWrapper}>
+        {leftIcon && <span className={s.leftIcon}>{leftIcon}</span>}
+        <input
+          className={clsx(
+            s.input,
+            s[variant],
+            showError && s.error,
+            leftIcon && s.withLeftIcon,
+            (rightIcon || type === 'password') && s.withRightIcon,
+            isDisabled && s.disabled
+          )}
+          id={inputId}
+          type={getInputType()}
+          disabled={isDisabled}
+          {...props}
+        />
+        {(rightIcon || type === 'password') && (
+          <button
+            type={'button'}
+            className={s.rightIcon}
+            onClick={type === 'password' ? togglePasswordVisibility : undefined}
+            disabled={isDisabled}
+          >
+            {getRightIcon()}
+          </button>
+        )}
+      </div>
+
+      {showError && <span className={s.errorMessage}>{errorMessage}</span>}
+    </div>
+  )
 }
