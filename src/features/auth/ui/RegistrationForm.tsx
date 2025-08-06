@@ -2,6 +2,7 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { useRegisterMutation } from '@/features/auth/api/baseAuthApi'
 import { Button } from '@/shared/ui/Button/Button'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { TextField } from '@/shared/ui/TextField/TextField'
@@ -17,6 +18,7 @@ export type FormData = {
 
 export const RegistrationForm = () => {
   const router = useRouter()
+  const [registerApi, { isLoading, error }] = useRegisterMutation()
   const {
     register,
     handleSubmit,
@@ -26,8 +28,21 @@ export const RegistrationForm = () => {
 
   const password = watch('password', '')
 
-  const onSubmit: SubmitHandler<FormData> = data => {
-    console.log('Форма:', data)
+  const onSubmit: SubmitHandler<FormData> = async data => {
+    try {
+      const result = await registerApi({
+        userName: data.username,
+        email: data.email,
+        password: data.password,
+        baseUrl: window.location.origin,
+      }).unwrap()
+
+      console.log('Server response:', result)
+      // например, после успешной регистрации редирект:
+      router.push('/sign-in')
+    } catch (err) {
+      console.error('Registration error:', err)
+    }
   }
 
   return (

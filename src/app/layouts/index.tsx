@@ -1,6 +1,10 @@
+'use client'
 import type { Metadata } from 'next'
 
 import { ReactNode } from 'react'
+import { Provider } from 'react-redux'
+
+import { store } from '../store'
 
 import '../styles/index.scss'
 
@@ -12,7 +16,9 @@ export const metadata: Metadata = {
 export function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={'en'}>
-      <body>{children}</body>
+      <Provider store={store}>
+        <body>{children}</body>
+      </Provider>
     </html>
   )
 }
