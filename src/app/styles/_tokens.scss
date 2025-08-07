@@ -1,26 +1,58 @@
 :root {
-  /* border-radius */
+  /* Border radius */
   --border-radius-s: 2px;
   --border-radius-m: 4px;
   --border-radius-l: 10px;
+  --border-radius-full: 9999px;
 
-  /* outlines */
-  --outline-focus: 2px solid var(--color-outline-focus);
+  /* Padding for inputs */
+  --padding-input-x: 12px;
+  --padding-input-y: 6px;
 
-  /* transitions */
-  --transtition-duration-basic: 200ms;
+  /* Transition easing */
+  --transition-ease-in-out: ease-in-out;
+  --transition-ease-in: ease-in;
+  --transition-ease-out: ease-out;
 
-  /* effects */
-  --tag-box-shadow: 0px 2px 10px rgb(109 109 109 / 25%), inset 0px 1px 0px rgb(255 255 255 / 30%);
+  /* Transition durations */
+  --transition-duration-fast: 150ms;
+  --transition-duration-medium: 200ms;
+  --transition-duration-slow: 300ms;
+  --transition-duration-basic: var(--transition-duration-medium);
 
-  /* z-indexes */
-  --z-index-header: 10;
-  --z-index-sidebar: 20;
-  --z-index-sidebar-overlay: 19;
-  --z-index-modal-overlay: 100;
-  --z-index-modal-content: 101;
+  /* Focus ring */
+  --shadow-focus-ring: 0 0 0 3px rgb(60 130 250 / 30%);
+
+  /* Spacing */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-s: 12px;
+  --spacing-m: 16px;
+  --spacing-l: 24px;
+  --spacing-xl: 32px;
+  --spacing-3xl: 40px;
+  --spacing-4xl: 48px;
+  --spacing-section: 64px;
+
+  /* Sizes */
+  --height-input: 40px;
+  --height-button: 40px;
+  --size-avatar-s: 24px;
+  --size-avatar-m: 32px;
+  --size-avatar-l: 40px;
+  --width-container: 1280px;
+
+  /* Z-index */
+  --z-index-dropdown: 100;
+  --z-index-modal: 1000;
+  --z-index-toast: 1100;
+  --z-index-tooltip: 1200;
+
+  /* Hover effects */
+  --shadow-hover: 0 2px 6px rgb(0 0 0 / 10%);
 }
 
-:root .dark-mode {
-  --tag-box-shadow: 0px 2px 18px rgb(54 80 109 / 25%), inset 0px 1px 0px rgb(79 79 79 / 30%);
+:root.dark-mode {
+  --shadow-focus-ring: 0 0 0 3px rgb(60 130 250 / 40%);
+  --shadow-hover: 0 2px 6px rgb(255 255 255 / 5%);
 }
