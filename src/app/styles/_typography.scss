@@ -102,4 +102,24 @@
   @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-regular));
 
   color: var(--color-accent-500);
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+// Error text
+.uik_typography-error {
+  @include typography(var(--font-size-xs), var(--line-height-m), var(--font-weight-regular));
+
+  color: var(--color-text-danger);
+}
+
+// Button text
+.uik_typography-button {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-semi-bold));
+
+  color: var(--color-accent-500);
 }
