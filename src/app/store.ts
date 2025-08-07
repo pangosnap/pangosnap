@@ -1,14 +1,16 @@
-import { api } from '@/features/auth/api/baseAuthApi'
+import { baseApi } from '@/app/baseApi'
 import { authReducer } from '@/features/auth/slice/authSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
 export const store = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer,
-    auth: authReducer,
+    //добавляем редюсеры rtk query baseAuthApi
+    [baseApi.reducerPath]: baseApi.reducer,
+    //добавляем редюсеры redux authSlice
+    // auth: authReducer,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
 })
 
 setupListeners(store.dispatch)

@@ -39,7 +39,7 @@ export const RegistrationForm = () => {
 
       console.log('Server response:', result)
       // например, после успешной регистрации редирект:
-      router.push('/sign-in')
+      // router.push('/sign-in')
     } catch (err) {
       console.error('Registration error:', err)
     }
