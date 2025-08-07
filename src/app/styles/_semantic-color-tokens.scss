@@ -1,21 +1,74 @@
 :root {
-  /* Основной цвет текста для светлой темы */
-  --color-text-primary: var(--color-dark-700); /* #0d0d0d — темный почти черный */
-  --color-text-primary-contrast: var(--color-light-100); /* #ffffff — для контраста */
-  --color-text-secondary: var(--color-dark-500); /* #171717 — чуть светлее основной */
-  --color-text-invalid: var(--color-accent-500); /* #397df6 — синий акцент */
-  --color-text-inactive: var(--color-dark-300); /* #333333 — серый для неактивных */
-  --color-text-disabled: var(--color-dark-100); /* #4c4c4c — более светлый для дизейблов */
-  --color-text-link: var(--color-accent-300); /* #4c8dff — цвет ссылок */
+  /* Текст */
+  --color-text-primary: var(--color-dark-700); /* Основной текст: #0d0d0d */
+  --color-text-primary-contrast: var(--color-light-100); /* Контрастный текст: #ffffff */
+  --color-text-secondary: var(--color-dark-500); /* Вторичный текст: #171717 */
+  --color-text-inactive: var(--color-dark-300); /* Неактивный текст: #333333 */
+  --color-text-disabled: var(--color-dark-100); /* Disabled: #4c4c4c */
+  --color-text-link: var(--color-accent-300); /* Ссылки: #4c8dff */
+  --color-text-invalid: var(--color-accent-500); /* Ошибки: #397df6 */
+  --color-text-success: var(--color-success-500); /* Успех: #14cc70 */
+  --color-text-danger: var(--color-danger-500); /* Опасность: #cc1439 */
+  --color-text-warning: var(--color-warning-500); /* Предупреждение: #d99000 */
+  --color-outline-focus: var(--color-accent-500);
+
+  /* Фоны */
+  --color-bg-primary: var(--color-light-100); /* Основной фон: #ffffff */
+  --color-bg-secondary: var(--color-light-300); /* Вторичный фон: #f7fbff */
+  --color-bg-disabled: var(--color-light-700); /* Disabled фон: #d5dae0 */
+  --color-bg-element: var(--color-light-100); /* Элементы: #ffffff */
+  --color-bg-hover: var(--color-light-500); /* Hover фон: #edf3fa */
+  --color-bg-success: var(--color-success-100); /* Успешный фон: #80ffbf */
+  --color-bg-danger: var(--color-danger-100); /* Ошибочный фон: #ff8099 */
+  --color-bg-warning: var(--color-warning-100); /* Предупреждение фон: #ffd073 */
+
+  /* Границы */
+  --color-border-primary: var(--color-dark-100); /* Основная граница: #4c4c4c */
+  --color-border-disabled: var(--color-light-700); /* Disabled: #d5dae0 */
+  --color-border-focus: var(--color-accent-500); /* Фокус: #397df6 */
+  --color-border-invalid: var(--color-danger-500); /* Ошибка: #cc1439 */
+  --color-border-success: var(--color-success-500); /* Успех: #14cc70 */
+  --color-border-warning: var(--color-warning-500); /* Предупреждение: #d99000 */
+
+  /* Специальные */
+  --color-overlay: rgb(0 0 0 / 40%); /* Оверлей/модалки */
+  --color-divider: var(--color-light-700); /* Разделители: #d5dae0 */
 }
 
 :root.dark-mode {
-  /* Основной цвет текста для тёмной темы */
-  --color-text-primary: var(--color-light-100); /* #ffffff — белый */
-  --color-text-primary-contrast: var(--color-dark-900); /* #000000 — для контраста */
-  --color-text-secondary: var(--color-light-300); /* #f7fbff — светлый для вторичного */
-  --color-text-invalid: var(--color-accent-700); /* #2f68cc — более темный акцент */
-  --color-text-inactive: var(--color-light-500); /* #edf3fa — для неактивных */
-  --color-text-disabled: var(--color-light-700); /* #d5dae0 — для дизейблов */
-  --color-text-link: var(--color-accent-100); /* #73a5ff — ссылки светлее */
+  /* Текст */
+  --color-text-primary: var(--color-light-100); /* Основной текст: #ffffff */
+  --color-text-primary-contrast: var(--color-dark-900); /* Контрастный: #000000 */
+  --color-text-secondary: var(--color-light-300); /* Вторичный: #f7fbff */
+  --color-text-inactive: var(--color-light-500); /* Неактивный: #edf3fa */
+  --color-text-disabled: var(--color-light-700); /* Disabled: #d5dae0 */
+  --color-text-link: var(--color-accent-300); /* Ссылки: #4c8dff */
+  --color-text-invalid: var(--color-accent-700); /* Ошибки: #2f68cc */
+  --color-text-success: var(--color-success-300); /* Успех: #22e584 */
+  --color-text-danger: var(--color-danger-500); /* Опасность: #cc1439 */
+  --color-text-warning: var(--color-warning-300); /* Предупреждение: #e5ac39 */
+  --color-outline-focus: var(--color-accent-700);
+
+  /* Фоны */
+  --color-bg-primary: var(--color-dark-700); /* Основной фон: #0d0d0d */
+  --color-bg-secondary: var(--color-dark-500); /* Вторичный: #171717 */
+  --color-bg-disabled: var(--color-dark-300); /* Disabled: #333333 */
+  --color-bg-element: var(--color-dark-700); /* Элементы: #0d0d0d */
+  --color-bg-hover: var(--color-dark-500); /* Hover: #171717 */
+  --color-bg-success: var(--color-success-700); /* Успех: #0f9954 */
+  --color-bg-danger: var(--color-danger-500); /* Опасность: #cc1439 */
+  --color-bg-warning: var(--color-warning-700); /* Предупреждение: #996600 */
+
+  /* Границы */
+  --color-border-primary: var(--color-light-700); /* Основная граница: #d5dae0 */
+  --color-border-disabled: var(--color-light-500); /* Disabled: #edf3fa */
+  --color-border-focus: var(--color-accent-700); /* Фокус: #2f68cc */
+  --color-border-invalid: var(--color-danger-300); /* Ошибка: #f23d61 */
+  --color-border-success: var(--color-success-300); /* Успех: #22e584 */
+  --color-border-warning: var(--color-warning-300); /* Предупреждение: #e5ac39 */
+  --color-border-danger: var(--color-danger-500); /* Опасность: #cc1439 */
+
+  /* Специальные */
+  --color-overlay: rgb(255 255 255 / 20%);
+  --color-divider: var(--color-dark-300); /* Разделители: #333333 */
 }
