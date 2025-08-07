@@ -53,5 +53,12 @@ export const ButtonAsLink: Story = {
     children: 'Button as Link',
   },
 }
+export const SmallButton: Story = {
+  args: {
+    variant: 'primary',
+    children: 'OK',
+    spacingNameBtn: 'small',
+  },
+}
 
 export default meta
