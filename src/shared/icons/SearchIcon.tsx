@@ -26,4 +26,4 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
 )
 const ForwardRef = forwardRef(SvgComponent)
 
-export const SearchImg = memo(ForwardRef)
+export const SearchIcon = memo(ForwardRef)
