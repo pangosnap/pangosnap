@@ -60,7 +60,7 @@ importers:
         specifier: 5.101.0
         version: 5.101.0(esbuild@0.25.8)
       zod:
-        specifier: 4.0.15
+        specifier: ^4.0.15
         version: 4.0.15
     devDependencies:
       '@chromatic-com/storybook':
@@ -979,7 +979,7 @@ packages:
   '@hookform/resolvers@5.2.1':
     resolution: {integrity: sha512-u0+6X58gkjMcxur1wRWokA7XsiiBJ6aK17aPZxhkoYiK5J+HcTx0Vhu9ovXe6H+dVpO6cjrn2FkJTryXEMlryQ==}
     peerDependencies:
-      react-hook-form: 7.55.0
+      react-hook-form: ^7.55.0
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}

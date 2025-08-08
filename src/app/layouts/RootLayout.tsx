@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang={'en'} className={'dark-mode'}>
+    <html lang={'en'}>
       <body>
         <Providers>{children}</Providers>
       </body>
