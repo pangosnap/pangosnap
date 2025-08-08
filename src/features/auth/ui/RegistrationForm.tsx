@@ -39,7 +39,7 @@ export const RegistrationForm = () => {
         userName: data.userName,
         email: data.email,
         password: data.password,
-        baseUrl: window.location.origin,
+        baseUrl: 'http://localhost:3000/registration-confirmation',
       }).unwrap()
 
       console.log('Server response:', result)
@@ -94,7 +94,7 @@ export const RegistrationForm = () => {
       <Button type={'submit'} variant={'primary'}>
         Sign Up
       </Button>
-      <Button type={'button'} variant={'secondary'} onClick={() => router.push('#')}>
+      <Button type={'button'} variant={'secondary'} onClick={() => router.push('/sign-in')}>
         Sign In
       </Button>
     </form>

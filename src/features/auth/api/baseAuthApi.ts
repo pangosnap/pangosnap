@@ -15,10 +15,17 @@ export const authRegApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    confirmRegistration: builder.mutation<void, { confirmationCode: string }>({
+      query: body => ({
+        url: '/auth/registration-confirmation',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useRegisterMutation } = authRegApi
+export const { useRegisterMutation, useConfirmRegistrationMutation } = authRegApi
 
 // const rawBaseQuery = fetchBaseQuery({
 //   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
