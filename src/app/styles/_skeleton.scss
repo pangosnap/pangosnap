@@ -1,10 +1,10 @@
 .react-loading-skeleton {
-  --base-color: #e2e2e2;
-  --highlight-color: #f0f0f0;
+  --base-color: var(--color-light-700); // базовый фон скелетона
+  --highlight-color: var(--color-light-500); // эффект "пульсации"
 
   .dark-mode & {
-    --base-color: #293747;
-    --highlight-color: #17212d;
+    --base-color: var(--color-dark-300); // фон скелетона в тёмной теме
+    --highlight-color: var(--color-dark-500); // пульсация в тёмной теме
   }
 }
 

@@ -1,1 +1,1 @@
-import './globals.css'
+import '@/app/styles/index.scss'
