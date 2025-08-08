@@ -1,3 +1,6 @@
+'use client'
+import { RegistrationForm } from '@/features/auth/ui/RegistrationForm'
+
 export default function SignUp() {
-  return <h1>Sign Up</h1>
+  return <RegistrationForm />
 }
