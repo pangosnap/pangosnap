@@ -1,13 +1,13 @@
 'use client'
 import { baseApi } from '@/app/baseApi'
-import { RootState } from '@/app/store'
-import { setAccessToken } from '@/features/auth/slice/authSlice'
+import { RegistrationInputs } from '@/features/auth/api/lib/schemas/registrationSchema'
 
 export const authRegApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     register: builder.mutation<
       void,
-      { userName: string; email: string; password: string; baseUrl: string }
+      { userName: string; email: string; password: string; baseUrl: string },
+      RegistrationInputs
     >({
       query: data => ({
         url: '/auth/registration',
