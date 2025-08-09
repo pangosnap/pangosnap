@@ -15,10 +15,17 @@ export const authRegApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    login: builder.mutation<{ accessToken: string }, { email: string; password: string }>({
+      query: body => ({
+        url: '/auth/login',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useRegisterMutation } = authRegApi
+export const { useRegisterMutation, useLoginMutation } = authRegApi
 
 // const rawBaseQuery = fetchBaseQuery({
 //   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,

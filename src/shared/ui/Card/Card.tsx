@@ -1,7 +1,5 @@
 import { ComponentProps, ReactNode } from 'react'
 
-import { clsx } from 'clsx'
-
 import s from './Card.module.scss'
 
 type Props = {
@@ -12,8 +10,8 @@ type Props = {
 export const Card = ({ children, title, ...rest }: Props) => {
   return (
     <div className={s.box} {...rest}>
-      {title && <h1 className={clsx('uik_typography-h1', s.title)}>{title}</h1>}
-      <div>{children}</div>
+      {title && <h1 className={'uik_typography-h1'}>{title}</h1>}
+      <div className={s.content}>{children}</div>
     </div>
   )
 }
