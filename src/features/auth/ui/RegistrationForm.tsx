@@ -1,5 +1,3 @@
-'use client'
-
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 import { useRegisterMutation } from '@/features/auth/api/baseAuthApi'
@@ -19,7 +17,6 @@ export const RegistrationForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
   } = useForm<RegistrationInputs>({
@@ -41,10 +38,6 @@ export const RegistrationForm = () => {
         password: data.password,
         baseUrl: 'http://localhost:3000/registration-confirmation',
       }).unwrap()
-
-      console.log('Server response:', result)
-      // например, после успешной регистрации редирект:
-      // router.push('/sign-in')
     } catch (err) {
       console.error('Registration error:', err)
     }
