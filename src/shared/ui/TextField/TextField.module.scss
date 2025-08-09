@@ -11,6 +11,7 @@
   font-weight: 400;
   line-height: 171%;
   color: var(--color-light-900);
+  text-align: left;
 
   &.disabled {
     color: var(--color-dark-100);
@@ -23,16 +24,14 @@
   font-weight: 400;
   line-height: 171%;
   color: var(--color-danger-500);
+  text-align: left;
 }
 
 .inputWrapper {
   position: relative;
-
   display: flex;
   align-items: center;
-
   width: 100%;
-  max-width: 274px;
 }
 
 .input {

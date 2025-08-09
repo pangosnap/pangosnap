@@ -59,7 +59,7 @@
   box-sizing: border-box;
   width: 18px;
   height: 18px;
-  border: 2px solid var(--color-light-100);
+  border: 2px solid var(--color-border-checkbox);
   border-radius: var(--border-radius-s);
 
   color: var(--color-light-100);
@@ -70,7 +70,7 @@
     cursor: default;
     border-color: var(--color-dark-100);
     color: var(--color-dark-100);
-    background-color: var(--color-light-700);
+    background-color: var(--color-text-disabled);
   }
 }
 
@@ -82,17 +82,12 @@
 
 .label {
   cursor: pointer;
-
   display: flex;
   gap: 8px;
   align-items: center;
-
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--color-light-100);
 }
 
 .disabled {
   cursor: default;
-  color: var(--color-dark-100);
+  color: var(--color-text-disabled);
 }
