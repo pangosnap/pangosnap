@@ -2,7 +2,7 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { useLoginMutation } from '@/features/auth/api/baseAuthApi'
+import { useLoginMutation } from '@/features/auth/api/authRegApi'
 import { LoginInputs, loginSchema } from '@/features/auth/api/lib/schemas/loginSchema'
 import GitHubIcon from '@/shared/icons/github.svg'
 import GoogleIcon from '@/shared/icons/google.svg'

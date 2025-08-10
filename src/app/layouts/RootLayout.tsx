@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 
 import { ReactNode } from 'react'
-import { Provider } from 'react-redux'
 
-import { store } from '../store'
 import { Providers } from '@/app/layouts/Providers'
+import { HeaderPublic } from '@/widgets/HeaderPublic/HeaderPublic'
 
 import '@/app/styles/index.scss'
 

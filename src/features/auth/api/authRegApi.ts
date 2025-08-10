@@ -29,10 +29,22 @@ export const authRegApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+    emailResending: builder.mutation<void, { email: string; baseUrl: string }>({
+      query: body => ({
+        url: '/auth/registration-email-resending',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useRegisterMutation, useLoginMutation, useConfirmRegistrationMutation } = authRegApi
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useConfirmRegistrationMutation,
+  useEmailResendingMutation,
+} = authRegApi
 
 // const rawBaseQuery = fetchBaseQuery({
 //   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
