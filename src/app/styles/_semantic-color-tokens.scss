@@ -6,6 +6,7 @@
   --color-text-inactive: var(--color-light-500); /* Неактивный: #edf3fa */
   --color-text-disabled: var(--color-light-700); /* Disabled: #d5dae0 */
   --color-text-link: var(--color-accent-300); /* Ссылки: #4c8dff */
+  --color-text-link-secondary: var(--color-light-900);
   --color-text-invalid: var(--color-accent-700); /* Ошибки: #2f68cc */
   --color-text-success: var(--color-success-300); /* Успех: #22e584 */
   --color-text-danger: var(--color-danger-500); /* Опасность: #cc1439 */
@@ -30,6 +31,8 @@
   --color-border-success: var(--color-success-300); /* Успех: #22e584 */
   --color-border-warning: var(--color-warning-300); /* Предупреждение: #e5ac39 */
   --color-border-danger: var(--color-danger-500); /* Опасность: #cc1439 */
+  --color-border-checkbox: var(--color-light-100); /* #fff */
+  --color-border-card: var(--color-dark-300); /* #333333ff */
 
   /* Специальные */
   --color-overlay: rgb(255 255 255 / 20%);

@@ -20,7 +20,7 @@ type Props = {
 export const Checkbox = ({ className, label, disabled, checked, onChange }: Props) => {
   return (
     <div className={clsx(s.container, disabled && s.disabled, className)}>
-      <LabelRadix.Root className={clsx(s.label, disabled && s.disabled)}>
+      <LabelRadix.Root className={clsx('uik_typography-body2', s.label, disabled && s.disabled)}>
         <div className={s.wrapper}>
           <CheckboxRadix.Root
             className={s.root}
