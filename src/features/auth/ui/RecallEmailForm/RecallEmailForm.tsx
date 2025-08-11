@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation'
 
 import s from '@/features/auth/ui/RegistrationForm/RegistrationForm.module.scss'
 
-export const RecallEmail = () => {
+export const RecallEmailForm = () => {
   const searchParams = useSearchParams()
   const email = searchParams.get('email')
   const [emailResending] = useEmailResendingMutation()
@@ -29,12 +29,12 @@ export const RecallEmail = () => {
   })
   const emailValue = watch('email')
 
-  const emailResendingHandler = async () => {
+  const emailResendingHandler = async data => {
     if (email) {
       try {
         await emailResending({
-          email,
-          baseUrl: 'http://localhost:3000/sign-up/recall-email',
+          email: data.email,
+          baseUrl: 'http://localhost:3000/registration-confirmation',
         }).unwrap()
       } catch (error) {
         console.error(error)

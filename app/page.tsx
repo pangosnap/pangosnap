@@ -1,1 +1,3 @@
-export { Home as default } from '@/views/home'
+export default function Home() {
+  return <h1>Главная страница</h1>
+}

@@ -1,5 +1,5 @@
-import { RecallEmail } from '@/features/auth/ui/RecallEmail/RecallEmail'
+import { RecallEmailForm } from '@/features/auth/ui/RecallEmailForm/RecallEmailForm'
 
-export default function SignIn() {
-  return <RecallEmail />
+export default function RecallEmail() {
+  return <RecallEmailForm />
 }
