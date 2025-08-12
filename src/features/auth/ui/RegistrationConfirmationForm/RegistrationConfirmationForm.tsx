@@ -30,5 +30,9 @@ export const RegistrationConfirmationForm = () => {
     })()
   }, [confirm, confirmationCode, error, router])
 
-  return <Button variant={'primary'}>Sign In</Button>
+  return (
+    <Button variant={'primary'} onClick={() => router.push('/sign-in')}>
+      Sign In
+    </Button>
+  )
 }

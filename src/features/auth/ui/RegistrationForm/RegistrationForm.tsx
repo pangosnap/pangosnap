@@ -39,7 +39,7 @@ export const RegistrationForm = () => {
 
   const onSubmit: SubmitHandler<RegistrationInputs> = async data => {
     try {
-      const result = await registerApi({
+      await registerApi({
         userName: data.userName,
         email: data.email,
         password: data.password,
