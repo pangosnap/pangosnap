@@ -6,11 +6,16 @@ import {
   RegistrationInputs,
   registrationSchema,
 } from '@/features/auth/api/lib/schemas/registrationSchema'
+import GitHubIcon from '@/shared/icons/github.svg'
+import GoogleIcon from '@/shared/icons/google.svg'
 import { Button } from '@/shared/ui/Button/Button'
+import { Card } from '@/shared/ui/Card'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { TextField } from '@/shared/ui/TextField/TextField'
 import { UniversalModal } from '@/shared/ui/UniversalModal/UniversalModal'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { clsx } from 'clsx'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import s from './RegistrationForm.module.scss'
@@ -53,65 +58,87 @@ export const RegistrationForm = () => {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          label={'Username'}
-          placeholder={'Pangosnap'}
-          {...register('userName')}
-          errorMessage={errors.userName?.message}
-        />
-
-        <TextField
-          type={'text'}
-          label={'Email'}
-          placeholder={'pangosnap@gmail.com'}
-          {...register('email')}
-          errorMessage={errors.email?.message}
-        />
-        <TextField
-          type={'password'}
-          label={'Password'}
-          placeholder={'*********'}
-          {...register('password')}
-          errorMessage={errors.password?.message}
-        />
-        <TextField
-          type={'password'}
-          label={'Password confirmation'}
-          placeholder={'*********'}
-          {...register('confirmPassword')}
-          errorMessage={errors.confirmPassword?.message}
-        />
-        <Controller
-          name={'terms'}
-          control={control}
-          render={({ field }) => (
-            <Checkbox
-              label={'I agree to the Terms of Service and Privacy Policy'}
-              checked={field.value}
-              onChange={field.onChange}
+    <div className={s.wrapper}>
+      <Card title={'Sign Up'}>
+        <div className={s.oAuthIcons}>
+          <GoogleIcon />
+          <GitHubIcon />
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className={s.textFields}>
+            <TextField
+              label={'Username'}
+              placeholder={'Pangosnap'}
+              {...register('userName')}
+              errorMessage={errors.userName?.message}
             />
-          )}
-        />
-        <Button type={'submit'} variant={'primary'}>
-          Sign Up
-        </Button>
-        <Button type={'button'} variant={'secondary'} onClick={() => router.push('/sign-in')}>
-          Sign In
-        </Button>
-      </form>
-      {isModalOpen && (
-        <UniversalModal
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          modalTitle={'Email sent'}
-          size={'sm'}
-          overlayDarkClass={s.OverlayModal}
-        >
-          We have sent a link to confirm your email to {emailValue}
-        </UniversalModal>
-      )}
-    </>
+
+            <TextField
+              type={'text'}
+              label={'Email'}
+              placeholder={'pangosnap@gmail.com'}
+              {...register('email')}
+              errorMessage={errors.email?.message}
+            />
+            <TextField
+              type={'password'}
+              label={'Password'}
+              placeholder={'*********'}
+              {...register('password')}
+              errorMessage={errors.password?.message}
+            />
+            <TextField
+              type={'password'}
+              label={'Password confirmation'}
+              placeholder={'*********'}
+              {...register('confirmPassword')}
+              errorMessage={errors.confirmPassword?.message}
+            />
+          </div>
+          <Controller
+            name={'terms'}
+            control={control}
+            render={({ field }) => (
+              <Checkbox
+                label={
+                  <>
+                    I agree to the
+                    <a href={'/terms-of-service'} className={'uik_typography-link-small'}>
+                      Terms of Service
+                    </a>
+                    and{' '}
+                    <a href={'/privacy-policy'} className={'uik_typography-link-small'}>
+                      Privacy Policy
+                    </a>
+                  </>
+                }
+                checked={field.value}
+                onChange={field.onChange}
+                labelSize={'small'}
+                className={s.checkbox}
+              />
+            )}
+          />
+          <Button type={'submit'} variant={'primary'} fullWidth>
+            Sign Up
+          </Button>
+          <p className={clsx('uik_typography-body1', s.text)}>Do you have an account?</p>
+          <Button as={Link} href={'/sign-in'} variant={'text'} className={s.signInLink}>
+            Sign In
+          </Button>
+        </form>
+        {isModalOpen && (
+          <UniversalModal
+            open={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            modalTitle={'Email sent'}
+            size={'sm'}
+            overlayDarkClass={s.OverlayModal}
+          >
+            We have sent a link to confirm your email to {emailValue}
+          </UniversalModal>
+        )}
+      </Card>
+    </div>
   )
 }
