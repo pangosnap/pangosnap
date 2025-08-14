@@ -1,38 +1,41 @@
 'use client'
-
 import { useEffect } from 'react'
 
 import { useConfirmRegistrationMutation } from '@/features/auth/api/authRegApi'
 import { Button } from '@/shared/ui/Button/Button'
-import { useRouter, useSearchParams } from 'next/navigation'
 
-export const RegistrationConfirmationForm = () => {
-  const [confirm, { error }] = useConfirmRegistrationMutation()
-  const searchParams = useSearchParams()
-  const router = useRouter()
+type Props = {
+  code: string
+  onErrorAction?: () => void
+  onSignInAction?: () => void
+}
 
-  const confirmationCode = searchParams.get('code')
+export function RegistrationConfirmationForm({ code, onErrorAction, onSignInAction }: Props) {
+  const [confirm, { isSuccess, isError, isLoading }] = useConfirmRegistrationMutation()
 
   useEffect(() => {
-    if (!confirmationCode) {
-      router.push('/recall-email')
-
-      return
+    if (code) {
+      confirm({ confirmationCode: code })
     }
-    ;(async () => {
-      try {
-        await confirm({ confirmationCode }).unwrap()
-      } catch (error: any) {
-        if (error) {
-          router.push('/recall-email')
-        }
-      }
-    })()
-  }, [confirm, confirmationCode, error, router])
+  }, [code, confirm])
 
-  return (
-    <Button variant={'primary'} onClick={() => router.push('/sign-in')}>
-      Sign In
-    </Button>
-  )
+  useEffect(() => {
+    if (isError) {
+      onErrorAction?.()
+    }
+  }, [isError, onErrorAction])
+
+  if (isLoading) {
+    return <p>We confirm your registration...</p>
+  }
+
+  if (isSuccess) {
+    return (
+      <Button variant={'primary'} onClick={onSignInAction}>
+        Sign In
+      </Button>
+    )
+  }
+
+  return null
 }

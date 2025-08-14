@@ -1,1 +1,1 @@
-export { default as RegistrationConfirmation } from './ui/RegistrationConfirmation'
+export { RegistrationConfirmationView } from './ui/RegistrationConfirmationView'
