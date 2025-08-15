@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, FieldError, SubmitHandler, useForm } from 'react-hook-form'
 
 import { useRegisterMutation } from '@/features/auth/api/authRegApi'
 import {
@@ -24,20 +24,24 @@ export const RegistrationForm = () => {
   const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [registerApi, { isLoading, error }] = useRegisterMutation()
+  const defaultValues: RegistrationInputs = {
+    userName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    terms: false,
+  }
   const {
     register,
     handleSubmit,
     control,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
+    setError,
+    reset,
   } = useForm<RegistrationInputs>({
-    defaultValues: {
-      userName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      terms: false,
-    },
+    defaultValues,
+    mode: 'onChange',
     resolver: zodResolver(registrationSchema),
   })
   const emailValue = watch('email')
@@ -52,8 +56,17 @@ export const RegistrationForm = () => {
       }).unwrap()
 
       setIsModalOpen(true)
-    } catch (err) {
-      console.error('Registration error:', err)
+      reset(defaultValues)
+    } catch (err: any) {
+      const field = err?.data?.messages[0].field as 'email' | 'userName' | undefined
+      const message = err?.data?.messages[0].message ?? 'Something went wrong'
+
+      if (field === 'email') {
+        setError('email', { type: 'server', message })
+      }
+      if (field === 'userName') {
+        setError('userName', { type: 'server', message })
+      }
     }
   }
 
@@ -119,7 +132,7 @@ export const RegistrationForm = () => {
               />
             )}
           />
-          <Button type={'submit'} variant={'primary'} fullWidth>
+          <Button type={'submit'} variant={'primary'} disabled={!isValid} fullWidth>
             Sign Up
           </Button>
           <p className={clsx('uik_typography-body1', s.text)}>Do you have an account?</p>

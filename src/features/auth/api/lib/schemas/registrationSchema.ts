@@ -25,7 +25,7 @@ export const registrationSchema = z
     email: emailSchema,
     password: passwordSchema,
     confirmPassword: passwordSchema,
-    terms: z.boolean(),
+    terms: z.boolean().refine(v => v === true),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
