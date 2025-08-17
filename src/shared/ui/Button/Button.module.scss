@@ -111,6 +111,13 @@
       color: var(--color-accent-900);
     }
   }
+
+  &.icon {
+    display: inline-flex;
+    width: var(--size-icon-width);
+    height: var(--size-icon-height);
+    padding: 0;
+  }
 }
 
 .fullWidth {

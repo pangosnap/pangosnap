@@ -1,1 +1,5 @@
-export { Home as default } from '@/views/home'
+import { HomeView } from '@/views/home'
+
+export default async function HomePage() {
+  return <HomeView />
+}

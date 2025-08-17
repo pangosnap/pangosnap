@@ -1,5 +1,9 @@
 import { z } from 'zod'
 
+export const emailSchema = z.string().regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
+  message: 'Invalid email',
+})
+
 const passwordSchema = z
   .string()
   .min(6, { message: 'Password must be at least 6 characters' })
@@ -18,12 +22,10 @@ export const registrationSchema = z
       .regex(/^[0-9A-Za-z_-]+$/, {
         message: 'Only letters, numbers, underscores and hyphens are allowed',
       }),
-    email: z.string().regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
-      message: 'Invalid email',
-    }),
+    email: emailSchema,
     password: passwordSchema,
     confirmPassword: passwordSchema,
-    terms: z.boolean(),
+    terms: z.boolean().refine(v => v === true),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
@@ -34,5 +36,8 @@ export const registrationSchema = z
       })
     }
   })
-
+export const emailFormSchema = z.object({
+  email: emailSchema,
+})
 export type RegistrationInputs = z.infer<typeof registrationSchema>
+export type EmailInputs = z.infer<typeof emailFormSchema>

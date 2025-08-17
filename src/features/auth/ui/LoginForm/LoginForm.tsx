@@ -2,10 +2,10 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { useLoginMutation } from '@/features/auth/api/baseAuthApi'
+import { useLoginMutation } from '@/features/auth/api/authRegApi'
 import { LoginInputs, loginSchema } from '@/features/auth/api/lib/schemas/loginSchema'
+import { GoogleAuth } from '@/features/auth/ui/LoginForm/GoogleAuth/GoogleAuth'
 import GitHubIcon from '@/shared/icons/github.svg'
-import GoogleIcon from '@/shared/icons/google.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
 import { TextField } from '@/shared/ui/TextField'
@@ -48,7 +48,7 @@ export const LoginForm = () => {
     <div className={s.wrapper}>
       <Card title={'Sign In'}>
         <div className={s.oAuthIcons}>
-          <GoogleIcon />
+          <GoogleAuth />
           <GitHubIcon />
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
