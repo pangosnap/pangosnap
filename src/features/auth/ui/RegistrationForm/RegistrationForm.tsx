@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { Controller, FieldError, SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 import { useRegisterMutation } from '@/features/auth/api/authRegApi'
 import {
   RegistrationInputs,
   registrationSchema,
 } from '@/features/auth/api/lib/schemas/registrationSchema'
+import { GoogleAuth } from '@/features/auth/ui/LoginForm/GoogleAuth/GoogleAuth'
 import GitHubIcon from '@/shared/icons/github.svg'
-import GoogleIcon from '@/shared/icons/google.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
@@ -16,14 +16,12 @@ import { UniversalModal } from '@/shared/ui/UniversalModal/UniversalModal'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 import s from './RegistrationForm.module.scss'
 
 export const RegistrationForm = () => {
-  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [registerApi, { isLoading, error }] = useRegisterMutation()
+  const [registerApi] = useRegisterMutation()
   const defaultValues: RegistrationInputs = {
     userName: '',
     email: '',
@@ -74,7 +72,7 @@ export const RegistrationForm = () => {
     <div className={s.wrapper}>
       <Card title={'Sign Up'}>
         <div className={s.oAuthIcons}>
-          <GoogleIcon />
+          <GoogleAuth />
           <GitHubIcon />
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>

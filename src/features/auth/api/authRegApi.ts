@@ -1,6 +1,13 @@
-'use client'
 import { baseApi } from '@/app/baseApi'
+import { MeResponse, meSchema } from '@/features/auth/api/lib/schemas/meSchema'
 import { RegistrationInputs } from '@/features/auth/api/lib/schemas/registrationSchema'
+
+// type MeResponse = {
+//   userId: number
+//   userName: string
+//   email: string
+//   isBlocked: boolean
+// }
 
 export const authRegApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -22,6 +29,17 @@ export const authRegApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+    googleLogin: builder.mutation<
+      { accessToken: string; email: string },
+      { code: string; redirectUrl?: string }
+    >({
+      query: body => ({
+        url: '/auth/google/login',
+        method: 'POST',
+        body,
+      }),
+    }),
+
     confirmRegistration: builder.mutation<void, { confirmationCode: string }>({
       query: body => ({
         url: '/auth/registration-confirmation',
@@ -36,6 +54,10 @@ export const authRegApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+    me: builder.query<MeResponse, void>({
+      query: () => '/auth/me',
+      extraOptions: { dataSchema: meSchema },
+    }),
   }),
 })
 
@@ -44,4 +66,6 @@ export const {
   useLoginMutation,
   useConfirmRegistrationMutation,
   useEmailResendingMutation,
+  useGoogleLoginMutation,
+  useMeQuery,
 } = authRegApi

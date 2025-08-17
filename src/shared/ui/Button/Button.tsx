@@ -6,7 +6,7 @@ import s from './Button.module.scss'
 
 type Props<T extends ElementType = 'button'> = {
   as?: T
-  variant?: 'primary' | 'secondary' | 'outlined' | 'text'
+  variant?: 'primary' | 'secondary' | 'outlined' | 'text' | 'icon'
   fullWidth?: boolean
   spacingNameBtn?: 'small' | 'medium'
 } & ComponentPropsWithoutRef<T>

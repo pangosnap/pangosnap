@@ -1,3 +1,5 @@
-export default function Home() {
-  return <h1>Главная страница</h1>
+import { HomeView } from '@/views/home'
+
+export default async function HomePage() {
+  return <HomeView />
 }
