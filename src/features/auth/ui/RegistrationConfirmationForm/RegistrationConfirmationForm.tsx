@@ -4,6 +4,8 @@ import { useEffect } from 'react'
 import { useConfirmRegistrationMutation } from '@/features/auth/api/authRegApi'
 import { Button } from '@/shared/ui/Button/Button'
 
+import s from './RegistrationConfirmationForm.module.scss'
+
 type Props = {
   code: string
   onErrorAction?: () => void
@@ -29,13 +31,15 @@ export function RegistrationConfirmationForm({ code, onErrorAction, onSignInActi
     return <p>We confirm your registration...</p>
   }
 
-  if (isSuccess) {
-    return (
+  // if (isSuccess) {
+  return (
+    <div className={s.wrapper}>
       <Button variant={'primary'} onClick={onSignInAction}>
         Sign In
       </Button>
-    )
-  }
+    </div>
+  )
+  // }
 
-  return null
+  // return null
 }
