@@ -58,6 +58,30 @@ export const authRegApi = baseApi.injectEndpoints({
       query: () => '/auth/me',
       extraOptions: { dataSchema: meSchema },
     }),
+    recoveryPassword: builder.mutation<
+      void,
+      { email: string; baseUrl: string; recaptcha?: string }
+    >({
+      query: body => ({
+        url: '/auth/password-recovery',
+        method: 'POST',
+        body,
+      }),
+    }),
+    createNewPassword: builder.mutation<void, { newPassword: string; recoveryCode: string }>({
+      query: body => ({
+        url: '/auth/new-password',
+        method: 'POST',
+        body,
+      }),
+    }),
+    resendRecoveryPassword: builder.mutation<void, { email: string; baseUrl: string }>({
+      query: body => ({
+        url: '/auth/password-recovery-resending',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
@@ -68,4 +92,7 @@ export const {
   useEmailResendingMutation,
   useGoogleLoginMutation,
   useMeQuery,
+  useRecoveryPasswordMutation,
+  useResendRecoveryPasswordMutation,
+  useCreateNewPasswordMutation,
 } = authRegApi
