@@ -4,7 +4,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useLoginMutation } from '@/features/auth/api/authRegApi'
 import { LoginInputs, loginSchema } from '@/features/auth/api/lib/schemas/loginSchema'
+import { setIsLoggedIn } from '@/features/auth/slice/authSlice'
 import { GoogleAuth } from '@/features/auth/ui/LoginForm/GoogleAuth/GoogleAuth'
+import { useAppDispatch } from '@/shared/hooks'
 import GitHubIcon from '@/shared/icons/github.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
@@ -12,10 +14,13 @@ import { TextField } from '@/shared/ui/TextField'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import s from './LoginForm.module.scss'
 
 export const LoginForm = () => {
+  const router = useRouter()
+  const dispatch = useAppDispatch()
   const [login] = useLoginMutation()
 
   const {
@@ -37,8 +42,10 @@ export const LoginForm = () => {
     try {
       const response = await login(data).unwrap()
 
+      dispatch(setIsLoggedIn({ isLoggedIn: true }))
       localStorage.setItem('access-token', response.accessToken)
       reset()
+      router.push('/')
     } catch (err) {
       console.error('Login error:', err)
     }
