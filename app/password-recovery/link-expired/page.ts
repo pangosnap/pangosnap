@@ -1,1 +1,1 @@
-export { EmailVerificationExpired as default } from '@/views/password-recovery'
+export { PasswordRecoveryLinkExpired as default } from '@/views/password-recovery'

@@ -5,9 +5,9 @@ import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
 import Link from 'next/link'
 
-import s from '../ForgotPassword.module.scss'
+import s from '../ForgotPasswordForm/ForgotPassword.module.scss'
 
-const EmailVerificationExpired: React.FC = () => {
+const PasswordRecoveryLinkExpired: React.FC = () => {
   return (
     <div className={s.wrapper}>
       <Card title={'Email verification link expired'}>
@@ -23,4 +23,4 @@ const EmailVerificationExpired: React.FC = () => {
   )
 }
 
-export default EmailVerificationExpired
+export default PasswordRecoveryLinkExpired

@@ -1,1 +1,1 @@
-export { default as EmailVerificationExpired } from './EmailVerificationExpired'
+export { default as PasswordRecoveryLinkExpired } from './LinkExpired'
