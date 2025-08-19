@@ -10,9 +10,9 @@ export default async function RegistrationConfirmationPage({
   const raw = params.code
   const code = Array.isArray(raw) ? raw[0] : raw
 
-  // if (!code) {
-  //   redirect('/recall-email')
-  // }
+  if (!code) {
+    redirect('/recall-email')
+  }
 
   return <RegistrationConfirmationView code={code} />
 }
