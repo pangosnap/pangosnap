@@ -23,11 +23,13 @@ export const RecallEmailForm = () => {
     register,
     handleSubmit,
     watch,
+    setError,
     formState: { errors },
   } = useForm<EmailInputs>({
     defaultValues: {
       email: '',
     },
+    mode: 'onChange',
     resolver: zodResolver(emailFormSchema),
   })
   const emailValue = watch('email')
@@ -38,8 +40,8 @@ export const RecallEmailForm = () => {
         email: data.email,
         baseUrl: 'http://localhost:3000/registration-confirmation',
       }).unwrap()
-    } catch (error) {
-      console.error(error)
+    } catch (err: any) {
+      setError('email', { type: 'server', message: err.data.messages[0].message })
     }
   }
 
@@ -50,7 +52,14 @@ export const RecallEmailForm = () => {
         <p className={clsx('uik_typography-body1', s.text)}>
           Looks like the verification link has expired. Not to worry, we can send the link again
         </p>
-        <TextField type={'text'} label={'Email'} {...register('email')} className={s.emailInput} />
+        <TextField
+          type={'text'}
+          label={'Email'}
+          placeholder={email || 'pangosnap@gmail.com'}
+          {...register('email')}
+          className={s.emailInput}
+          errorMessage={errors.email?.message}
+        />
         <Button type={'submit'} variant={'primary'} className={s.signInLink}>
           Resend verification link
         </Button>

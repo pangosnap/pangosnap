@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Controller, FieldError, SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 import { useRegisterMutation } from '@/features/auth/api/authRegApi'
 import {
@@ -16,14 +16,12 @@ import { UniversalModal } from '@/shared/ui/UniversalModal/UniversalModal'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 import s from './RegistrationForm.module.scss'
 
 export const RegistrationForm = () => {
-  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [registerApi, { isLoading, error }] = useRegisterMutation()
+  const [registerApi] = useRegisterMutation()
   const defaultValues: RegistrationInputs = {
     userName: '',
     email: '',
