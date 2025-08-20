@@ -10,26 +10,30 @@ type Props = {
 }
 export const Header = ({ isLoggedIn }: Props) => {
   return (
-    <header className={clsx(s.header, 'l-container')}>
-      <h1 className={'uik_typography-display-large'}>Pangosnap</h1>
-      <div className={s.actions}>
-        {isLoggedIn && (
-          <div className={s.notification}>
-            <NotificationIcon />
-            <span className={clsx(s.badge)}>3</span>
+    <header className={s.header}>
+      <div className={'l-container'}>
+        <div className={s.content}>
+          <h1 className={'uik_typography-display-large'}>Pangosnap</h1>
+          <div className={s.actions}>
+            {isLoggedIn && (
+              <div className={s.notification}>
+                <NotificationIcon />
+                <span className={clsx(s.badge)}>3</span>
+              </div>
+            )}
+            <div className={s.language}>🌐 English ▼</div>
+            {!isLoggedIn && (
+              <div className={s.authLinks}>
+                <Button as={Link} href={'/sign-in'} variant={'text'}>
+                  Log in
+                </Button>
+                <Button as={Link} href={'/sign-up'}>
+                  Sign up
+                </Button>
+              </div>
+            )}
           </div>
-        )}
-        <div className={s.language}>🌐 English ▼</div>
-        {!isLoggedIn && (
-          <div className={s.authLinks}>
-            <Button as={Link} href={'/sign-in'} variant={'text'}>
-              Log in
-            </Button>
-            <Button as={Link} href={'/sign-up'}>
-              Sign up
-            </Button>
-          </div>
-        )}
+        </div>
       </div>
     </header>
   )
