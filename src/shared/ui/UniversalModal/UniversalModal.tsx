@@ -13,6 +13,7 @@ type ModalSize = 'lg' | 'md' | 'sm'
 type Props = {
   open: boolean
   onClose: () => void
+  onConfirm?: () => void
   size?: ModalSize
   modalTitle: string
   overlayDarkClass?: string
@@ -22,6 +23,7 @@ export const UniversalModal = (props: Props) => {
   const {
     modalTitle,
     onClose,
+    onConfirm,
     open,
     className,
     size = 'md',
@@ -49,7 +51,9 @@ export const UniversalModal = (props: Props) => {
           <Dialog.Description className={s.Description}>{children}</Dialog.Description>
           <div className={s.Footer}>
             <Dialog.Close asChild>
-              <Button variant={'primary'}>OK</Button>
+              <Button variant={'primary'} onClick={onConfirm}>
+                OK
+              </Button>
             </Dialog.Close>
           </div>
         </Dialog.Content>
