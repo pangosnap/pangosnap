@@ -114,13 +114,13 @@ export const RegistrationForm = () => {
                 label={
                   <>
                     I agree to the
-                    <a href={'/terms-of-service'} className={'uik_typography-link-small'}>
+                    <Link href={'/terms-of-service'} className={'uik_typography-link-small'}>
                       Terms of Service
-                    </a>
+                    </Link>
                     and{' '}
-                    <a href={'/privacy-policy'} className={'uik_typography-link-small'}>
+                    <Link href={'/privacy-policy'} className={'uik_typography-link-small'}>
                       Privacy Policy
-                    </a>
+                    </Link>
                   </>
                 }
                 checked={field.value}

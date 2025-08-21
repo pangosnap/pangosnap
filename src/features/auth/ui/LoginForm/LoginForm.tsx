@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useLoginMutation } from '@/features/auth/api/authRegApi'
@@ -14,14 +15,22 @@ import { TextField } from '@/shared/ui/TextField'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import s from './LoginForm.module.scss'
 
 export const LoginForm = () => {
   const router = useRouter()
+  const search = useSearchParams()
   const dispatch = useAppDispatch()
   const [login] = useLoginMutation()
+
+  useEffect(() => {
+    if (search.get('from') === 'logout') {
+      localStorage.removeItem('access-token')
+      dispatch(setIsLoggedIn({ isLoggedIn: false }))
+    }
+  }, [dispatch, search])
 
   const {
     register,
