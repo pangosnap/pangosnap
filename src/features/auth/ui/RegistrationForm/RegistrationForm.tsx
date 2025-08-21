@@ -8,7 +8,7 @@ import {
 } from '@/features/auth/api/lib/schemas/registrationSchema'
 import { GoogleAuth } from '@/features/auth/ui/LoginForm/GoogleAuth/GoogleAuth'
 import GitHubIcon from '@/shared/icons/github.svg'
-import { Path } from '@/shared/route/constants'
+import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'

@@ -1,5 +1,5 @@
 import NotificationIcon from '@/shared/icons/notification.svg'
-import { Path } from '@/shared/route/constants'
+import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'
 import { clsx } from 'clsx'
 import Link from 'next/link'

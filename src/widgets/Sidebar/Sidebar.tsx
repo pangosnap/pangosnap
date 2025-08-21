@@ -2,7 +2,7 @@
 
 import { useLogoutMutation } from '@/features/auth/api/authRegApi'
 import LogoutIcon from '@/shared/icons/logout.svg'
-import { Path } from '@/shared/route/constants'
+import { Path } from '@/shared/routes/constants'
 import { clsx } from 'clsx'
 import { useRouter } from 'next/navigation'
 

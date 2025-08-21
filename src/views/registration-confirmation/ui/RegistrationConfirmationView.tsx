@@ -1,7 +1,7 @@
 'use client'
 
 import { RegistrationConfirmationForm } from '@/features/auth/ui/RegistrationConfirmationForm/RegistrationConfirmationForm'
-import { Path } from '@/shared/route/constants'
+import { Path } from '@/shared/routes/constants'
 import { useRouter } from 'next/navigation'
 
 type Props = {
