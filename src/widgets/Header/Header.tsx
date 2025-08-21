@@ -1,4 +1,5 @@
 import NotificationIcon from '@/shared/icons/notification.svg'
+import { Path } from '@/shared/route/constants'
 import { Button } from '@/shared/ui/Button/Button'
 import { clsx } from 'clsx'
 import Link from 'next/link'
@@ -24,10 +25,10 @@ export const Header = ({ isLoggedIn }: Props) => {
             <div className={s.language}>🌐 English ▼</div>
             {!isLoggedIn && (
               <div className={s.authLinks}>
-                <Button as={Link} href={'/sign-in'} variant={'text'}>
+                <Button as={Link} href={Path.signIn} variant={'text'}>
                   Log in
                 </Button>
-                <Button as={Link} href={'/sign-up'}>
+                <Button as={Link} href={Path.signUp}>
                   Sign up
                 </Button>
               </div>

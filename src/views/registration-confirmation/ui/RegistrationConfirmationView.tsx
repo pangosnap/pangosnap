@@ -1,6 +1,7 @@
 'use client'
 
 import { RegistrationConfirmationForm } from '@/features/auth/ui/RegistrationConfirmationForm/RegistrationConfirmationForm'
+import { Path } from '@/shared/route/constants'
 import { useRouter } from 'next/navigation'
 
 type Props = {
@@ -13,8 +14,8 @@ export function RegistrationConfirmationView({ code }: Props) {
   return (
     <RegistrationConfirmationForm
       code={code}
-      onErrorAction={() => router.replace('/recall-email')}
-      onSignInAction={() => router.replace('/sign-in')}
+      onErrorAction={() => router.replace(Path.recallEmail)}
+      onSignInAction={() => router.replace(Path.signIn)}
     />
   )
 }

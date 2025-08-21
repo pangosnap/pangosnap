@@ -2,6 +2,7 @@
 
 import { useLogoutMutation } from '@/features/auth/api/authRegApi'
 import LogoutIcon from '@/shared/icons/logout.svg'
+import { Path } from '@/shared/route/constants'
 import { clsx } from 'clsx'
 import { useRouter } from 'next/navigation'
 
@@ -14,7 +15,7 @@ export const Sidebar = () => {
   const logoutHandler = async () => {
     try {
       await logout().unwrap()
-      router.replace('/sign-in?from=logout')
+      router.replace(`${Path.signIn}?from=logout`)
     } catch (err) {
       console.error('Logout error:', err)
     }

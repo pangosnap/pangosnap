@@ -9,6 +9,7 @@ import { setIsLoggedIn } from '@/features/auth/slice/authSlice'
 import { GoogleAuth } from '@/features/auth/ui/LoginForm/GoogleAuth/GoogleAuth'
 import { useAppDispatch } from '@/shared/hooks'
 import GitHubIcon from '@/shared/icons/github.svg'
+import { Path } from '@/shared/route/constants'
 import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
 import { TextField } from '@/shared/ui/TextField'
@@ -54,7 +55,7 @@ export const LoginForm = () => {
       dispatch(setIsLoggedIn({ isLoggedIn: true }))
       localStorage.setItem('access-token', response.accessToken)
       reset()
-      router.push('/')
+      router.push(Path.main)
     } catch (err) {
       console.error('Login error:', err)
     }
@@ -105,7 +106,7 @@ export const LoginForm = () => {
             Sign In
           </Button>
           <p className={clsx('uik_typography-body1', s.text)}>Don’t have an account?</p>
-          <Button as={Link} href={'/sign-up'} variant={'text'}>
+          <Button as={Link} href={Path.signUp} variant={'text'}>
             Sign Up
           </Button>
         </form>
