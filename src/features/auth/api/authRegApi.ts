@@ -58,6 +58,12 @@ export const authRegApi = baseApi.injectEndpoints({
       query: () => '/auth/me',
       extraOptions: { dataSchema: meSchema },
     }),
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: '/auth/logout',
+        method: 'POST',
+      }),
+    }),
   }),
 })
 
@@ -68,4 +74,5 @@ export const {
   useEmailResendingMutation,
   useGoogleLoginMutation,
   useMeQuery,
+  useLogoutMutation,
 } = authRegApi

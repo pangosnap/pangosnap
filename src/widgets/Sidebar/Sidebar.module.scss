@@ -1,0 +1,20 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 220px;
+  height: calc(100vh - 60px);
+  padding-top: 72px;
+  padding-bottom: 36px;
+  border-right: 1px solid #333;
+
+  .logout {
+    cursor: pointer;
+
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-self: flex-end;
+  }
+}

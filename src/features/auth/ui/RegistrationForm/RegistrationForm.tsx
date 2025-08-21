@@ -8,6 +8,7 @@ import {
 } from '@/features/auth/api/lib/schemas/registrationSchema'
 import { GoogleAuth } from '@/features/auth/ui/LoginForm/GoogleAuth/GoogleAuth'
 import GitHubIcon from '@/shared/icons/github.svg'
+import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
@@ -114,13 +115,13 @@ export const RegistrationForm = () => {
                 label={
                   <>
                     I agree to the
-                    <a href={'/terms-of-service'} className={'uik_typography-link-small'}>
+                    <Link href={Path.termsOfService} className={'uik_typography-link-small'}>
                       Terms of Service
-                    </a>
+                    </Link>
                     and{' '}
-                    <a href={'/privacy-policy'} className={'uik_typography-link-small'}>
+                    <Link href={Path.privacyPolicy} className={'uik_typography-link-small'}>
                       Privacy Policy
-                    </a>
+                    </Link>
                   </>
                 }
                 checked={field.value}
@@ -134,7 +135,7 @@ export const RegistrationForm = () => {
             Sign Up
           </Button>
           <p className={clsx('uik_typography-body1', s.text)}>Do you have an account?</p>
-          <Button as={Link} href={'/sign-in'} variant={'text'} className={s.signInLink}>
+          <Button as={Link} href={Path.signIn} variant={'text'} className={s.signInLink}>
             Sign In
           </Button>
         </form>
