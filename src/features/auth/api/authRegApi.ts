@@ -75,7 +75,7 @@ export const authRegApi = baseApi.injectEndpoints({
         url: '/auth/password-recovery-resending',
         method: 'POST',
         body,
-      }),
+       }),
     }),
     logout: builder.mutation<void, void>({
       query: () => ({

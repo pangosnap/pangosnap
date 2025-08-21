@@ -97,7 +97,7 @@ export const LoginForm = () => {
             />
           </div>
           <Link
-            href={'/forgot-password'}
+            href={'/password-recovery'}
             className={clsx('uik_typography-body2', s.forgotPasswordLink)}
           >
             Forgot Password
