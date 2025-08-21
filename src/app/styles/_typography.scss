@@ -1,0 +1,125 @@
+:root {
+  --font-family: 'Inter', sans-serif;
+
+  /* font-sizes */
+  --font-size-xs: 12px;
+  --font-size-s: 14px;
+  --font-size-m: 16px;
+  --font-size-l: 18px;
+  --font-size-md: 20px;
+  --font-size-md-lg: 26px;
+  --font-size-xl: 22px;
+  --font-size-xxl: 28px;
+
+  /* line-heights */
+  --line-height-xs: 1.25;
+  --line-height-s: 1.3;
+  --line-height-sm: 1.4;
+  --line-height-m: 1.5;
+  --line-height-l: 1.7;
+  --line-height-xl: 1.8;
+
+  /* font-weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+}
+
+@mixin typography($fontSize, $lineHeight, $fontWeight, $color: var(--color-text-primary)) {
+  margin: 0;
+
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+  color: $color;
+}
+
+//  Large
+.uik_typography-display-large {
+  @include typography(var(--font-size-md-lg), var(--line-height-sm), var(--font-weight-semi-bold));
+}
+
+//  H1
+.uik_typography-h1 {
+  @include typography(var(--font-size-md), var(--line-height-xl), var(--font-weight-bold));
+}
+
+// H2
+.uik_typography-h2 {
+  @include typography(var(--font-size-l), var(--line-height-s), var(--font-weight-bold));
+}
+
+// H3
+.uik_typography-h3 {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-semi-bold));
+}
+
+//  regular-text-16
+.uik_typography-body1 {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-regular));
+}
+
+//  bold_text-16
+.uik_typography-body1-bold {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-bold));
+}
+
+//  regular-text-14
+.uik_typography-body2 {
+  @include typography(var(--font-size-s), var(--line-height-l), var(--font-weight-regular));
+}
+
+// medium_text-14
+.uik_typography-body2-medium {
+  @include typography(var(--font-size-s), var(--line-height-l), var(--font-weight-medium));
+}
+
+// bold-text-14
+.uik_typography-body2-bold {
+  @include typography(var(--font-size-s), var(--line-height-l), var(--font-weight-bold));
+}
+
+//  small-text
+.uik_typography-caption {
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-regular));
+}
+
+// semi-bold-small-text
+.uik_typography-caption-bold {
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-semi-bold));
+}
+
+//  regular-link
+.uik_typography-link {
+  @include typography(var(--font-size-s), var(--line-height-l), var(--font-weight-regular));
+
+  color: var(--color-accent-500);
+}
+
+//  small-link
+.uik_typography-link-small {
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-regular));
+
+  color: var(--color-accent-500);
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+// Error text
+.uik_typography-error {
+  @include typography(var(--font-size-xs), var(--line-height-m), var(--font-weight-regular));
+
+  color: var(--color-text-danger);
+}
+
+// Button text
+.uik_typography-button {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-semi-bold));
+
+  color: var(--color-accent-500);
+}

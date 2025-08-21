@@ -1,0 +1,126 @@
+.button {
+  display: inline-block;
+
+  box-sizing: border-box;
+  height: 36px;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-s);
+
+  color: var(--color-light-100);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.small {
+    padding: 6px 24px;
+  }
+
+  &.medium {
+    padding: 6px 34px;
+  }
+
+  &.primary {
+    background-color: var(--color-accent-500);
+
+    &:active {
+      color: var(--color-light-500);
+      background-color: var(--color-accent-700);
+    }
+
+    &:hover {
+      background-color: var(--color-accent-100);
+    }
+
+    &:focus {
+      border-color: var(--color-accent-700);
+    }
+
+    &:disabled {
+      color: var(--color-light-900);
+      background-color: var(--color-accent-900);
+    }
+  }
+
+  &.secondary {
+    background-color: var(--color-dark-300);
+
+    &:active {
+      background-color: #212121;
+    }
+
+    &:hover {
+      background-color: var(--color-dark-100);
+    }
+
+    &:focus {
+      border-color: var(--color-accent-500);
+    }
+
+    &:disabled {
+      color: var(--color-light-900);
+      background-color: var(--color-dark-500);
+    }
+  }
+
+  &.outlined {
+    border-color: var(--color-accent-500);
+    color: var(--color-accent-500);
+
+    &:active {
+      color: var(--color-accent-700);
+    }
+
+    &:hover {
+      border-color: var(--color-accent-100);
+      color: var(--color-accent-100);
+    }
+
+    &:focus {
+      color: var(--color-accent-700);
+    }
+
+    &:disabled {
+      color: var(--color-accent-900);
+    }
+  }
+
+  &.text {
+    color: var(--color-accent-500);
+
+    &:active,
+    &:hover {
+      color: var(--color-accent-700);
+    }
+
+    &:focus {
+      border-color: var(--color-accent-700);
+    }
+
+    &:disabled {
+      color: var(--color-accent-900);
+    }
+  }
+
+  &.icon {
+    display: inline-flex;
+    width: var(--size-icon-width);
+    height: var(--size-icon-height);
+    padding: 0;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}

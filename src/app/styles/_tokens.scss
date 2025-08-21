@@ -1,0 +1,62 @@
+:root {
+  /* Border radius */
+  --border-radius-s: 2px;
+  --border-radius-m: 4px;
+  --border-radius-l: 10px;
+  --border-radius-full: 9999px;
+
+  /* Padding for inputs */
+  --padding-input-x: 12px;
+  --padding-input-y: 6px;
+
+  /* Transition easing */
+  --transition-ease-in-out: ease-in-out;
+  --transition-ease-in: ease-in;
+  --transition-ease-out: ease-out;
+
+  /* Transition durations */
+  --transition-duration-fast: 150ms;
+  --transition-duration-medium: 200ms;
+  --transition-duration-slow: 300ms;
+  --transition-duration-basic: var(--transition-duration-medium);
+
+  /* Focus ring */
+  --shadow-focus-ring: 0 0 0 3px rgb(60 130 250 / 30%);
+
+  /* Spacing */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-s: 12px;
+  --spacing-m: 16px;
+  --spacing-l: 24px;
+  --spacing-xl: 32px;
+  --spacing-3xl: 40px;
+  --spacing-4xl: 48px;
+  --spacing-section: 64px;
+
+  /* Sizes */
+  --height-input: 40px;
+  --height-button: 40px;
+  --size-avatar-s: 24px;
+  --size-avatar-m: 32px;
+  --size-avatar-l: 40px;
+  --width-container: 1280px;
+
+  /* Z-index */
+  --z-index-dropdown: 100;
+  --z-index-modal: 1000;
+  --z-index-toast: 1100;
+  --z-index-tooltip: 1200;
+
+  /* Hover effects */
+  --shadow-hover: 0 2px 6px rgb(0 0 0 / 10%);
+
+  /* Size icon */
+  --size-icon-width: 36px;
+  --size-icon-height: 36px;
+}
+
+:root.dark-mode {
+  --shadow-focus-ring: 0 0 0 3px rgb(60 130 250 / 40%);
+  --shadow-hover: 0 2px 6px rgb(255 255 255 / 5%);
+}
