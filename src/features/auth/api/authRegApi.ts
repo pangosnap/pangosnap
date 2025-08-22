@@ -2,7 +2,6 @@ import { baseApi } from '@/app/baseApi'
 import { MeResponse, meSchema } from '@/features/auth/api/lib/schemas/meSchema'
 import { RegistrationInputs } from '@/features/auth/api/lib/schemas/registrationSchema'
 
-
 export const authRegApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     register: builder.mutation<
@@ -73,6 +72,8 @@ export const authRegApi = baseApi.injectEndpoints({
         url: '/auth/password-recovery-resending',
         method: 'POST',
         body,
+      }),
+    }),
     logout: builder.mutation<void, void>({
       query: () => ({
         url: '/auth/logout',
