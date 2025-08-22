@@ -1,17 +1,15 @@
 'use client'
 
 import React, { useState } from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
+import { ReCAPTCHA } from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   useRecoveryPasswordMutation,
   useResendRecoveryPasswordMutation,
 } from '@/features/auth/api/authRegApi'
-import {
-  PasswordRecoveryInputs,
-  passwordRecoverySchema,
-} from '@/features/auth/api/lib/schemas/passwordRecoverySchema'
+import { LoginInputs, loginSchema } from '@/features/auth/api/lib/schemas/loginSchema'
+import { EmailInputType } from '@/features/auth/api/lib/schemas/passwordRecoverySchema'
 import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
 import { TextField } from '@/shared/ui/TextField'
@@ -37,15 +35,15 @@ export default function ForgotPasswordForm() {
     handleSubmit,
     formState: { errors, touchedFields },
     trigger,
-  } = useForm<PasswordRecoveryInputs>({
+  } = useForm<EmailInputType>({
     defaultValues: {
       email: '',
     },
-    resolver: zodResolver(passwordRecoverySchema),
+    resolver: zodResolver(loginSchema.pick({ email: true })),
     mode: 'onBlur',
   })
 
-  const onSubmit: SubmitHandler<PasswordRecoveryInputs> = async data => {
+  const onSubmit: SubmitHandler<Pick<LoginInputs, 'email'>> = async data => {
     setServerError(undefined)
 
     if (!captchaToken) {
