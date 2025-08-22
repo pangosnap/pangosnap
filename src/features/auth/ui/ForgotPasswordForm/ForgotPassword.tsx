@@ -1,16 +1,15 @@
 'use client'
 
 import React, { useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   useRecoveryPasswordMutation,
   useResendRecoveryPasswordMutation,
 } from '@/features/auth/api/authRegApi'
-import {
-  PasswordRecoveryInputs,
-  passwordRecoverySchema,
-} from '@/features/auth/api/lib/schemas/passwordRecoverySchema'
+import { LoginInputs, loginSchema } from '@/features/auth/api/lib/schemas/loginSchema'
+import { EmailInputType } from '@/features/auth/api/lib/schemas/passwordRecoverySchema'
 import { Button } from '@/shared/ui/Button/Button'
 import { Card } from '@/shared/ui/Card'
 import { TextField } from '@/shared/ui/TextField'
@@ -28,6 +27,7 @@ export default function ForgotPasswordForm() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLetterSent, setLetterSent] = useState(false)
   const [userEmail, setUserEmail] = useState('')
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
   const {
     register,
@@ -35,22 +35,29 @@ export default function ForgotPasswordForm() {
     handleSubmit,
     formState: { errors, touchedFields },
     trigger,
-  } = useForm<PasswordRecoveryInputs>({
+  } = useForm<EmailInputType>({
     defaultValues: {
       email: '',
     },
-    resolver: zodResolver(passwordRecoverySchema),
+    resolver: zodResolver(loginSchema.pick({ email: true })),
     mode: 'onBlur',
   })
 
-  const onSubmit: SubmitHandler<PasswordRecoveryInputs> = async data => {
+  const onSubmit: SubmitHandler<Pick<LoginInputs, 'email'>> = async data => {
     setServerError(undefined)
+
+    if (!captchaToken) {
+      alert('Пожалуйста, подтвердите, что вы не робот')
+
+      return
+    }
 
     try {
       if (!isLetterSent) {
         await recoveryPassword({
           ...data,
           baseUrl: `${window.location.origin}/password-recovery/create-new-password`,
+          recaptcha: captchaToken,
         }).unwrap()
       } else {
         await resendRecoveryPassword({
@@ -74,6 +81,10 @@ export default function ForgotPasswordForm() {
   const handleCloseModal = () => {
     setIsModalOpen(false)
     setLetterSent(true)
+  }
+
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token)
   }
 
   return (
@@ -103,6 +114,15 @@ export default function ForgotPasswordForm() {
               The link has been sent by email. If you don’t receive an email send link again
             </div>
           )}
+          {!isLetterSent && (
+            <div className={s.captchaBlock}>
+              <ReCAPTCHA
+                sitekey={'6LdHxG4qAAAAAPKRxEHrlV5VvLFHIf2BO5NMI8YM'}
+                theme={'dark'}
+                onChange={handleCaptchaChange}
+              />
+            </div>
+          )}
           <div className={s.buttonsBlock}>
             <Button fullWidth type={'submit'}>
               {!isLetterSent ? 'Send Link' : 'Send Link Again'}
@@ -112,7 +132,6 @@ export default function ForgotPasswordForm() {
             </Button>
           </div>
         </form>
-        {!isLetterSent && <div className={s.captchaBlock}>captcha</div>}
       </Card>
 
       <UniversalModal

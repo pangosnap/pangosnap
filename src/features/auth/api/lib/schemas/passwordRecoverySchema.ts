@@ -1,12 +1,5 @@
+import { LoginInputs } from '@/features/auth/api/lib/schemas/loginSchema'
 import { z } from 'zod'
-
-export const passwordRecoverySchema = z.object({
-  email: z.string().regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
-    message: 'Invalid email',
-  }),
-})
-
-export type PasswordRecoveryInputs = z.infer<typeof passwordRecoverySchema>
 
 export const createNewPasswordSchema = z
   .object({
@@ -22,3 +15,4 @@ export const createNewPasswordSchema = z
   })
 
 export type CreateNewPasswordInputs = z.infer<typeof createNewPasswordSchema>
+export type EmailInputType = Pick<LoginInputs, 'email'>

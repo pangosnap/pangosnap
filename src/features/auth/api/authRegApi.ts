@@ -53,16 +53,15 @@ export const authRegApi = baseApi.injectEndpoints({
       query: () => '/auth/me',
       extraOptions: { dataSchema: meSchema },
     }),
-    recoveryPassword: builder.mutation<
-      void,
-      { email: string; baseUrl: string; recaptcha?: string }
-    >({
-      query: body => ({
-        url: '/auth/password-recovery',
-        method: 'POST',
-        body,
-      }),
-    }),
+    recoveryPassword: builder.mutation<void, { email: string; baseUrl: string; recaptcha: string }>(
+      {
+        query: body => ({
+          url: '/auth/password-recovery',
+          method: 'POST',
+          body,
+        }),
+      }
+    ),
     createNewPassword: builder.mutation<void, { newPassword: string; recoveryCode: string }>({
       query: body => ({
         url: '/auth/new-password',
@@ -83,6 +82,13 @@ export const authRegApi = baseApi.injectEndpoints({
         method: 'POST',
       }),
     }),
+    checkRecoveryCode: builder.mutation<void, { recoveryCode: string }>({
+      query: body => ({
+        url: '/auth/check-recovery-code',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
@@ -97,4 +103,5 @@ export const {
   useResendRecoveryPasswordMutation,
   useCreateNewPasswordMutation,
   useLogoutMutation,
+  useCheckRecoveryCodeMutation,
 } = authRegApi
