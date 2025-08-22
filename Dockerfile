@@ -25,13 +25,6 @@ COPY . .
 # Копируем node_modules из предыдущего этапа
 COPY --from=dependencies /app/node_modules ./node_modules
 
-# === Добавляем аргументы для билда ===
-ARG NEXT_PUBLIC_BASE_URL
-ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID
-
-# Превращаем их в ENV, чтобы Next.js мог использовать
-ENV NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL
-ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
 # Билдим проект
 RUN pnpm run build:production
@@ -47,9 +40,6 @@ RUN npm install -g pnpm@10.13.1
 # Копируем всё из билдера
 COPY --from=builder /app .
 
-# Продублируем ENV для runtime (на всякий случай)
-ENV NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL
-ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
 # Порт приложения
 EXPOSE 3000
