@@ -1,0 +1,16 @@
+export const Path = {
+  main: '/',
+  favorites: '/favorites',
+  forgotPassword: '/forgot-password',
+  messenger: '/messenger',
+  privacyPolicy: '/privacy-policy',
+  profile: '/profile',
+  recallEmail: '/recall-email',
+  registrationConfirmation: '/registration-confirmation',
+  search: '/search',
+  settings: '/settings',
+  signIn: '/sign-in',
+  signUp: '/sign-up',
+  statistics: '/statistics',
+  termsOfService: '/terms-of-service',
+} as const

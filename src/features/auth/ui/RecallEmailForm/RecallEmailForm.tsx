@@ -8,9 +8,11 @@ import { Button } from '@/shared/ui/Button/Button'
 import { TextField } from '@/shared/ui/TextField'
 import { UniversalModal } from '@/shared/ui/UniversalModal/UniversalModal'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { clsx } from 'clsx'
+import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 
-import s from '@/features/auth/ui/RegistrationForm/RegistrationForm.module.scss'
+import s from './RecallEmailForm.module.scss'
 
 export const RecallEmailForm = () => {
   const searchParams = useSearchParams()
@@ -21,11 +23,13 @@ export const RecallEmailForm = () => {
     register,
     handleSubmit,
     watch,
+    setError,
     formState: { errors },
   } = useForm<EmailInputs>({
     defaultValues: {
       email: '',
     },
+    mode: 'onChange',
     resolver: zodResolver(emailFormSchema),
   })
   const emailValue = watch('email')
@@ -36,25 +40,31 @@ export const RecallEmailForm = () => {
         email: data.email,
         baseUrl: 'http://localhost:3000/registration-confirmation',
       }).unwrap()
-    } catch (error) {
-      console.error(error)
+    } catch (err: any) {
+      setError('email', { type: 'server', message: err.data.messages[0].message })
     }
   }
 
   return (
-    <>
+    <div className={s.wrapper}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={'l-wrap'}>
-          <main className={'l-container l-centered page-public'}>
-            <h1 className={'uik_typography-h1'}>Email verification link expired</h1>
-            <p className={'uik_typography-body1'}>
-              Looks like the verification link has expired. Not to worry, we can send the link again
-            </p>
-            <TextField type={'text'} label={'Email'} {...register('email')} />
-            <Button type={'submit'}>Resend verification link</Button>
-          </main>
-        </div>
+        <h1 className={clsx('uik_typography-h1', s.h1Text)}>Email verification link expired</h1>
+        <p className={clsx('uik_typography-body1', s.text)}>
+          Looks like the verification link has expired. Not to worry, we can send the link again
+        </p>
+        <TextField
+          type={'text'}
+          label={'Email'}
+          placeholder={email || 'pangosnap@gmail.com'}
+          {...register('email')}
+          className={s.emailInput}
+          errorMessage={errors.email?.message}
+        />
+        <Button type={'submit'} variant={'primary'} className={s.signInLink}>
+          Resend verification link
+        </Button>
       </form>
+      <Image src={'/sign-up/rafiki.png'} alt={'Recall Email'} width={473} height={352} />
       {isModalOpen && (
         <UniversalModal
           open={isModalOpen}
@@ -66,6 +76,6 @@ export const RecallEmailForm = () => {
           We have sent a link to confirm your email to {emailValue}
         </UniversalModal>
       )}
-    </>
+    </div>
   )
 }
