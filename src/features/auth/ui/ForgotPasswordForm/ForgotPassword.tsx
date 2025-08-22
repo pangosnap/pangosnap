@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
@@ -28,6 +29,7 @@ export default function ForgotPasswordForm() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLetterSent, setLetterSent] = useState(false)
   const [userEmail, setUserEmail] = useState('')
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
   const {
     register,
@@ -46,11 +48,18 @@ export default function ForgotPasswordForm() {
   const onSubmit: SubmitHandler<PasswordRecoveryInputs> = async data => {
     setServerError(undefined)
 
+    if (!captchaToken) {
+      alert('Пожалуйста, подтвердите, что вы не робот')
+
+      return
+    }
+
     try {
       if (!isLetterSent) {
         await recoveryPassword({
           ...data,
           baseUrl: `${window.location.origin}/password-recovery/create-new-password`,
+          recaptcha: captchaToken,
         }).unwrap()
       } else {
         await resendRecoveryPassword({
@@ -74,6 +83,10 @@ export default function ForgotPasswordForm() {
   const handleCloseModal = () => {
     setIsModalOpen(false)
     setLetterSent(true)
+  }
+
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token)
   }
 
   return (
@@ -103,6 +116,15 @@ export default function ForgotPasswordForm() {
               The link has been sent by email. If you don’t receive an email send link again
             </div>
           )}
+          {!isLetterSent && (
+            <div className={s.captchaBlock}>
+              <ReCAPTCHA
+                sitekey={'6LdHxG4qAAAAAPKRxEHrlV5VvLFHIf2BO5NMI8YM'}
+                theme={'dark'}
+                onChange={handleCaptchaChange}
+              />
+            </div>
+          )}
           <div className={s.buttonsBlock}>
             <Button fullWidth type={'submit'}>
               {!isLetterSent ? 'Send Link' : 'Send Link Again'}
@@ -112,7 +134,6 @@ export default function ForgotPasswordForm() {
             </Button>
           </div>
         </form>
-        {!isLetterSent && <div className={s.captchaBlock}>captcha</div>}
       </Card>
 
       <UniversalModal
