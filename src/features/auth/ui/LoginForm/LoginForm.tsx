@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLoginMutation } from '@/features/auth/api/authRegApi'
 import { LoginInputs, loginSchema } from '@/features/auth/api/lib/schemas/loginSchema'
 import { setIsLoggedIn } from '@/features/auth/slice/authSlice'
-import { GoogleAuth } from '@/features/auth/ui/LoginForm/GoogleAuth/GoogleAuth'
+import { GoogleLoginButton } from '@/features/auth/ui/LoginForm/GoogleLoginButton/GoogleLoginButton'
 import { useAppDispatch } from '@/shared/hooks'
 import GitHubIcon from '@/shared/icons/github.svg'
 import { Path } from '@/shared/routes/constants'
@@ -65,7 +65,7 @@ export const LoginForm = () => {
     <div className={s.wrapper}>
       <Card title={'Sign In'}>
         <div className={s.oAuthIcons}>
-          <GoogleAuth />
+          <GoogleLoginButton />
           <GitHubIcon />
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
