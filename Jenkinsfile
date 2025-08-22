@@ -12,6 +12,9 @@ pipeline {
         DEPLOYMENT_NAME = "pangosnap-deployment"
         IMAGE_NAME = "${env.BUILD_ID}_${env.ENV_TYPE}_${env.GIT_COMMIT}"
         DOCKER_BUILD_NAME = "${env.REGISTRY_HOSTNAME}/${env.PROJECT}:${env.IMAGE_NAME}"
+
+        NEXT_PUBLIC_BASE_URL = "https://inctagram.work/api/v1"
+        NEXT_PUBLIC_GOOGLE_CLIENT_ID = "272583913867-t74i019ufdvmarh05jlv8bcu1ak0a6o6.apps.googleusercontent.com"
     }
 
     stages {
@@ -39,6 +42,8 @@ pipeline {
                 echo "Build image started..."
                     script {
                         app = docker.build("${env.DOCKER_BUILD_NAME}")
+                        "--build-arg NEXT_PUBLIC_BASE_URL=${env.NEXT_PUBLIC_BASE_URL} " +
+                        "--build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID=${env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} ."
                     }
                 echo "Build image finished..."
             }
