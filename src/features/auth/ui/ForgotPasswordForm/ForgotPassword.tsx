@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ReCAPTCHA } from 'react-google-recaptcha'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
