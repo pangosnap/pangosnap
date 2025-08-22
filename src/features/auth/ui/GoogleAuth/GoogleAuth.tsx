@@ -32,7 +32,7 @@ export function GoogleAuth() {
         // console.error(e)
       }
     })()
-  }, [code, googleLogin, pathname, router])
+  }, [code, dispatch, googleLogin, pathname, router])
 
   return null
 }
