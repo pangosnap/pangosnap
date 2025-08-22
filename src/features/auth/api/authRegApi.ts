@@ -80,6 +80,13 @@ export const authRegApi = baseApi.injectEndpoints({
         method: 'POST',
       }),
     }),
+    checkRecoveryCode: builder.mutation<void, { recoveryCode: string }>({
+      query: body => ({
+        url: '/auth/check-recovery-code',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
@@ -94,4 +101,5 @@ export const {
   useResendRecoveryPasswordMutation,
   useCreateNewPasswordMutation,
   useLogoutMutation,
+  useCheckRecoveryCodeMutation,
 } = authRegApi
