@@ -1,3 +1,4 @@
+import { Path } from '@/shared/routes/constants'
 import { RegistrationConfirmationView } from '@/views/registration-confirmation'
 import { redirect } from 'next/navigation'
 
@@ -11,7 +12,7 @@ export default async function RegistrationConfirmationPage({
   const code = Array.isArray(raw) ? raw[0] : raw
 
   if (!code) {
-    redirect('/recall-email')
+    redirect(Path.recallEmail)
   }
 
   return <RegistrationConfirmationView code={code} />
