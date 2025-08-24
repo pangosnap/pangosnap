@@ -7,23 +7,24 @@ import Link from 'next/link'
 import s from './Header.module.scss'
 
 type Props = {
-  isLoggedIn: boolean
+  isAuth: boolean
+  isProcessingAuth?: boolean
 }
-export const Header = ({ isLoggedIn }: Props) => {
+export const Header = ({ isAuth, isProcessingAuth = false }: Props) => {
   return (
     <header className={s.header}>
       <div className={'l-container'}>
         <div className={s.content}>
           <h1 className={'uik_typography-display-large'}>Pangosnap</h1>
           <div className={s.actions}>
-            {isLoggedIn && (
+            {isAuth && (
               <div className={s.notification}>
                 <NotificationIcon />
                 <span className={clsx(s.badge)}>3</span>
               </div>
             )}
             <div className={s.language}>🌐 English ▼</div>
-            {!isLoggedIn && (
+            {!isAuth && !isProcessingAuth && (
               <div className={s.authLinks}>
                 <Button as={Link} href={Path.signIn} variant={'text'}>
                   Log in

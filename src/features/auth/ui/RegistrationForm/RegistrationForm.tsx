@@ -6,7 +6,7 @@ import {
   RegistrationInputs,
   registrationSchema,
 } from '@/features/auth/api/lib/schemas/registrationSchema'
-import { GoogleAuth } from '@/features/auth/ui/GoogleAuth/GoogleAuth'
+import { GoogleLoginButton } from '@/features/auth/ui/LoginForm/GoogleLoginButton/GoogleLoginButton'
 import GitHubIcon from '@/shared/icons/github.svg'
 import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'
@@ -73,7 +73,7 @@ export const RegistrationForm = () => {
     <div className={s.wrapper}>
       <Card title={'Sign Up'}>
         <div className={s.oAuthIcons}>
-          <GoogleAuth />
+          <GoogleLoginButton />
           <GitHubIcon />
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
