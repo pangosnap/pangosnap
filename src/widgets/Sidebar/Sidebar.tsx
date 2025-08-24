@@ -20,6 +20,7 @@ export const Sidebar = () => {
     try {
       await logout().unwrap()
       router.replace(`${Path.signIn}?from=logout`)
+      localStorage.removeItem('access-token')
     } catch (err) {
       console.error('Logout error:', err)
     }

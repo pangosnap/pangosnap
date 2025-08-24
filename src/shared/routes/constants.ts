@@ -13,4 +13,5 @@ export const Path = {
   signUp: '/sign-up',
   statistics: '/statistics',
   termsOfService: '/terms-of-service',
+  passwordRecovery: '/password-recovery',
 } as const

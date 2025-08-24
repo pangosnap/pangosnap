@@ -1,7 +1,1 @@
-import { ReactNode } from 'react'
-
-import HomeLayout from '@/app/layouts/home/HomeLayout'
-
-export default function ForgotPassword({ children }: { children: ReactNode }) {
-  return <HomeLayout>{children}</HomeLayout>
-}
+export { BaseLayout as default } from '@/app/layouts/base/BaseLayout'

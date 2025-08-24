@@ -1,0 +1,18 @@
+.wrapper {
+  width: 100%;
+}
+
+.backArrow {
+  cursor: pointer;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  margin-top: 24px;
+}
+
+.content {
+  max-width: 958px;
+  margin: 0 auto;
+}
