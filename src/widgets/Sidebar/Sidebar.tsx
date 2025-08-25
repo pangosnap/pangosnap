@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 import { useLogoutMutation } from '@/features/auth/api/authRegApi'
-import CreateIcon from '@/shared/icons/create-icone.svg'
+import { AddPostWithPhoto } from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPostWithPhoto'
 import LogoutIcon from '@/shared/icons/logout.svg'
 import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'
@@ -37,10 +37,7 @@ export const Sidebar = () => {
           </li>
 
           <li className={s.item}>
-            <Button variant={'icon'} className={s.iconBtn} aria-label={'Create'}>
-              <CreateIcon />
-            </Button>
-            <span className={'uik_typography-body2-medium'}>Create</span>
+            <AddPostWithPhoto />
           </li>
 
           <li className={s.item}>

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-import { useGoogleLoginMutation, useLazyMeQuery, useMeQuery } from '@/features/auth/api/authRegApi'
+import { useGoogleLoginMutation, useLazyMeQuery } from '@/features/auth/api/authRegApi'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export function GoogleAuth() {
