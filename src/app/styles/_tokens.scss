@@ -52,8 +52,10 @@
   --shadow-hover: 0 2px 6px rgb(0 0 0 / 10%);
 
   /* Size icon */
-  --size-icon-width: 36px;
-  --size-icon-height: 36px;
+  --size-icon-width-big: 36px;
+  --size-icon-height-big: 36px;
+  --size-icon-width-small: 24px;
+  --size-icon-height-small: 24px;
 }
 
 :root.dark-mode {

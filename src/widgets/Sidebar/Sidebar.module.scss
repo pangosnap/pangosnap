@@ -1,20 +1,39 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
   width: 220px;
   height: calc(100vh - 60px);
-  padding-top: 72px;
-  padding-bottom: 36px;
+  padding: 72px 0 36px;
   border-right: 1px solid #333;
+}
 
-  .logout {
-    cursor: pointer;
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-self: flex-end;
+.item {
+  cursor: pointer;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  color: var(--color-light-100);
+
+  &:hover {
+    border-radius: 12px;
+    background: rgb(255 255 255 / 6%);
   }
+}
+
+.item + .item {
+  margin-top: 24px;
+}
+
+.iconBtn {
+  width: var(--size-icon-width-small);
+  height: var(--size-icon-height-small);
 }

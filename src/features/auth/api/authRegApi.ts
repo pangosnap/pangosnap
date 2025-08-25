@@ -99,6 +99,7 @@ export const {
   useEmailResendingMutation,
   useGoogleLoginMutation,
   useMeQuery,
+  useLazyMeQuery,
   useRecoveryPasswordMutation,
   useResendRecoveryPasswordMutation,
   useCreateNewPasswordMutation,
