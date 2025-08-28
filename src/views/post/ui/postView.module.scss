@@ -1,0 +1,17 @@
+.post {
+  display: flex;
+  width: 100%;
+  font-family: Inter, sans-serif;
+
+  &__media {
+    width: 50%;
+  }
+
+  &__content {
+    width: 50%;
+  }
+
+  &__img {
+    width: 100%;
+  }
+}
