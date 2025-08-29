@@ -21,11 +21,6 @@ export const AddPostWithPhoto = () => {
         <span className={'uik_typography-body2-medium'}>Create</span>
       </Button>
       {isModalOpen && (
-        // <UniversalModal
-        //   open={isModalOpen}
-        //   onClose={() => setIsModalOpen(false)}
-        //   modalTitle={'Create'}
-        // ></UniversalModal>
         <AddPhotoModal
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
