@@ -15,12 +15,6 @@
 }
 
 .item {
-  cursor: pointer;
-
-  display: flex;
-  gap: 12px;
-  align-items: center;
-
   color: var(--color-light-100);
 
   &:hover {
@@ -34,6 +28,19 @@
 }
 
 .iconBtn {
+  flex: 0 0 var(--size-icon-width-small);
   width: var(--size-icon-width-small);
   height: var(--size-icon-height-small);
+}
+
+.rowBtn {
+  cursor: pointer;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
 }

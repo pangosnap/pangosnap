@@ -2,36 +2,25 @@ import * as React from 'react'
 import { ComponentPropsWithoutRef } from 'react'
 
 import CloseIcon from '@/shared/icons/close-outline.svg'
+import PictureIcon from '@/shared/icons/picture-icon.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import { clsx } from 'clsx'
 import { Dialog } from 'radix-ui'
 
-import s from './UniversalModal.module.scss'
-
-type ModalSize = 'lg' | 'md' | 'sm'
+import s from './AddPhotoModal.module.scss'
 
 type Props = {
   open: boolean
   onClose: () => void
   onConfirm?: () => void
-  size?: ModalSize
   modalTitle: string
   overlayDarkClass?: string
 } & ComponentPropsWithoutRef<'div'>
 
-export const UniversalModal = (props: Props) => {
-  const {
-    modalTitle,
-    onClose,
-    onConfirm,
-    open,
-    className,
-    size = 'md',
-    children,
-    overlayDarkClass,
-    ...rest
-  } = props
-  const contentClassName = clsx(s.Content, s[size], className)
+export const AddPhotoModal = (props: Props) => {
+  const { modalTitle, onClose, onConfirm, open, className, children, overlayDarkClass, ...rest } =
+    props
+  const contentClassName = clsx(s.Content, className)
 
   return (
     <Dialog.Root open={open} onOpenChange={onClose} {...rest}>
@@ -47,13 +36,12 @@ export const UniversalModal = (props: Props) => {
             </Dialog.Close>
           </div>
           <hr />
-          <Dialog.Description className={s.Description}>{children}</Dialog.Description>
-          <div className={s.Footer}>
-            <Dialog.Close asChild>
-              <Button variant={'primary'} onClick={onConfirm}>
-                OK
-              </Button>
-            </Dialog.Close>
+          <div className={s.Body}>
+            <div className={s.Picture}>
+              <PictureIcon />
+            </div>
+            <Button fullWidth>Select from Computer</Button>
+            <Button variant={'outlined'}>Open Draft</Button>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
