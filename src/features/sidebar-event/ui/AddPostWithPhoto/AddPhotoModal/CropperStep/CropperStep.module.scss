@@ -1,0 +1,40 @@
+.Root {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.CropArea {
+  /* Было: width: 100%; aspect-ratio: 1 / 1; */
+
+  /* Сделаем большое квадратное окно, но адаптивно */
+  --size: min(80vmin, 350px); /* 80% от меньшей стороны вьюпорта, но не больше 900px */
+
+  position: relative;
+
+  overflow: hidden;
+
+  width: var(--size);
+  height: var(--size);
+  margin: 0 auto;
+  border-radius: 12px;
+
+  background: #111;
+}
+
+.Toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Zoom {
+  flex: 1;
+}
+
+.Actions {
+  display: flex;
+  gap: 8px;
+}

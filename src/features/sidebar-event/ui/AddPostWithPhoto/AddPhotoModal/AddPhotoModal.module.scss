@@ -52,7 +52,16 @@
   .Body {
     display: flex;
     flex-direction: column;
-    padding: 72px 112px 0;
+
+    &.select {
+      justify-items: stretch;
+      padding: 72px 112px 0;
+    }
+
+    &.crop {
+      justify-items: center;
+      padding-top: 20px;
+    }
   }
 
   .Body > .Picture {
@@ -118,8 +127,9 @@
 .PreviewSingle {
   overflow: hidden;
 
-  width: 100%;
+  // width: 100%;
   height: 320px;
+  margin-bottom: 16px;
   border-radius: 8px;
 
   background: #111;
