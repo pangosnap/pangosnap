@@ -5,10 +5,7 @@
 }
 
 .CropArea {
-  /* Было: width: 100%; aspect-ratio: 1 / 1; */
-
-  /* Сделаем большое квадратное окно, но адаптивно */
-  --size: min(80vmin, 350px); /* 80% от меньшей стороны вьюпорта, но не больше 900px */
+  --size: min(80vmin, 350px);
 
   position: relative;
 

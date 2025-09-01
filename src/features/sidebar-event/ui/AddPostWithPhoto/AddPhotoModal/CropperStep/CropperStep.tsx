@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEventHandler, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import Cropper, { Area } from 'react-easy-crop'
 
 import { cropImageToBlob } from '../lib/cropImage'

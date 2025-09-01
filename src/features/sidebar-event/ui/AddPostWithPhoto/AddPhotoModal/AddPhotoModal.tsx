@@ -2,16 +2,16 @@
 
 import { ChangeEvent, ComponentPropsWithoutRef, useRef, useState } from 'react'
 
-// NEW
 import { CropperStep } from './CropperStep/CropperStep'
-import { AddPhotoPreviews } from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/AddPhotoPreviews/AddPhotoPreviews'
+import { ImageCarousel } from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/ImageCarousel/ImageCarousel'
 import {
   ALLOWED_MIME,
   MAX_FILES,
   MAX_SIZE_BYTES,
-} from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/uploadPhoto.constants'
+} from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/lib/uploadPhoto.constants'
+import BackArrow from '@/shared/icons/back-arrow.svg'
 import CloseIcon from '@/shared/icons/close-outline.svg'
-import SelectDemo from '@/shared/ui/BaseSelect/BaseSelect'
+import PictureIcon from '@/shared/icons/picture-icon.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import { clsx } from 'clsx'
 import { Dialog } from 'radix-ui'
@@ -26,7 +26,7 @@ type Props = {
   onConfirm?: () => void
 } & ComponentPropsWithoutRef<'div'>
 
-type Step = 'select' | 'crop' // NEW
+type Step = 'select' | 'crop'
 
 export const AddPhotoModal = (props: Props) => {
   const { modalTitle, onClose, onConfirm, open, className, overlayDarkClass, ...rest } = props
@@ -37,8 +37,11 @@ export const AddPhotoModal = (props: Props) => {
   const [previews, setPreviews] = useState<string[]>([])
   const [validFiles, setValidFiles] = useState<File[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [publishing, setPublishing] = useState(false)
 
-  const [step, setStep] = useState<Step>('select') // NEW
+  const [step, setStep] = useState<Step>('select')
+
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
 
   const openFileDialog = () => inputRef.current?.click()
 
@@ -66,6 +69,7 @@ export const AddPhotoModal = (props: Props) => {
 
     setError(errors.length ? errors.join('\n') : null)
 
+    // Чистим старые blob-URL'ы
     setPreviews(prev => {
       prev.forEach(url => URL.revokeObjectURL(url))
 
@@ -73,27 +77,31 @@ export const AddPhotoModal = (props: Props) => {
     })
 
     setValidFiles(valid)
+    setCurrentIndex(0)
     setStep(valid.length ? 'select' : 'select')
   }
 
-  const handleApplyCrop = (file: File, previewUrl: string) => {
+  const handleApplyCropAt = (index: number, file: File, previewUrl: string) => {
     setPreviews(prev => {
-      if (prev[0]) {
-        URL.revokeObjectURL(prev[0])
-      }
       const next = [...prev]
+      const old = next[index]
 
-      next[0] = previewUrl
+      if (old) {
+        URL.revokeObjectURL(old)
+      }
+      next[index] = previewUrl
 
       return next
     })
+
     setValidFiles(prev => {
       const next = [...prev]
 
-      next[0] = file
+      next[index] = file
 
       return next
     })
+
     setStep('select')
   }
 
@@ -106,12 +114,23 @@ export const AddPhotoModal = (props: Props) => {
         <Dialog.Overlay className={overlayDarkClass || s.Overlay} />
         <Dialog.Content className={contentClassName} {...rest}>
           <div className={s.Header}>
-            <Dialog.Title className={'uik_typography-h1'}>{modalTitle}</Dialog.Title>
-            <Dialog.Close asChild>
-              <Button className={s.IconButton} aria-label={'Close'}>
-                <CloseIcon />
+            {canGoCrop && (
+              <Button onClick={() => setPreviews([])} variant={'text'}>
+                <BackArrow />
               </Button>
-            </Dialog.Close>
+            )}
+            <Dialog.Title className={'uik_typography-h1'}>{modalTitle}</Dialog.Title>
+            {canGoCrop ? (
+              <Button onClick={() => setPublishing(true)} variant={'text'}>
+                Next
+              </Button>
+            ) : (
+              <Dialog.Close asChild>
+                <Button className={s.IconButton} aria-label={'Close'}>
+                  <CloseIcon />
+                </Button>
+              </Dialog.Close>
+            )}
           </div>
 
           <hr />
@@ -119,16 +138,30 @@ export const AddPhotoModal = (props: Props) => {
           <div className={bodyClassName}>
             {step === 'select' ? (
               <>
-                <AddPhotoPreviews previews={previews} />
-                <Button onClick={openFileDialog} fullWidth>
-                  Select from Computer
-                </Button>
                 {canGoCrop ? (
-                  <Button variant={'outlined'} onClick={() => setStep('crop')}>
-                    Next
-                  </Button>
+                  <ImageCarousel
+                    slides={previews}
+                    selectedIndex={currentIndex}
+                    onSelect={setCurrentIndex}
+                  />
                 ) : (
-                  <Button variant={'outlined'}>Open Draft</Button>
+                  <div className={s.Picture}>
+                    <PictureIcon />
+                  </div>
+                )}
+
+                {canGoCrop ? (
+                  <>
+                    <Button variant={'outlined'} onClick={() => setStep('crop')}>
+                      Crop current ({currentIndex + 1}/{previews.length})
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button onClick={openFileDialog}>Select from Computer</Button>
+
+                    <Button variant={'outlined'}>Open Draft</Button>
+                  </>
                 )}
 
                 {error && (
@@ -136,6 +169,7 @@ export const AddPhotoModal = (props: Props) => {
                     {error}
                   </p>
                 )}
+
                 <input
                   ref={inputRef}
                   type={'file'}
@@ -147,9 +181,9 @@ export const AddPhotoModal = (props: Props) => {
               </>
             ) : (
               <CropperStep
-                src={previews[0]}
+                src={previews[currentIndex]}
                 onCancel={() => setStep('select')}
-                onApply={handleApplyCrop}
+                onApply={(file, url) => handleApplyCropAt(currentIndex, file, url)}
               />
             )}
           </div>
