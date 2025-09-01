@@ -11,6 +11,7 @@ import {
   MAX_SIZE_BYTES,
 } from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/uploadPhoto.constants'
 import CloseIcon from '@/shared/icons/close-outline.svg'
+import SelectDemo from '@/shared/ui/BaseSelect/BaseSelect'
 import { Button } from '@/shared/ui/Button/Button'
 import { clsx } from 'clsx'
 import { Dialog } from 'radix-ui'
@@ -122,7 +123,6 @@ export const AddPhotoModal = (props: Props) => {
                 <Button onClick={openFileDialog} fullWidth>
                   Select from Computer
                 </Button>
-
                 {canGoCrop ? (
                   <Button variant={'outlined'} onClick={() => setStep('crop')}>
                     Next

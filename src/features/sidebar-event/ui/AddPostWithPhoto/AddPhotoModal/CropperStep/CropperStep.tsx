@@ -1,9 +1,10 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { MouseEventHandler, useCallback, useState } from 'react'
 import Cropper, { Area } from 'react-easy-crop'
 
 import { cropImageToBlob } from '../lib/cropImage'
+import { BaseSelect } from '@/shared/ui/BaseSelect/BaseSelect'
 import { Button } from '@/shared/ui/Button/Button'
 
 import s from './CropperStep.module.scss'
@@ -34,6 +35,12 @@ export const CropperStep = ({ src, onCancel, onApply }: Props) => {
     onApply(file, url)
   }, [croppedAreaPixels, onApply, src])
 
+  const aspectMap: Record<string, number> = {
+    '1:1': 1,
+    '4:5': 4 / 5,
+    '16:9': 16 / 9,
+  }
+
   return (
     <div className={s.Root}>
       <div className={s.CropArea}>
@@ -61,9 +68,12 @@ export const CropperStep = ({ src, onCancel, onApply }: Props) => {
           onChange={e => setZoom(Number(e.target.value))}
           aria-label={'Zoom'}
         />
-        <Button onClick={() => setAspect(1)}>1:1</Button>
-        <Button onClick={() => setAspect(4 / 5)}>4:5</Button>
-        <Button onClick={() => setAspect(16 / 9)}>16:9</Button>
+        <BaseSelect
+          items={['1:1', '4:5', '16:9']}
+          defaultValue={'1:1'}
+          onValueChange={value => setAspect(aspectMap[value])}
+        />
+
         <div className={s.Actions}>
           <Button variant={'text'} onClick={onCancel}>
             Back

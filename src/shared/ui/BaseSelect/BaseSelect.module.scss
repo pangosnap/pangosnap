@@ -1,0 +1,145 @@
+.Trigger {
+  all: unset;
+
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+
+  min-width: 180px;
+  height: 36px;
+  padding: var(--padding-input-y) var(--padding-input-x);
+  border: 1px solid var(--color-border-primary); /* #4c4c4c */
+  border-radius: var(--border-radius-m);
+
+  color: var(--color-text-primary); /* #fff */
+
+  background: var(--color-dark-500); /* #171717 */
+
+  transition:
+    border-color 120ms var(--transition-ease-in-out),
+    background-color 120ms var(--transition-ease-in-out),
+    box-shadow 120ms var(--transition-ease-in-out);
+}
+
+.Trigger:focus-visible {
+  border-color: var(--color-border-focus); /* #397df6 */
+  outline: none;
+  box-shadow: var(--shadow-focus-ring);
+}
+
+.Trigger:hover:not([data-disabled]) {
+  border-color: var(--color-dark-300); /* легкий подсвет на hover */
+}
+
+.Trigger[data-state='open'] {
+  border-color: var(--color-dark-300);
+}
+
+.Trigger[disabled],
+.Trigger[data-disabled] {
+  cursor: not-allowed;
+  border-color: var(--color-border-disabled);
+  color: var(--color-text-disabled); /* #d5dae0 */
+  background: var(--color-dark-500);
+}
+
+/* Текст плейсхолдера чуть слабее */
+.Trigger [data-placeholder] {
+  color: var(--color-text-inactive); /* #edf3fa */
+}
+
+/* Иконка-стрелка справа */
+.Icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  transition: transform 150ms var(--transition-ease-in-out);
+}
+
+.Trigger[data-state='open'] .Icon {
+  transform: rotate(180deg);
+}
+
+/* Выпадающее меню */
+.Content {
+  z-index: var(--z-index-dropdown);
+
+  overflow: hidden;
+
+  /* Чтобы ширина совпадала с триггером (для position="popper") */
+  min-width: var(--radix-select-trigger-width);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-m);
+
+  background: var(--color-dark-500);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Кнопки прокрутки */
+.ScrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 28px;
+  border-bottom: 1px solid var(--color-border-primary);
+
+  color: var(--color-text-secondary);
+
+  background: var(--color-dark-500);
+}
+
+.ScrollButton:last-child {
+  border-bottom: 0;
+}
+
+/* Вьюпорт со списком */
+.Viewport {
+  padding: 4px 0;
+}
+
+/* Пункты меню */
+.Item {
+  cursor: default;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  height: 36px;
+  padding: 0 var(--padding-input-x);
+
+  color: var(--color-text-primary);
+
+  transition:
+    background-color 100ms var(--transition-ease-in-out),
+    color 100ms var(--transition-ease-in-out);
+}
+
+/* Hover по пункту */
+.Item[data-highlighted] {
+  background: var(--color-dark-300); /* затемнение строки на hover */
+}
+
+/* Выбранный пункт — синим как на скрине */
+.Item[data-state='checked'] {
+  color: var(--color-text-link); /* #4c8dff */
+}
+
+/* Disabled пункт */
+.Item[aria-disabled='true'],
+.Item[data-disabled] {
+  cursor: not-allowed;
+  color: var(--color-text-disabled);
+}
+
+/* Иконка выбранности слева (если будешь добавлять) */
+.ItemIndicator {
+  position: absolute;
+  left: 8px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
