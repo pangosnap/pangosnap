@@ -1,6 +1,6 @@
 'use client'
 
-import { useGetProfileQuery } from '@/features/profile/api/profileApi'
+import { useGetProfileQuery } from '@/entities/profile/api/profileApi'
 
 export function HomeView() {
   const { data } = useGetProfileQuery()

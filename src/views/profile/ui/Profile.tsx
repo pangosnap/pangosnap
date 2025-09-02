@@ -1,3 +1,5 @@
-export default function Profile() {
-  return <h1>Profile</h1>
+import { Profile } from '@/entities/profile/ui'
+
+export default function ProfileView() {
+  return <Profile />
 }

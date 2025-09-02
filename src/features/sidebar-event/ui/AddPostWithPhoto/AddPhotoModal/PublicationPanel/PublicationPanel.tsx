@@ -1,4 +1,4 @@
-import { profileApi } from '@/features/profile/api/profileApi'
+import { profileApi } from '@/entities/profile/api/profileApi'
 import { useAppSelector } from '@/shared/hooks'
 import Avatar from '@/shared/ui/Avatar/Avatar'
 

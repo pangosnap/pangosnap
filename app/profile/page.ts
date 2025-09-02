@@ -1,1 +1,1 @@
-export { Profile as default } from '@/views/profile'
+export { ProfileView as default } from '@/views/profile'
