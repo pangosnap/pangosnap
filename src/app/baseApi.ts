@@ -1,24 +1,32 @@
 import { baseQueryWithZodValidation } from '@/shared/lib/utils/baseQueryWithZodValidation'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+
 export const baseApi = createApi({
   reducerPath: 'api',
+  tagTypes: ['Profile', 'Authorization'],
+
   baseQuery: baseQueryWithZodValidation(async (args, api, extraOptions) => {
-    const result = await fetchBaseQuery({
-      baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    const rawBaseQuery = fetchBaseQuery({
+      baseUrl: BASE_URL,
       credentials: 'include',
       prepareHeaders: headers => {
-        // headers.set('API-KEY', import.meta.env.VITE_API_KEY)
         if (typeof window !== 'undefined') {
           const token = localStorage.getItem('access-token')
 
-          headers.set('Authorization', `Bearer ${token}`)
+          if (token) {
+            headers.set('Authorization', `Bearer ${token}`)
+          }
         }
+
+        return headers
       },
-    })(args, api, extraOptions)
+    })
 
-    // handleError(api, result)
+    const result = await rawBaseQuery(args, api, extraOptions)
 
+    // handleError(api, result) // можно вернуть, когда будете готовы
     return result
   }),
 

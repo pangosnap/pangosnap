@@ -148,3 +148,55 @@
   color: #ff6b6b;
   white-space: pre-line;
 }
+
+.wide {
+  width: 1120px;
+}
+
+/* шаговые классы (ты навешиваешь s[step]) */
+// .select {
+// }
+// .crop {
+// }
+// .publish {
+// }
+
+/* Двухколоночный лэйаут только на шаге publish */
+.publish .PublishLayout {
+  display: grid;
+  grid-template-columns: 1fr 750px;
+  gap: 24px;
+  align-items: start;
+}
+
+.Left {
+  min-width: 0; /* чтобы карусель не раздувала контейнер */
+}
+
+.Right {
+  overflow: auto; /* прокрутка правой панели */
+  min-width: 0;
+  max-height: calc(80vh - 120px); /* подгони под высоту модалки */
+
+  /* добавь свои отступы/фон по дизайну: */
+
+  /* padding: 16px; background: var(--uik-surface-2); border-radius: 12px; */
+}
+
+/* Вспомогательные классы, если вдруг их нет в твоём файле */
+
+.Carousel {
+  /* если нужно ограничить высоту карусели: */
+
+  /* max-height: 520px; */
+}
+
+.Empty {
+  display: grid;
+  place-items: center;
+
+  min-height: 360px;
+  border-radius: 12px;
+
+  background: rgb(0 0 0 / 6%);
+}
