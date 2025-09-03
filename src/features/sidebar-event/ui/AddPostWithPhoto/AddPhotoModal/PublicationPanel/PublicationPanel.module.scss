@@ -1,0 +1,17 @@
+.Description {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-light-900);
+}
+
+.userName {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-size-m);
+  line-height: 24px;
+}
+
+.label {
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-l);
+}
