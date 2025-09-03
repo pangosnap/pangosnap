@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react'
 
 import { useMeQuery } from '@/features/auth/api/authRegApi'
 import { useAppDispatch } from '@/shared/hooks'
+import { useSelectedLayoutSegments } from 'next/navigation'
 
 type Props = {
   children: ReactNode
@@ -21,6 +22,9 @@ export const AuthGate = ({ children }: Props) => {
     refetchOnFocus: false,
     refetchOnReconnect: false,
   })
+  const segments = useSelectedLayoutSegments()
+  const root = segments[0] ?? ''
+  const isPostPublic = root === 'post'
 
   useEffect(() => {
     if (isLoading) {
@@ -29,7 +33,7 @@ export const AuthGate = ({ children }: Props) => {
     setIsInitialized(true)
   }, [isLoading])
 
-  if (!isInitialized) {
+  if (!isInitialized && !isPostPublic) {
     return <div>Loading...</div>
   }
 

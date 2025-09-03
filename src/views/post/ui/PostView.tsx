@@ -5,7 +5,6 @@ import { useMeQuery } from '@/features/auth/api/authRegApi'
 import { PostHeader, PostFooter } from '@/views/post'
 import { Comments, CommentsInput } from '@/widgets/Comments'
 import { PostModal } from '@/widgets/PostModal'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import s from './postView.module.scss'
@@ -22,7 +21,7 @@ export const PostView = ({ post }: { post: Post }) => {
       <article className={s.post}>
         <div className={s.post__media}>
           {post.images?.map(img => (
-            <Image
+            /*<Image
               key={img.uploadId || img.url}
               src={img.url}
               priority
@@ -30,14 +29,15 @@ export const PostView = ({ post }: { post: Post }) => {
               width={img.width}
               height={img.height}
               className={s.post__img}
-            />
+            />*/
+            <img key={img.uploadId} src={img.url} alt={''} className={s.post__img} />
           ))}
         </div>
 
         <div className={s.post__content}>
           <PostHeader
             isOwner={isOwner}
-            avatarOwner={post.avatarOwner}
+            avatarOwner={post.avatarOwner || ''}
             userName={post.userName}
             isAuthed={isAuthed}
             postId={post.id}

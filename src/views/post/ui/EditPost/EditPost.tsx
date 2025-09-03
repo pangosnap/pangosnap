@@ -2,8 +2,9 @@
 
 import { useState, FormEvent } from 'react'
 
-import { useUpdatePostMutation } from '@/entities/post/api/postApi'
+import { useGetPostQuery, useUpdatePostMutation } from '@/entities/post/api/postApi'
 import CloseIcon from '@/shared/icons/close-outline.svg'
+import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useParams, useRouter } from 'next/navigation'
@@ -14,12 +15,14 @@ export const EditPost = ({ initialDescription = '' }: { initialDescription?: str
   const router = useRouter()
   const { id } = useParams<{ id: string }>()
   const postId = Number(id)
+  const skip = !id || Number.isNaN(postId)
+
+  const { data } = useGetPostQuery(postId, { skip })
 
   const [description, setDescription] = useState(initialDescription)
   const [updatePost, { isLoading, error }] = useUpdatePostMutation()
 
-  const goToView = () =>
-    history.length > 1 ? router.back() : router.replace(`/modal/post/${postId}`)
+  const goToView = () => (history.length > 1 ? router.back() : router.replace(`/post/${postId}`))
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
@@ -35,15 +38,24 @@ export const EditPost = ({ initialDescription = '' }: { initialDescription?: str
     <form onSubmit={onSubmit} className={s.form}>
       <header className={s.header}>
         <h2 className={s.title}>Edit Post</h2>
-        <Dialog.Close asChild>
-          <button type={'button'} className={s.close} aria-label={'Close'}>
-            <CloseIcon />
-          </button>
-        </Dialog.Close>
+        <button
+          type={'button'}
+          className={s.close}
+          aria-label={'Close'}
+          onClick={() => router.back()}
+        >
+          <CloseIcon />
+        </button>
       </header>
       <div className={s.wrap}>
-        <div className={s.left}>1</div>
+        <div className={s.left}>
+          {data?.images.map(image => <img key={image.uploadId} src={image.url} alt={''} />)}
+        </div>
         <div className={s.right}>
+          <div className={s.userWrap}>
+            <Avatar size={'small'} alt={''} src={data?.avatarOwner || ''} />
+            <p className={s.userName}>{data?.userName}</p>
+          </div>
           <label className={s.label}>Add publication descriptions</label>
 
           <div className={s.editor}>

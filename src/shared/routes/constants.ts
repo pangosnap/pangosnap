@@ -4,7 +4,7 @@ export const Path = {
   forgotPassword: '/forgot-password',
   messenger: '/messenger',
   privacyPolicy: '/privacy-policy',
-  profile: '/profile',
+  profile: (id: number) => `/profile?id=${id}`,
   recallEmail: '/recall-email',
   registrationConfirmation: '/registration-confirmation',
   search: '/search',

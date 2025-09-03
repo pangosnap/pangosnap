@@ -4,6 +4,7 @@ import Bookmark from '@/shared/icons/Bookmark.svg'
 import HeartFill from '@/shared/icons/HeartFill.svg'
 import HeartOutline from '@/shared/icons/HeartOutline.svg'
 import Paper from '@/shared/icons/Paper.svg'
+import { Avatar } from '@/shared/ui/Avatar'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 
@@ -51,14 +52,7 @@ export const PostFooter = ({ likesCount, isLiked, createdAt, avatarWhoLikes, isA
         <div className={s.footer__likers}>
           {likers.map((url, i) => (
             <div className={s.footer__avatarWrap} key={`${url}-${i}`}>
-              <Image
-                src={url}
-                alt={''}
-                sizes={'24px'}
-                fill
-                priority
-                className={clsx(s['footer__avatar'], s[`footer__avatar-${i}`])}
-              />
+              <Avatar size={'very_small'} alt={''} src={url || ''} />
             </div>
           ))}
           <div className={s.footer__meta}>

@@ -52,6 +52,7 @@ export const authRegApi = baseApi.injectEndpoints({
     me: builder.query<MeResponse, void>({
       query: () => '/auth/me',
       extraOptions: { dataSchema: meSchema },
+      providesTags: ['Authorization'],
     }),
     recoveryPassword: builder.mutation<void, { email: string; baseUrl: string; recaptcha: string }>(
       {
@@ -91,7 +92,6 @@ export const authRegApi = baseApi.injectEndpoints({
     }),
   }),
 })
-
 export const {
   useRegisterMutation,
   useLoginMutation,
@@ -99,6 +99,7 @@ export const {
   useEmailResendingMutation,
   useGoogleLoginMutation,
   useMeQuery,
+  useLazyMeQuery,
   useRecoveryPasswordMutation,
   useResendRecoveryPasswordMutation,
   useCreateNewPasswordMutation,

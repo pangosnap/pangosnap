@@ -8,7 +8,7 @@ import { clsx } from 'clsx'
 
 import s from './BaseLayout.module.scss'
 
-export function BaseLayout({ children, modal }: { children: ReactNode; modal?: ReactNode }) {
+export function BaseLayout({ children, modal }: { children: ReactNode; modal: ReactNode }) {
   const { data } = useMeQuery()
 
   return (

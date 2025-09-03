@@ -1,5 +1,6 @@
 'use client'
 
+import { Avatar } from '@/shared/ui/Avatar'
 import { PostActionsMenu } from '@/views/post'
 import { clsx } from 'clsx'
 import Image from 'next/image'
@@ -18,7 +19,7 @@ export const PostHeader = ({ avatarOwner, userName, isAuthed, isOwner, postId }:
   return (
     <div className={clsx(s['header'])}>
       <div className={s.avatarWrap}>
-        <Image src={avatarOwner} alt={''} sizes={'36px'} fill priority className={s.avatar} />
+        <Avatar size={'small'} alt={''} src={avatarOwner || ''} />
       </div>
       <span className={s.user}>{userName}</span>
       {isAuthed && <PostActionsMenu isOwner={isOwner} postId={postId} />}

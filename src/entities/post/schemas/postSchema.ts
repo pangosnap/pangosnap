@@ -15,24 +15,23 @@ export const PostOwnerSchema = z.object({
 })
 
 export const PostSchema = z.object({
-  id: z.number().int(),
+  id: z.number(),
   userName: z.string(),
   description: z.string(),
-  location: z.string(),
+  location: z.string().nullable().optional(),
   images: z.array(PostImageSchema),
 
   createdAt: z.string(),
   updatedAt: z.string(),
 
-  ownerId: z.number().int(),
-  avatarOwner: z.string(),
+  ownerId: z.number(),
+  avatarOwner: z.string().nullable().optional(),
   owner: PostOwnerSchema,
 
   likesCount: z.number().int().default(0),
   isLiked: z.boolean().default(false),
 
-  avatarWhoLikes: z.preprocess(v => (v === false ? [] : v), z.array(z.string())),
-  /*avatarWhoLikes: z.array(z.string()),*/
+  avatarWhoLikes: z.array(z.string()),
 })
 
 export type Post = z.infer<typeof PostSchema>

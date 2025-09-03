@@ -1,0 +1,13 @@
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.countValue {
+  display: inline-block;
+  font-weight: bold;
+}

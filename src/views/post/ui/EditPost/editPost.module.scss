@@ -33,6 +33,10 @@
   width: 24px;
   height: 24px;
   margin-right: 0;
+
+  &:hover {
+    color: #8d9094;
+  }
 }
 
 .left {
@@ -46,6 +50,23 @@
   width: 50%;
   min-height: 0;
   padding: 24px;
+}
+
+.userWrap {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+
+  padding-bottom: 24px;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.userName {
+  margin: 0;
+  padding: 0;
 }
 
 .label {

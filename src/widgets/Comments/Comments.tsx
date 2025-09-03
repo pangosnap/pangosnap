@@ -17,14 +17,15 @@ export const Comments = ({ post }: Props) => {
     <section className={s.comments__list}>
       <div className={s.comments__item}>
         <div className={s.comments__avatarWrap}>
-          <Image
+          {/*<Image
             src={post.avatarOwner}
             alt={post.userName}
             priority
             fill
             sizes={'36px'}
             className={s.comments__avatar}
-          />
+          />*/}
+          <img src={post.avatarOwner || ''} alt={post.userName} />
         </div>
         <div className={s.comments__body}>
           <p className={s.comments__text}>
