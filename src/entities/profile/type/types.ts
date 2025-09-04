@@ -1,4 +1,4 @@
-type Avatars = {
+export type Avatar = {
   url: string
   width: number
   height: number
@@ -15,6 +15,6 @@ export type ProfileResponse = {
   region: string
   dateOfBirth: string
   aboutMe: string
-  avatars: [Avatars]
+  avatars: [Avatar]
   createdAt: string
 }
