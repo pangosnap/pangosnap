@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useState } from 'react'
 
-import { profileApi } from '@/features/profile/api/profileApi'
+import { profileApi } from '@/entities/profile/api/profileApi'
 import { useAppSelector } from '@/shared/hooks'
 import Avatar from '@/shared/ui/Avatar/Avatar'
 import { clsx } from 'clsx'
@@ -31,7 +31,6 @@ export const PublicationPanel = ({ descriptionValue }: Props) => {
         <Avatar size={'small'} alt={'Avatar'} />
         <span className={s.userName}>{userName}</span>
       </div>
-
       <div className={s.Description}>
         <label className={clsx('uik_typography-body2', s.label)}>
           Add publication descriptions

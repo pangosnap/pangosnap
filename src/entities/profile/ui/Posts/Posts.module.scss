@@ -1,0 +1,50 @@
+.posts {
+  position: relative;
+  width: 100%;
+  margin: 50px auto;
+
+  &__empty,
+  &__error {
+    padding: 60px 20px;
+    font-size: 16px;
+    color: #8e8e8e;
+    text-align: center;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+
+    @media (width <= 768px) {
+      gap: 4px;
+    }
+
+    @media (width <= 480px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+  }
+
+  .observerTarget {
+    height: 10px;
+    margin-top: 20px;
+  }
+
+  .loading {
+    padding: 20px;
+    color: #8e8e8e;
+    text-align: center;
+  }
+
+  .noMorePosts {
+    padding: 30px;
+    border-top: 1px solid #dbdbdb;
+    color: #8e8e8e;
+    text-align: center;
+  }
+
+  @media (width <= 768px) {
+    padding: 0 10px;
+  }
+}
