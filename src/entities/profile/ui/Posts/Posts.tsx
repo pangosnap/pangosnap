@@ -101,12 +101,7 @@ const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
     <div className={s.posts}>
       <div className={s.posts__grid}>
         {allPosts.map(post => (
-          <Post
-            key={post.id}
-            imageUrl={post.images[0]?.url}
-            likesCount={post.likesCount}
-            id={post.id}
-          />
+          <Post key={post.id} images={post.images} likesCount={post.likesCount} />
         ))}
       </div>
 
