@@ -4,6 +4,13 @@
   color: var(--color-light-900);
 }
 
+.info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 24px 0;
+}
+
 .userName {
   font-size: var(--font-size-medium);
   font-weight: var(--font-size-m);
@@ -11,7 +18,14 @@
 }
 
 .label {
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-l);
+  color: var(--color-light-900);
+}
+
+.textarea {
+  min-height: 120px;
+  color: var(--color-light-900);
+}
+
+.counter {
+  text-align: end;
 }

@@ -24,7 +24,7 @@ type Props = {
   onClose: () => void
   modalTitle: string
   overlayDarkClass?: string
-  onConfirm?: () => void
+  onConfirm?: (validFiles: File[], description: string) => void
 } & ComponentPropsWithoutRef<'div'>
 
 type Step = 'select' | 'crop' | 'publish'
@@ -36,7 +36,7 @@ export const AddPhotoModal = (props: Props) => {
   const [previews, setPreviews] = useState<string[]>([])
   const [validFiles, setValidFiles] = useState<File[]>([])
   const [error, setError] = useState<string | null>(null)
-
+  const [description, setDescription] = useState<string>('')
   const [step, setStep] = useState<Step>('select')
   const [currentIndex, setCurrentIndex] = useState<number>(0)
 
@@ -103,6 +103,9 @@ export const AddPhotoModal = (props: Props) => {
     e.target.value = ''
   }
 
+  const publicationPost = () => {
+    onConfirm?.(validFiles, description)
+  }
   const renderHeaderAction = () => {
     if (!canGoNext) {
       return (
@@ -116,7 +119,7 @@ export const AddPhotoModal = (props: Props) => {
 
     if (step === 'publish') {
       return (
-        <Button type={'button'} variant={'text'} onClick={() => onConfirm?.()}>
+        <Button type={'button'} variant={'text'} onClick={publicationPost}>
           Publish
         </Button>
       )
@@ -161,7 +164,6 @@ export const AddPhotoModal = (props: Props) => {
         <Dialog.Overlay className={overlayDarkClass || s.Overlay} />
 
         <Dialog.Content className={contentClassName}>
-          {/* Header */}
           <div className={s.Header}>
             {step !== 'select' ? (
               <Button type={'button'} variant={'text'} onClick={() => setStep('select')}>
@@ -245,7 +247,7 @@ export const AddPhotoModal = (props: Props) => {
                 </div>
 
                 <aside className={s.Right}>
-                  <PublicationPanel />
+                  <PublicationPanel descriptionValue={setDescription} />
                 </aside>
               </div>
             )}
