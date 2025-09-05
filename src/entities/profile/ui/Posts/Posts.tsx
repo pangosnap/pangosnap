@@ -38,6 +38,15 @@ const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
 
   const handleCloseModal = () => setShowAuthAlert(false)
 
+  useEffect(() => {
+    setAllPosts([])
+    setLastLoadedPostId(undefined)
+
+    return () => {
+      setAllPosts([])
+    }
+  }, [userId])
+
   const loadNextPage = useCallback(() => {
     if (!isAuthorized) {
       setShowAuthAlert(true)
