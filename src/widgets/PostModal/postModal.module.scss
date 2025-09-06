@@ -8,15 +8,19 @@
 .content {
   position: fixed;
   inset: 0;
+
   display: grid;
   place-items: center center;
+
+  min-height: 564px;
 
   /* padding: 94px 36px 36px; */
 }
 
 .modal {
   width: 100%;
-  max-width: 972px;
+  max-width: 1014px;
+  min-height: 564px;
   margin: 0 auto;
 }
 
@@ -24,18 +28,22 @@
   position: relative;
 
   min-width: 0;
+  max-width: 972px;
   border: 1px solid #4c4c4c;
   border-radius: 2px;
 
   background-color: #333;
 }
 
-.modal .body .button {
-  cursor: pointer;
+.buttonWrap {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 36px;
+}
 
-  position: absolute;
-  top: -36px;
-  right: -36px;
+.button {
+  cursor: pointer;
 
   width: 24px;
   height: 24px;

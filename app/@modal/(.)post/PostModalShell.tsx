@@ -28,7 +28,7 @@ export function PostModalShell({
   }
 
   return (
-    <PostModal open closeAction={closeAction} isShowClose={isShowClose}>
+    <PostModal open onCloseAction={closeAction} isShowClose={isShowClose}>
       {children}
     </PostModal>
   )

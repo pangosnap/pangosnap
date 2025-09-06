@@ -6,6 +6,7 @@ import { useGetPostQuery, useUpdatePostMutation } from '@/entities/post/api/post
 import CloseIcon from '@/shared/icons/close-outline.svg'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
+import { Loader } from '@/shared/ui/Loader/Loader'
 import { ConfirmModal } from '@/views/post/ui/ConfirmModal/ConfirmModal'
 import { useRouter } from 'next/navigation'
 
@@ -22,7 +23,7 @@ export const EditPost = ({ postId, closeAction }: Props) => {
   const router = useRouter()
   const close = closeAction ?? (() => router.back())
   const { data, isFetching } = useGetPostQuery(postId)
-  const [updatePost, { isLoading, error, isError }] = useUpdatePostMutation()
+  const [updatePost, { isLoading, isError }] = useUpdatePostMutation()
 
   const [draft, setDraft] = useState<string | null>(null)
 
@@ -31,7 +32,7 @@ export const EditPost = ({ postId, closeAction }: Props) => {
   const isDirty = draft !== null && draft !== initial
 
   const count = value.length
-  const disabled = isLoading || !value.trim() || count > MAX
+  const disabled = isLoading || !isDirty || !value.trim() || count > MAX
 
   const [confirmOpen, setConfirmOpen] = useState(false)
 
@@ -58,6 +59,7 @@ export const EditPost = ({ postId, closeAction }: Props) => {
 
   return (
     <>
+      {isFetching && <Loader />}
       <form onSubmit={onSubmit} className={s.form}>
         <header className={s.header}>
           <h2 className={s.title}>Edit Post</h2>
@@ -75,7 +77,9 @@ export const EditPost = ({ postId, closeAction }: Props) => {
         <div className={s.wrap}>
           <div className={s.left}>
             {data?.images?.map(img =>
-              img?.url?.trim() ? <img key={img.uploadId} src={img.url} alt={''} /> : null
+              img?.url?.trim() ? (
+                <img key={img.uploadId} src={img.url} alt={''} className={s.img} loading={'lazy'} />
+              ) : null
             )}
           </div>
 

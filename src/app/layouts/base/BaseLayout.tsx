@@ -8,7 +8,7 @@ import { clsx } from 'clsx'
 
 import s from './BaseLayout.module.scss'
 
-export function BaseLayout({ children, modal }: { children: ReactNode; modal: ReactNode }) {
+export function BaseLayout({ children }: { children: ReactNode }) {
   const { data } = useMeQuery()
 
   return (
@@ -16,10 +16,7 @@ export function BaseLayout({ children, modal }: { children: ReactNode; modal: Re
       <Header isAuth={!!data} />
       <div className={clsx(s.content, 'l-container')}>
         {!!data && <Sidebar />}
-        <main className={'l-container l-centered page-public'}>
-          {children}
-          {modal}
-        </main>
+        <main className={'l-container l-centered page-public'}>{children}</main>
       </div>
     </div>
   )
