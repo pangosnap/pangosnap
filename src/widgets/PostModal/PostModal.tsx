@@ -11,14 +11,14 @@ import s from './postModal.module.scss'
 
 type Props = {
   open: boolean
-  onCloseAction: () => void
+  closeAction: () => void
   children: ReactNode
-  showDefaultClose?: boolean
+  isShowClose?: boolean
 }
 
-export const PostModal = ({ open, onCloseAction, children, showDefaultClose = true }: Props) => {
+export const PostModal = ({ open, closeAction, children, isShowClose }: Props) => {
   return (
-    <Dialog.Root open={open} onOpenChange={v => !v && onCloseAction()}>
+    <Dialog.Root open={open} onOpenChange={v => !v && closeAction()}>
       <Dialog.Portal>
         <Dialog.Overlay className={s.overlay} />
         <div className={s.content}>
@@ -28,7 +28,7 @@ export const PostModal = ({ open, onCloseAction, children, showDefaultClose = tr
               <Dialog.Description>Post</Dialog.Description>
             </VisuallyHidden>
             <div className={s.body}>
-              {showDefaultClose && (
+              {isShowClose && (
                 <Dialog.Close asChild>
                   <Button className={s.button} variant={'text'} aria-label={'Close post modal'}>
                     <CloseIcon />

@@ -9,11 +9,5 @@ export async function getPostFromParams(params: Promise<{ id: string }>) {
     notFound()
   }
 
-  const post = await ssrGetPost(num, { throwOnNotFound: false })
-
-  if (!post) {
-    notFound()
-  }
-
-  return post
+  return ssrGetPost(num)
 }

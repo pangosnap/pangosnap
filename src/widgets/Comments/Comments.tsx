@@ -25,7 +25,7 @@ export const Comments = ({ post }: Props) => {
             sizes={'36px'}
             className={s.comments__avatar}
           />*/}
-          <img src={post.avatarOwner || ''} alt={post.userName} />
+          {post.avatarOwner && <img src={post.avatarOwner} alt={post.userName} />}
         </div>
         <div className={s.comments__body}>
           <p className={s.comments__text}>

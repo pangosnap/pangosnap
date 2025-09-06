@@ -6,76 +6,129 @@ import { useGetPostQuery, useUpdatePostMutation } from '@/entities/post/api/post
 import CloseIcon from '@/shared/icons/close-outline.svg'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
-import * as Dialog from '@radix-ui/react-dialog'
-import { useParams, useRouter } from 'next/navigation'
+import { ConfirmModal } from '@/views/post/ui/ConfirmModal/ConfirmModal'
+import { useRouter } from 'next/navigation'
 
 import s from './editPost.module.scss'
 
-export const EditPost = ({ initialDescription = '' }: { initialDescription?: string }) => {
+type Props = {
+  postId: number
+  closeAction?: () => void
+}
+
+const MAX = 500
+
+export const EditPost = ({ postId, closeAction }: Props) => {
   const router = useRouter()
-  const { id } = useParams<{ id: string }>()
-  const postId = Number(id)
-  const skip = !id || Number.isNaN(postId)
+  const close = closeAction ?? (() => router.back())
+  const { data, isFetching } = useGetPostQuery(postId)
+  const [updatePost, { isLoading, error, isError }] = useUpdatePostMutation()
 
-  const { data } = useGetPostQuery(postId, { skip })
+  const [draft, setDraft] = useState<string | null>(null)
 
-  const [description, setDescription] = useState(initialDescription)
-  const [updatePost, { isLoading, error }] = useUpdatePostMutation()
+  const initial = data?.description ?? ''
+  const value = draft ?? initial
+  const isDirty = draft !== null && draft !== initial
 
-  const goToView = () => (history.length > 1 ? router.back() : router.replace(`/post/${postId}`))
+  const count = value.length
+  const disabled = isLoading || !value.trim() || count > MAX
 
-  async function onSubmit(e: FormEvent) {
+  const [confirmOpen, setConfirmOpen] = useState(false)
+
+  const requestClose = () => (isDirty ? setConfirmOpen(true) : close())
+  const confirmClose = () => {
+    setConfirmOpen(false)
+    close()
+  }
+
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (!postId || Number.isNaN(postId)) {
+    if (disabled) {
       return
     }
 
-    await updatePost({ postId, description }).unwrap()
-    goToView()
+    try {
+      await updatePost({ postId, description: value }).unwrap()
+      /*onSuccess?.() */
+      close()
+    } catch {
+      //tost
+    }
   }
 
   return (
-    <form onSubmit={onSubmit} className={s.form}>
-      <header className={s.header}>
-        <h2 className={s.title}>Edit Post</h2>
-        <button
-          type={'button'}
-          className={s.close}
-          aria-label={'Close'}
-          onClick={() => router.back()}
-        >
-          <CloseIcon />
-        </button>
-      </header>
-      <div className={s.wrap}>
-        <div className={s.left}>
-          {data?.images.map(image => <img key={image.uploadId} src={image.url} alt={''} />)}
+    <>
+      <form onSubmit={onSubmit} className={s.form}>
+        <header className={s.header}>
+          <h2 className={s.title}>Edit Post</h2>
+          <button
+            type={'button'}
+            className={s.close}
+            aria-label={'Close'}
+            onClick={requestClose}
+            disabled={isLoading || isFetching}
+          >
+            <CloseIcon />
+          </button>
+        </header>
+
+        <div className={s.wrap}>
+          <div className={s.left}>
+            {data?.images?.map(img =>
+              img?.url?.trim() ? <img key={img.uploadId} src={img.url} alt={''} /> : null
+            )}
+          </div>
+
+          <div className={s.right}>
+            <div className={s.userWrap}>
+              <Avatar
+                size={'small'}
+                alt={data?.userName ?? 'user'}
+                src={data?.avatarOwner ?? undefined}
+              />
+              <p className={s.userName}>{data?.userName}</p>
+            </div>
+
+            <label className={s.label} htmlFor={'post-desc'}>
+              Add publication descriptions
+            </label>
+            <div className={s.editor}>
+              <textarea
+                id={'post-desc'}
+                value={value}
+                onChange={e => setDraft(e.target.value)}
+                maxLength={MAX}
+                disabled={isLoading || isFetching}
+                className={s.textArea}
+              />
+              <div className={s.counter}>
+                {count}/{MAX}
+              </div>
+            </div>
+
+            {isError && <p className={s.error}>Something went wrong</p>}
+
+            <div className={s.actions}>
+              <Button type={'submit'} disabled={disabled}>
+                {isLoading ? 'Saving…' : 'Save Changes'}
+              </Button>
+            </div>
+          </div>
         </div>
-        <div className={s.right}>
-          <div className={s.userWrap}>
-            <Avatar size={'small'} alt={''} src={data?.avatarOwner || ''} />
-            <p className={s.userName}>{data?.userName}</p>
-          </div>
-          <label className={s.label}>Add publication descriptions</label>
-
-          <div className={s.editor}>
-            <textarea
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              disabled={isLoading}
-            />
-            <div className={s.counter}>200/500</div>
-          </div>
-
-          {!!error && <p>Something went wrong</p>}
-
-          <div className={s.actions}>
-            <Button type={'submit'} disabled={isLoading || !description.trim()}>
-              {isLoading ? 'Saving…' : 'Save Changes'}
-            </Button>
-          </div>
-        </div>
-      </div>
-    </form>
+      </form>
+      <ConfirmModal
+        open={confirmOpen}
+        closeAction={() => setConfirmOpen(false)}
+        confirmAction={confirmClose}
+        title={'Close Post'}
+        message={
+          <>
+            Do you really want to close the edition of the publication?
+            <br />
+            If you close, changes won’t be saved.
+          </>
+        }
+      />
+    </>
   )
 }

@@ -17,7 +17,7 @@ export const NotFoundPost = () => {
   }
 
   return (
-    <PostModal open onCloseAction={backHandler}>
+    <PostModal open closeAction={backHandler}>
       <div className={s.notfound}>
         <h1 className={s.title}>404</h1>
         <p className={s.text}>The post has not been found</p>

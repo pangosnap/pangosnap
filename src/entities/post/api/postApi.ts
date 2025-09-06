@@ -9,7 +9,7 @@ export const postApi = baseApi.injectEndpoints({
     }),
     updatePost: build.mutation<void, { postId: number; description: string }>({
       query: ({ postId, description }) => ({
-        url: `/posts/id/${postId}`,
+        url: `/posts/${postId}`,
         method: 'PUT',
         body: { description },
       }),

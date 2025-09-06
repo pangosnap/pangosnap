@@ -10,8 +10,8 @@ export const PostImageSchema = z.object({
 })
 
 export const PostOwnerSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
+  firstName: z.string().nullable().optional(),
+  lastName: z.string().nullable().optional(),
 })
 
 export const PostSchema = z.object({

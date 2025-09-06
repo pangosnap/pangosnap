@@ -8,7 +8,7 @@ import Image from 'next/image'
 import s from './postHeader.module.scss'
 
 type Props = {
-  avatarOwner: string
+  avatarOwner: string | null
   userName: string
   isAuthed: boolean
   isOwner: boolean
@@ -19,7 +19,7 @@ export const PostHeader = ({ avatarOwner, userName, isAuthed, isOwner, postId }:
   return (
     <div className={clsx(s['header'])}>
       <div className={s.avatarWrap}>
-        <Avatar size={'small'} alt={''} src={avatarOwner || ''} />
+        <Avatar size={'small'} alt={''} src={avatarOwner ?? undefined} />
       </div>
       <span className={s.user}>{userName}</span>
       {isAuthed && <PostActionsMenu isOwner={isOwner} postId={postId} />}
