@@ -1,23 +1,84 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+
+import { PostImage } from '@/entities/profile/model/types'
+import useEmblaCarousel from 'embla-carousel-react'
 
 import s from './Post.module.scss'
 
 type PostType = {
-  id: number
-  imageUrl: string
+  images: PostImage[]
   likesCount: number
 }
 
-const Post: FC<PostType> = ({ id, imageUrl, likesCount }) => {
+const Post: FC<PostType> = ({ images, likesCount }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: false,
+    },
+    []
+  )
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
+  useEffect(() => {
+    if (!emblaApi) {
+      return
+    }
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap())
+    }
+
+    emblaApi.on('select', onSelect)
+
+    return () => {
+      emblaApi.off('select', onSelect)
+    }
+  }, [emblaApi])
+
+  if (!images || images.length === 0) {
+    return null
+  }
+
   return (
     <article className={s.post}>
-      <div className={s.imageContainer}>
-        <img src={imageUrl} className={s.image} loading={'lazy'} />
-
-        <div className={s.postOverlay}>
-          <div className={s.stats}>
-            <span className={s.stat}>❤️ {likesCount || 0}</span>
+      <div className={s.post__carousel}>
+        <div className={s.embla} ref={emblaRef}>
+          <div className={s.embla__container}>
+            {images.map((image, index) => (
+              <div className={s.embla__slide} key={image.uploadId}>
+                <img
+                  src={image.url}
+                  alt={`Post image ${index + 1}`}
+                  className={s.embla__slide__img}
+                  loading={'lazy'}
+                />
+              </div>
+            ))}
           </div>
+        </div>
+
+        {images.length > 1 && (
+          <>
+            <div className={s.embla__dots}>
+              {images.map((_, index) => (
+                <button
+                  type={'button'}
+                  key={index}
+                  className={`${s.embla__dot} ${
+                    index === selectedIndex ? s.embla__dot__selected : ''
+                  }`}
+                  onClick={() => emblaApi?.scrollTo(index)}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className={s.postOverlay}>
+        <div className={s.stats}>
+          <span className={s.stat}>❤️ {likesCount || 0}</span>
         </div>
       </div>
     </article>

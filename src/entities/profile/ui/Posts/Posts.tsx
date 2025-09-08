@@ -38,6 +38,15 @@ const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
 
   const handleCloseModal = () => setShowAuthAlert(false)
 
+  useEffect(() => {
+    setAllPosts([])
+    setLastLoadedPostId(undefined)
+
+    return () => {
+      setAllPosts([])
+    }
+  }, [userId])
+
   const loadNextPage = useCallback(() => {
     if (!isAuthorized) {
       setShowAuthAlert(true)
@@ -92,12 +101,7 @@ const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
     <div className={s.posts}>
       <div className={s.posts__grid}>
         {allPosts.map(post => (
-          <Post
-            key={post.id}
-            imageUrl={post.images[0]?.url}
-            likesCount={post.likesCount}
-            id={post.id}
-          />
+          <Post key={post.id} images={post.images} likesCount={post.likesCount} />
         ))}
       </div>
 
