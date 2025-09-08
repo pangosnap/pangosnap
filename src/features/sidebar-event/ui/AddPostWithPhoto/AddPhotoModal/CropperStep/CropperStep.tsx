@@ -11,11 +11,11 @@ import s from './CropperStep.module.scss'
 
 type Props = {
   src: string
-  onCancel: () => void
-  onApply: (file: File, previewUrl: string) => void
+
+  onApplyAction: (file: File, previewUrl: string) => void
 }
 
-export const CropperStep = ({ src, onCancel, onApply }: Props) => {
+export const CropperStep = ({ src, onApplyAction }: Props) => {
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
@@ -32,8 +32,8 @@ export const CropperStep = ({ src, onCancel, onApply }: Props) => {
     const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' })
     const url = URL.createObjectURL(blob)
 
-    onApply(file, url)
-  }, [croppedAreaPixels, onApply, src])
+    onApplyAction(file, url)
+  }, [croppedAreaPixels, onApplyAction, src])
 
   const aspectMap: Record<string, number> = {
     '1:1': 1,
@@ -58,26 +58,24 @@ export const CropperStep = ({ src, onCancel, onApply }: Props) => {
       </div>
 
       <div className={s.Toolbar}>
-        <input
-          className={s.Zoom}
-          type={'range'}
-          min={1}
-          max={3}
-          step={0.01}
-          value={zoom}
-          onChange={e => setZoom(Number(e.target.value))}
-          aria-label={'Zoom'}
-        />
-        <BaseSelect
-          items={['1:1', '4:5', '16:9']}
-          defaultValue={'1:1'}
-          onValueChange={value => setAspect(aspectMap[value])}
-        />
-
         <div className={s.Actions}>
-          <Button variant={'text'} onClick={onCancel}>
-            Back
-          </Button>
+          <input
+            className={s.Zoom}
+            type={'range'}
+            min={1}
+            max={3}
+            step={0.01}
+            value={zoom}
+            onChange={e => setZoom(Number(e.target.value))}
+            aria-label={'Zoom'}
+          />
+          <BaseSelect
+            items={['1:1', '4:5', '16:9']}
+            defaultValue={'1:1'}
+            onValueChange={value => setAspect(aspectMap[value])}
+          />
+        </div>
+        <div>
           <Button variant={'primary'} onClick={applyHandler}>
             Apply crop
           </Button>

@@ -1,6 +1,7 @@
 .Description {
   display: flex;
   flex-direction: column;
+  margin-top: 24px;
   color: var(--color-light-900);
 }
 
@@ -8,7 +9,6 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  margin: 24px 0;
 }
 
 .userName {

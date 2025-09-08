@@ -15,8 +15,6 @@
   height: var(--size);
   margin: 0 auto;
   border-radius: 12px;
-
-  background: #111;
 }
 
 .Toolbar {
@@ -33,5 +31,6 @@
 
 .Actions {
   display: flex;
-  gap: 8px;
+  gap: 20px;
+  justify-content: center;
 }

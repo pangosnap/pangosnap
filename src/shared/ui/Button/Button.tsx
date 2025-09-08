@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
+import { ComponentPropsWithoutRef, ElementType, MouseEvent } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -9,6 +9,7 @@ type Props<T extends ElementType = 'button'> = {
   variant?: 'primary' | 'secondary' | 'outlined' | 'text' | 'icon'
   fullWidth?: boolean
   spacingNameBtn?: 'small' | 'medium'
+  autoBlurOnClick?: boolean
 } & ComponentPropsWithoutRef<T>
 
 export const Button = <T extends ElementType = 'button'>(props: Props<T>) => {
@@ -18,8 +19,17 @@ export const Button = <T extends ElementType = 'button'>(props: Props<T>) => {
     fullWidth,
     className,
     as: Component = 'button',
+    autoBlurOnClick = false,
+    onMouseUp,
     ...rest
   } = props
+
+  const handleMouseUp = (e: MouseEvent) => {
+    onMouseUp?.(e as any)
+    if (autoBlurOnClick && e.currentTarget instanceof HTMLElement) {
+      e.currentTarget.blur()
+    }
+  }
 
   return (
     <Component
@@ -31,6 +41,7 @@ export const Button = <T extends ElementType = 'button'>(props: Props<T>) => {
         className,
         'uik_typography-button'
       )}
+      onMouseUp={handleMouseUp}
       {...rest}
     />
   )

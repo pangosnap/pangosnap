@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-bottom: 15px;
 }
 
 .Viewport {
@@ -16,20 +17,25 @@
 
 .Slide {
   position: relative;
+
+  display: flex;
   flex: 0 0 100%; // КЛЮЧЕВОЕ: ширина одного слайда = ширина вьюпорта
+  justify-content: center;
+
   min-width: 0;
 }
 
 .Image {
   display: block;
 
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  max-height: 420px; // подстрой под твой layout
+  max-height: 420px;
+  margin-inline: auto;
   border-radius: 12px;
 
   object-fit: contain;
-  background: var(--uik-bg-muted, #f6f6f6);
 }
 
 .Controls {
@@ -39,7 +45,7 @@
   justify-content: space-between;
 
   &.single {
-    justify-content: center; // без стрелок точки по центру
+    justify-content: center;
   }
 }
 
