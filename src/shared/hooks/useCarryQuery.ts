@@ -8,7 +8,7 @@ export const useCarryQuery = () => {
   return (pathname: string) => {
     const qs = new URLSearchParams(sp)
 
-    qs.set('modal', '1')
+    /*qs.set('modal', '1')*/
 
     return `${pathname}?${qs.toString()}`
   }

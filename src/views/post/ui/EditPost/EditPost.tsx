@@ -125,14 +125,13 @@ export const EditPost = ({ postId, closeAction }: Props) => {
         closeAction={() => setConfirmOpen(false)}
         confirmAction={confirmClose}
         title={'Close Post'}
-        message={
-          <>
-            Do you really want to close the edition of the publication?
-            <br />
-            If you close, changes won’t be saved.
-          </>
-        }
-      />
+      >
+        <>
+          Do you really want to close the edition of the publication?
+          <br />
+          If you close, changes won’t be saved.
+        </>
+      </ConfirmModal>
     </>
   )
 }

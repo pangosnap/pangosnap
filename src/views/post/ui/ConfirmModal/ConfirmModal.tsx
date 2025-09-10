@@ -13,11 +13,11 @@ type Props = {
   closeAction: () => void
   confirmAction: () => void
   title?: string
-  message?: ReactNode
+  children?: ReactNode
 }
 
 export const ConfirmModal = (props: Props) => {
-  const { open, closeAction, confirmAction, title = 'Confirm', message = 'Are you sure?' } = props
+  const { open, closeAction, confirmAction, title = 'Confirm', children = 'Are you sure?' } = props
 
   const handleOk = () => {
     confirmAction()
@@ -45,7 +45,7 @@ export const ConfirmModal = (props: Props) => {
             </Dialog.Close>
           </div>
 
-          <Dialog.Description className={s.message}>{message}</Dialog.Description>
+          <Dialog.Description className={s.message}>{children}</Dialog.Description>
 
           <div className={s.buttonWrap}>
             <Button variant={'outlined'} type={'button'} onClick={handleOk}>

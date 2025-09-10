@@ -1,12 +1,17 @@
 'use client'
 
+import { useState } from 'react'
+
+import { useDeletePostMutation } from '@/entities/post/api/postApi'
 import { useCarryQuery } from '@/shared/hooks/useCarryQuery'
 import Edit from '@/shared/icons/Edit.svg'
 import More from '@/shared/icons/More.svg'
 import Trash from '@/shared/icons/Trash.svg'
 import { Button } from '@/shared/ui/Button/Button'
+import { ConfirmModal } from '@/views/post/ui/ConfirmModal/ConfirmModal'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import s from './postActionsMenu.module.scss'
 
@@ -16,6 +21,19 @@ type Props = {
 }
 export const PostActionsMenu = ({ isOwner, postId }: Props) => {
   const href = useCarryQuery()
+
+  const router = useRouter()
+  const [isConfirmOpen, setConfirmOpen] = useState(false)
+  const [deletePost, { isLoading }] = useDeletePostMutation()
+
+  const handleConfirmDelete = async () => {
+    try {
+      await deletePost(postId).unwrap()
+      router.back()
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   return (
     <div className={s.headerActions}>
@@ -44,9 +62,16 @@ export const PostActionsMenu = ({ isOwner, postId }: Props) => {
                 </Link>
               </DropdownMenu.Item>
 
-              <DropdownMenu.Item className={s.item}>
-                <Trash />
-                Delete Post
+              <DropdownMenu.Item asChild className={s.item} disabled={isLoading}>
+                <button
+                  type={'button'}
+                  onClick={() => {
+                    setConfirmOpen(true)
+                  }}
+                >
+                  <Trash />
+                  Delete Post
+                </button>
               </DropdownMenu.Item>
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
@@ -85,6 +110,15 @@ export const PostActionsMenu = ({ isOwner, postId }: Props) => {
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
       )}
+
+      <ConfirmModal
+        open={isConfirmOpen}
+        closeAction={() => setConfirmOpen(false)}
+        confirmAction={handleConfirmDelete}
+        title={'Delete Post'}
+      >
+        Are you sure you want to delete this post??
+      </ConfirmModal>
     </div>
   )
 }
