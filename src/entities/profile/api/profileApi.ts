@@ -4,7 +4,7 @@ import {
   PostsResponse,
   ProfileResponse,
   PublicUserProfileResponse,
-} from '@/entities/profile/model/types'
+} from '@/entities/profile/type/types'
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: builder => ({

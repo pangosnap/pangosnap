@@ -69,8 +69,13 @@
 
   .Footer {
     display: flex;
+    gap: 94px;
     justify-content: flex-end;
     margin-top: 18px;
+
+    &:has(> button:nth-of-type(2):last-of-type) {
+      justify-content: space-between;
+    }
   }
 
   .IconButton {

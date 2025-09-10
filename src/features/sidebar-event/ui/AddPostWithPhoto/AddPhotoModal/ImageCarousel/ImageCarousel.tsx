@@ -12,11 +12,11 @@ import s from './ImageCarousel.module.scss'
 type Props = {
   slides: string[]
   selectedIndex: number
-  onSelect: (index: number) => void
+  onSelectAction: (index: number) => void
   className?: string
 }
 
-export const ImageCarousel = ({ slides, selectedIndex, onSelect, className }: Props) => {
+export const ImageCarousel = ({ slides, selectedIndex, onSelectAction, className }: Props) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: 'center',
@@ -25,8 +25,8 @@ export const ImageCarousel = ({ slides, selectedIndex, onSelect, className }: Pr
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
 
   const onSelectEmbla = useCallback(
-    (api: EmblaCarouselType) => onSelect(api.selectedScrollSnap()),
-    [onSelect]
+    (api: EmblaCarouselType) => onSelectAction(api.selectedScrollSnap()),
+    [onSelectAction]
   )
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export const ImageCarousel = ({ slides, selectedIndex, onSelect, className }: Pr
                 key={i}
                 type={'button'}
                 className={clsx(s.Dot, i === selectedIndex && s.active)}
-                onClick={() => onSelect(i)}
+                onClick={() => onSelectAction(i)}
                 aria-label={`Go to photo ${i + 1}`}
               />
             ))}

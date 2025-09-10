@@ -1,17 +1,15 @@
 'use client'
 
-import { ChangeEvent, ComponentPropsWithoutRef, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState, type ReactNode } from 'react'
 
 import { CropperStep } from './CropperStep/CropperStep'
-import { ImageCarousel } from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/ImageCarousel/ImageCarousel'
-import { PublicationPanel } from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/PublicationPanel/PublicationPanel'
-import {
-  ALLOWED_MIME,
-  MAX_FILES,
-  MAX_SIZE_BYTES,
-} from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/lib/uploadPhoto.constants'
+import { ImageCarousel } from './ImageCarousel/ImageCarousel'
+import { PublicationPanel } from './PublicationPanel/PublicationPanel'
+import { ALLOWED_MIME, MAX_FILES, MAX_SIZE_BYTES } from './lib/uploadPhoto.constants'
+import { useObjectUrls } from './lib/useObjectUrls'
+import { validateFiles } from './lib/validateFiles'
+import { HeaderAction } from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPhotoModal/HeaderAction/HeaderAction'
 import BackArrow from '@/shared/icons/back-arrow.svg'
-import CloseIcon from '@/shared/icons/close-outline.svg'
 import PictureIcon from '@/shared/icons/picture-icon.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import { clsx } from 'clsx'
@@ -21,61 +19,53 @@ import s from './AddPhotoModal.module.scss'
 
 type Props = {
   open: boolean
-  onClose: () => void
+  onCloseAction: () => void
   modalTitle: string
   overlayDarkClass?: string
-  onConfirm?: () => void
-} & ComponentPropsWithoutRef<'div'>
+  onConfirmAction?: (validFiles: File[], description: string) => void
+}
 
-type Step = 'select' | 'crop' | 'publish'
+export type Step = 'select' | 'crop' | 'publish'
 
 export const AddPhotoModal = (props: Props) => {
-  const { modalTitle, onClose, onConfirm, open, className, overlayDarkClass, ...rest } = props
+  const { modalTitle, onCloseAction, onConfirmAction, open, overlayDarkClass } = props
 
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const [previews, setPreviews] = useState<string[]>([])
-  const [validFiles, setValidFiles] = useState<File[]>([])
+
+  const [files, setFiles] = useState<File[]>([])
   const [error, setError] = useState<string | null>(null)
-
+  const [description, setDescription] = useState('')
   const [step, setStep] = useState<Step>('select')
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const [stepTitle, setStepTitle] = useState<string>(modalTitle)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
-  const contentClassName = clsx(s.Content, className, step === 'publish' && s.wide)
+  const previews = useObjectUrls(files)
+  const hasFiles = files.length > 0
+  const isCropOrPublish = step === 'crop' || step === 'publish'
+  const isSelectWithFiles = step === 'select' && hasFiles
+  const contentClassName = clsx(s.Content, step === 'publish' && s.wide)
 
   const openFileDialog = () => {
-    if (inputRef.current) {
-      inputRef.current.value = ''
-      inputRef.current.click()
+    if (!inputRef.current) {
+      return
     }
+    inputRef.current.value = ''
+    inputRef.current.click()
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const filesList = e.target.files
+    const list = e.target.files
 
-    // Пользователь нажал "Отмена" — не трогаем текущее состояние
-    if (!filesList || filesList.length === 0) {
+    if (!list || list.length === 0) {
       return
     }
 
-    const picked = Array.from(filesList)
-    const errors: string[] = []
-    const valid: File[] = []
-
-    if (picked.length > MAX_FILES) {
-      errors.push(`Max ${MAX_FILES} photo.`)
-    }
-
-    for (const f of picked.slice(0, MAX_FILES)) {
-      if (!ALLOWED_MIME.includes(f.type)) {
-        errors.push(`${f.name}: only JPEG/PNG.`)
-        continue
-      }
-      if (f.size > MAX_SIZE_BYTES) {
-        errors.push(`${f.name}: no more 20 mb.`)
-        continue
-      }
-      valid.push(f)
-    }
+    const picked = Array.from(list)
+    const { valid, errors } = validateFiles(picked, {
+      maxFiles: MAX_FILES,
+      allowedMime: ALLOWED_MIME,
+      maxBytes: MAX_SIZE_BYTES,
+    })
 
     if (valid.length === 0) {
       setError(errors.length ? errors.join('\n') : 'No valid files selected')
@@ -84,96 +74,87 @@ export const AddPhotoModal = (props: Props) => {
       return
     }
 
+    setFiles(valid)
     setError(errors.length ? errors.join('\n') : null)
-
-    setPreviews(prev => {
-      prev.forEach(url => {
-        if (url.startsWith('blob:')) {
-          URL.revokeObjectURL(url)
-        }
-      })
-
-      return valid.map(file => URL.createObjectURL(file))
-    })
-
-    setValidFiles(valid)
     setCurrentIndex(0)
     setStep('select')
-
+    setStepTitle('Add Photo')
     e.target.value = ''
   }
 
-  const renderHeaderAction = () => {
-    if (!canGoNext) {
-      return (
-        <Dialog.Close asChild>
-          <Button type={'button'} className={s.IconButton} aria-label={'Close'}>
-            <CloseIcon />
-          </Button>
-        </Dialog.Close>
-      )
-    }
-
-    if (step === 'publish') {
-      return (
-        <Button type={'button'} variant={'text'} onClick={() => onConfirm?.()}>
-          Publish
-        </Button>
-      )
-    }
-
-    return (
-      <Button type={'button'} variant={'text'} onClick={() => setStep('publish')}>
-        Next
-      </Button>
-    )
+  const publicationPost = () => {
+    onConfirmAction?.(files, description)
   }
 
-  const handleApplyCropAt = (index: number, file: File, previewUrl: string) => {
-    setPreviews(prev => {
-      const next = [...prev]
-      const old = next[index]
-
-      if (old?.startsWith('blob:')) {
-        URL.revokeObjectURL(old)
-      }
-      next[index] = previewUrl
-
-      return next
-    })
-
-    setValidFiles(prev => {
+  const handleApplyCropAt = (index: number, file: File) => {
+    setFiles(prev => {
       const next = [...prev]
 
       next[index] = file
 
       return next
     })
-
     setStep('select')
+    setStepTitle('Add Photo')
   }
 
-  const canGoNext = previews.length > 0
+  // не даём currentIndex выйти за пределы при изменении набора файлов
+  useEffect(() => {
+    setCurrentIndex(prev => (files.length === 0 ? 0 : Math.min(prev, files.length - 1)))
+  }, [files.length])
+
+  let backButton: ReactNode = <span className={s.IconPlaceholder} />
+
+  if (isCropOrPublish) {
+    backButton = (
+      <Button
+        type={'button'}
+        variant={'text'}
+        onClick={() => {
+          setStep('select')
+          setStepTitle('Add Photo')
+        }}
+        aria-label={'Back'}
+        autoBlurOnClick
+      >
+        <BackArrow />
+      </Button>
+    )
+  } else if (isSelectWithFiles) {
+    backButton = (
+      <Button
+        type={'button'}
+        variant={'text'}
+        onClick={() => setFiles([])}
+        aria-label={'Back'}
+        autoBlurOnClick
+      >
+        <BackArrow />
+      </Button>
+    )
+  }
 
   return (
-    <Dialog.Root open={open} onOpenChange={onClose} {...rest}>
+    <Dialog.Root open={open} onOpenChange={isOpen => !isOpen && onCloseAction()}>
       <Dialog.Portal>
         <Dialog.Overlay className={overlayDarkClass || s.Overlay} />
 
         <Dialog.Content className={contentClassName}>
-          {/* Header */}
           <div className={s.Header}>
-            {step !== 'select' ? (
-              <Button type={'button'} variant={'text'} onClick={() => setStep('select')}>
-                <BackArrow />
-              </Button>
-            ) : (
-              <span />
-            )}
+            {backButton}
 
-            <Dialog.Title className={'uik_typography-h1'}>{modalTitle}</Dialog.Title>
+            <Dialog.Title className={'uik_typography-h1'}>{stepTitle}</Dialog.Title>
 
-            {renderHeaderAction()}
+            <HeaderAction
+              step={step}
+              canGoNext={hasFiles}
+              onPublish={publicationPost}
+              onNext={() => {
+                setStep('publish')
+                setStepTitle('Publish')
+              }}
+              classes={{ iconButton: s.IconButton }}
+            />
           </div>
 
           <hr />
@@ -185,7 +166,7 @@ export const AddPhotoModal = (props: Props) => {
                   <ImageCarousel
                     slides={previews}
                     selectedIndex={currentIndex}
-                    onSelect={setCurrentIndex}
+                    onSelectAction={setCurrentIndex}
                     className={s.Carousel}
                   />
                 ) : (
@@ -195,15 +176,22 @@ export const AddPhotoModal = (props: Props) => {
                 )}
 
                 {previews.length > 0 ? (
-                  <Button variant={'outlined'} onClick={() => setStep('crop')}>
-                    Crop current ({currentIndex + 1}/{previews.length})
+                  <Button
+                    type={'button'}
+                    variant={'outlined'}
+                    onClick={() => {
+                      setStep('crop')
+                      setStepTitle('Crop')
+                    }}
+                  >
+                    {`Crop current (${currentIndex + 1}/${previews.length})`}
                   </Button>
                 ) : (
                   <>
-                    <Button onClick={openFileDialog} fullWidth>
+                    <Button type={'button'} onClick={openFileDialog}>
                       Select from Computer
                     </Button>
-                    <Button variant={'outlined'} disabled>
+                    <Button type={'button'} variant={'outlined'} disabled>
                       Open Draft
                     </Button>
                   </>
@@ -226,11 +214,10 @@ export const AddPhotoModal = (props: Props) => {
               </>
             )}
 
-            {step === 'crop' && (
+            {step === 'crop' && files.length > 0 && (
               <CropperStep
                 src={previews[currentIndex]}
-                onCancel={() => setStep('select')}
-                onApply={(file, url) => handleApplyCropAt(currentIndex, file, url)}
+                onApplyAction={file => handleApplyCropAt(currentIndex, file)}
               />
             )}
 
@@ -240,12 +227,12 @@ export const AddPhotoModal = (props: Props) => {
                   <ImageCarousel
                     slides={previews}
                     selectedIndex={currentIndex}
-                    onSelect={setCurrentIndex}
+                    onSelectAction={setCurrentIndex}
                   />
                 </div>
 
                 <aside className={s.Right}>
-                  <PublicationPanel />
+                  <PublicationPanel descriptionValue={setDescription} />
                 </aside>
               </div>
             )}

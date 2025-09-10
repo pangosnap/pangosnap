@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 export const baseApi = createApi({
   reducerPath: 'api',
-  tagTypes: ['Profile', 'Authorization'],
+  tagTypes: ['Profile', 'Authorization', 'Post'],
 
   baseQuery: baseQueryWithZodValidation(async (args, api, extraOptions) => {
     const rawBaseQuery = fetchBaseQuery({
