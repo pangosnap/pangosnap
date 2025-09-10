@@ -1,15 +1,17 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
 
-/*useModalHref*/
 export const useCarryQuery = () => {
   const sp = useSearchParams()
 
   return (pathname: string) => {
+    if (!sp) {
+      return pathname
+    }
+
     const qs = new URLSearchParams(sp)
+    const str = qs.toString()
 
-    /*qs.set('modal', '1')*/
-
-    return `${pathname}?${qs.toString()}`
+    return str ? `${pathname}?${str}` : pathname
   }
 }

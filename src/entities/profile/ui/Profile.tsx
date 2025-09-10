@@ -5,11 +5,9 @@ import { useGetPublicUserProfileQuery } from '@/entities/profile/api/profileApi'
 import { Count } from '@/entities/profile/ui/Count'
 import { Posts } from '@/entities/profile/ui/Posts'
 import { useMeQuery } from '@/features/auth/api/authRegApi'
-import { useCarryQuery } from '@/shared/hooks/useCarryQuery'
 import { Path } from '@/shared/routes/constants'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
-import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import s from './Profile.module.scss'
@@ -34,8 +32,6 @@ export default function Profile() {
 
   const isProfileOwner = !!id && user?.userId && Number(id) === user.userId
 
-  const href = useCarryQuery()
-
   useEffect(() => {
     if (!id) {
       router.push(Path.main)
@@ -44,9 +40,6 @@ export default function Profile() {
 
   return (
     <div className={s.profile}>
-      <Link href={href('/post/1')} scroll={false}>
-        Открыть пост
-      </Link>
       <div className={s.profile__container}>
         <div className={s.profile__header}>
           <Avatar alt={'avatar'} src={profileData?.avatars[0]?.url} size={'large'} />
