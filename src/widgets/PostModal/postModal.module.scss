@@ -1,8 +1,17 @@
 .overlay {
   position: fixed;
   inset: 0;
+
   display: flex;
+
+  opacity: 1;
   background-color: rgb(0 0 0 / 60%);
+
+  transition: opacity 220ms ease-out;
+
+  &[data-state='closed'] {
+    opacity: 0;
+  }
 }
 
 .content {
@@ -18,10 +27,23 @@
 }
 
 .modal {
+  transform: none;
+
   width: 100%;
   max-width: 1014px;
   min-height: 564px;
   margin: 0 auto;
+
+  opacity: 1;
+
+  transition:
+    opacity 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  &[data-state='closed'] {
+    transform: translateY(8px) scale(0.985);
+    opacity: 0;
+  }
 }
 
 .body {
@@ -29,6 +51,7 @@
 
   min-width: 0;
   max-width: 972px;
+  min-height: 564px;
   border: 1px solid #4c4c4c;
   border-radius: 2px;
 

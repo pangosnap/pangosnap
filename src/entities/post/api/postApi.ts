@@ -14,20 +14,12 @@ export const postApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: { description },
       }),
-      invalidatesTags: (_res, _err, { postId }) => [
-        { type: 'Post', id: postId },
-        { type: 'Posts', id: 'LIST' },
-      ],
     }),
     deletePost: build.mutation<void, number>({
       query: postId => ({
         url: `/posts/${postId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (_res, _err, postId) => [
-        { type: 'Post', id: postId },
-        { type: 'Posts', id: 'LIST' },
-      ],
     }),
   }),
 })
