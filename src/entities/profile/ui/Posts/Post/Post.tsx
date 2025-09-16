@@ -72,7 +72,10 @@ const Post: FC<PostType> = ({ images, likesCount, postId }) => {
                     className={`${s.embla__dot} ${
                       index === selectedIndex ? s.embla__dot__selected : ''
                     }`}
-                    onClick={() => emblaApi?.scrollTo(index)}
+                    onClick={e => {
+                      e.preventDefault()
+                      emblaApi?.scrollTo(index)
+                    }}
                   />
                 ))}
               </div>

@@ -35,3 +35,4 @@ export const PostSchema = z.object({
 })
 
 export type Post = z.infer<typeof PostSchema>
+export type PostImage = z.infer<typeof PostImageSchema>

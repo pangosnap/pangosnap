@@ -3,6 +3,7 @@ import type { Post } from '@/entities/post/schemas/postSchema'
 
 import { useMeQuery } from '@/features/auth/api/authRegApi'
 import { PostHeader, PostFooter } from '@/views/post'
+import { PostCarousel } from '@/views/post/ui/PostCarousel/PostCarousel'
 import { Comments, CommentsInput } from '@/widgets/Comments'
 
 import s from './postView.module.scss'
@@ -20,9 +21,7 @@ export const PostView = ({ post }: Props) => {
   return (
     <article className={s.post}>
       <div className={s.post__media}>
-        {post.images?.map(img => (
-          <img key={img.uploadId} src={img.url} alt={''} className={s.post__img} />
-        ))}
+        <PostCarousel images={post.images} />
       </div>
 
       <div className={s.post__content}>

@@ -20,8 +20,12 @@
 }
 
 .content {
+  position: relative;
+  z-index: 9999;
+
   padding: 12px;
   border: 1px solid #4c4c4c;
+
   background: #171717;
 }
 

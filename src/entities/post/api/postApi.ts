@@ -14,6 +14,7 @@ export const postApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: { description },
       }),
+      invalidatesTags: (_res, _err, { postId }) => [{ type: 'Post', id: postId }],
     }),
     deletePost: build.mutation<void, number>({
       query: postId => ({

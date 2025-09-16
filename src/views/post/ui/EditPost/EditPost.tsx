@@ -8,6 +8,7 @@ import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
 import { Loader } from '@/shared/ui/Loader/Loader'
 import { ConfirmModal } from '@/views/post/ui/ConfirmModal/ConfirmModal'
+import { PostCarousel } from '@/views/post/ui/PostCarousel/PostCarousel'
 import { useRouter } from 'next/navigation'
 
 import s from './editPost.module.scss'
@@ -76,11 +77,7 @@ export const EditPost = ({ postId, closeAction }: Props) => {
 
         <div className={s.wrap}>
           <div className={s.left}>
-            {data?.images?.map(img =>
-              img?.url?.trim() ? (
-                <img key={img.uploadId} src={img.url} alt={''} className={s.img} loading={'lazy'} />
-              ) : null
-            )}
+            <PostCarousel images={data?.images ?? []} />
           </div>
 
           <div className={s.right}>

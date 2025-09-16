@@ -37,79 +37,42 @@ export const PostActionsMenu = ({ isOwner, postId }: Props) => {
 
   return (
     <div className={s.headerActions}>
-      {isOwner && (
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger asChild>
-            <Button
-              variant={'text'}
-              type={'button'}
-              className={s.button}
-              aria-label={'Post actions'}
-            >
-              <More aria-hidden />
-            </Button>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Portal>
-            <DropdownMenu.Content
-              className={s.content}
-              side={'bottom'}
-              align={'end'}
-              sideOffset={6}
-            >
-              <DropdownMenu.Item asChild className={s.item}>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
+          <Button variant={'text'} type={'button'} className={s.button} aria-label={'Post actions'}>
+            <More aria-hidden />
+          </Button>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Portal>
+          <DropdownMenu.Content className={s.content} side={'bottom'} align={'end'} sideOffset={6}>
+            <DropdownMenu.Item asChild className={s.item}>
+              {isOwner ? (
                 <Link href={href(`/post/${postId}/edit`)} scroll={false}>
                   <Edit /> Edit Post
                 </Link>
-              </DropdownMenu.Item>
-
-              <DropdownMenu.Item asChild className={s.item} disabled={isLoading}>
-                <button
-                  type={'button'}
-                  onClick={() => {
-                    setConfirmOpen(true)
-                  }}
-                >
-                  <Trash />
-                  Delete Post
-                </button>
-              </DropdownMenu.Item>
-            </DropdownMenu.Content>
-          </DropdownMenu.Portal>
-        </DropdownMenu.Root>
-      )}
-      {!isOwner && (
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger asChild>
-            <Button
-              variant={'text'}
-              type={'button'}
-              className={s.button}
-              aria-label={'Post actions'}
-            >
-              <More aria-hidden />
-            </Button>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Portal>
-            <DropdownMenu.Content
-              className={s.content}
-              side={'bottom'}
-              align={'end'}
-              sideOffset={6}
-            >
-              <DropdownMenu.Item asChild className={s.item}>
+              ) : (
                 <Link href={href(`#`)} scroll={false}>
                   <Edit /> Follow
                 </Link>
-              </DropdownMenu.Item>
+              )}
+            </DropdownMenu.Item>
 
-              <DropdownMenu.Item className={s.item}>
-                <Trash />
-                UnFollow
-              </DropdownMenu.Item>
-            </DropdownMenu.Content>
-          </DropdownMenu.Portal>
-        </DropdownMenu.Root>
-      )}
+            <DropdownMenu.Item asChild className={s.item} disabled={isLoading}>
+              {isOwner ? (
+                <button type={'button'} onClick={() => setConfirmOpen(true)}>
+                  <Trash />
+                  Delete Post
+                </button>
+              ) : (
+                <>
+                  <Trash />
+                  UnFollow
+                </>
+              )}
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Portal>
+      </DropdownMenu.Root>
 
       <ConfirmModal
         open={isConfirmOpen}
