@@ -21,6 +21,7 @@ export const postApi = baseApi.injectEndpoints({
         url: `/posts/${postId}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['Profile'],
     }),
   }),
 })

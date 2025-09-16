@@ -65,7 +65,7 @@ export function PostCarousel({ images }: Props) {
             aria-label={'Previous slide'}
             onClick={() => emblaApi?.scrollPrev()}
           >
-            ‹
+            <span className={s.arrow}>‹</span>
           </button>
           <button
             type={'button'}
@@ -73,7 +73,7 @@ export function PostCarousel({ images }: Props) {
             aria-label={'Next slide'}
             onClick={() => emblaApi?.scrollNext()}
           >
-            ›
+            <span className={s.arrow}>›</span>
           </button>
 
           <div className={s.dots} role={'tablist'} aria-label={'Slides'}>

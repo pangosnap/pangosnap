@@ -42,9 +42,11 @@ export const profileApi = baseApi.injectEndpoints({
           params: Object.keys(queryParams).length > 0 ? queryParams : undefined,
         }
       },
+      providesTags: ['Profile'],
     }),
     getPublicUserProfile: builder.query<PublicUserProfileResponse, { profileId: number }>({
       query: ({ profileId }) => `public-user/profile/${profileId}`,
+      providesTags: ['Profile'],
     }),
   }),
 })
