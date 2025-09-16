@@ -64,7 +64,12 @@ const Post: FC<PostType> = ({ images, likesCount, postId }) => {
 
           {images.length > 1 && (
             <>
-              <div className={s.embla__dots}>
+              <div
+                className={s.embla__dots}
+                onClick={e => {
+                  e.preventDefault()
+                }}
+              >
                 {images.map((_, index) => (
                   <button
                     type={'button'}
