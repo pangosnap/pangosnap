@@ -12,12 +12,13 @@ export const metadata: Metadata = {
   description: 'pangosnap',
 }
 
-export function RootLayout({ children }: { children: ReactNode }) {
+export function RootLayout({ children, modal }: { children: ReactNode; modal: ReactNode }) {
   return (
     <html lang={'en'}>
       <body>
         <Providers>
           <AuthGate>{children}</AuthGate>
+          {modal}
         </Providers>
       </body>
     </html>

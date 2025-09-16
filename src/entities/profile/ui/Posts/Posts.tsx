@@ -70,12 +70,24 @@ const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
   })
 
   useEffect(() => {
-    if (currentData?.items) {
-      setAllPosts(prev => {
-        return [...prev, ...currentData.items]
-      })
+    if (!currentData?.items) {
+      return
     }
-  }, [currentData])
+    setAllPosts(prev => {
+      // первая страница (после удаления/инвалидации) — ПОЛНАЯ ЗАМЕНА
+      if (lastLoadedPostId === undefined) {
+        return currentData.items
+      }
+      // последующие страницы — APPEND + DEDUPE по id
+      const map = new Map(prev.map(p => [p.id, p]))
+
+      for (const p of currentData.items) {
+        map.set(p.id, p)
+      }
+
+      return [...map.values()]
+    })
+  }, [currentData, lastLoadedPostId])
 
   if (error) {
     return (
@@ -101,7 +113,7 @@ const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
     <div className={s.posts}>
       <div className={s.posts__grid}>
         {allPosts.map(post => (
-          <Post key={post.id} images={post.images} likesCount={post.likesCount} />
+          <Post key={post.id} images={post.images} likesCount={post.likesCount} postId={post.id} />
         ))}
       </div>
 

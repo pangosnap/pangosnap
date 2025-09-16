@@ -1,10 +1,7 @@
 .Overlay {
   position: fixed;
-  z-index: 10;
   inset: 0;
-
   background-color: rgb(0 0 0 / 90%);
-
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 

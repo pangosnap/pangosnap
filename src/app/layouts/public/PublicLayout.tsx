@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { HeaderPublic } from '@/widgets/HeaderPublic/HeaderPublic'
 
-export default function PublicLayout({ children }: { children: ReactNode }) {
+export default function PublicLayout({ children}: { children: ReactNode}) {
   return (
     <>
       <div className="l-wrap">

@@ -1,0 +1,107 @@
+.footer {
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+
+    padding: 12px 24px 0;
+    border-top: 1px solid #4c4c4c;
+
+    font-family: Inter, sans-serif;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 24px;
+  }
+
+  &__like {
+    color: #fff;
+
+    &:hover {
+      color: #8d9094;
+    }
+  }
+
+  &__like--active {
+    color: #cc1439;
+
+    &:hover {
+      color: #f23d61;
+    }
+  }
+
+  &__forward {
+    &:hover {
+      color: #8d9094;
+    }
+  }
+
+  &__bookmark {
+    margin-left: auto;
+
+    &:hover {
+      color: #8d9094;
+    }
+  }
+
+  &__likers {
+    display: flex;
+    align-items: center;
+  }
+
+  &__avatarWrap {
+    position: relative;
+
+    overflow: hidden;
+    flex: 0 0 24px;
+
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+
+  &__avatar {
+    display: block;
+    object-fit: cover;
+
+    &:not(:first-child) {
+      margin-left: -8px;
+    }
+  }
+
+  &__avatar-0 {
+    z-index: 3;
+  }
+
+  &__avatar-1 {
+    z-index: 2;
+  }
+
+  &__avatar-2 {
+    z-index: 1;
+  }
+
+  &__meta {
+    padding-left: 12px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  &__likesCount {
+    padding-right: 6px;
+    font-weight: 400;
+  }
+
+  &__likeText {
+    font-weight: 600;
+  }
+
+  &__time {
+    margin-top: 4px;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #8d9094;
+  }
+}
