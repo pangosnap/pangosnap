@@ -64,10 +64,10 @@ export const PostActionsMenu = ({ isOwner, postId }: Props) => {
                   Delete Post
                 </button>
               ) : (
-                <>
+                <span>
                   <Trash />
                   UnFollow
-                </>
+                </span>
               )}
             </DropdownMenu.Item>
           </DropdownMenu.Content>
