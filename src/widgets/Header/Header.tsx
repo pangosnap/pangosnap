@@ -1,7 +1,5 @@
-import NotificationIcon from '@/shared/icons/notification.svg'
 import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'
-import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './Header.module.scss'
@@ -17,13 +15,13 @@ export const Header = ({ isAuth, isProcessingAuth = false }: Props) => {
         <div className={s.content}>
           <h1 className={'uik_typography-display-large'}>Pangosnap</h1>
           <div className={s.actions}>
-            {isAuth && (
+            {/*{isAuth && (
               <div className={s.notification}>
                 <NotificationIcon />
                 <span className={clsx(s.badge)}>3</span>
               </div>
             )}
-            <div className={s.language}>🌐 English ▼</div>
+            <div className={s.language}>🌐 English ▼</div>*/}
             {!isAuth && !isProcessingAuth && (
               <div className={s.authLinks}>
                 <Button as={Link} href={Path.signIn} variant={'text'}>

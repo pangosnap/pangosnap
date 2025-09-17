@@ -1,42 +1,43 @@
 'use client'
 
+import { Post } from '@/entities/post/schemas/postSchema'
 import Bookmark from '@/shared/icons/Bookmark.svg'
 import HeartFill from '@/shared/icons/HeartFill.svg'
 import HeartOutline from '@/shared/icons/HeartOutline.svg'
 import Paper from '@/shared/icons/Paper.svg'
 import { Avatar } from '@/shared/ui/Avatar'
 import { clsx } from 'clsx'
-import Image from 'next/image'
 
 import s from './postFooter.module.scss'
 
 type Props = {
-  likesCount: number
-  isLiked: boolean
-  createdAt: string
-  avatarWhoLikes: string[]
+  post: Post
   isAuthed: boolean
 }
+const MAX_SHOW = 3
 
-export const PostFooter = ({ likesCount, isLiked, createdAt, avatarWhoLikes, isAuthed }: Props) => {
-  const MAX_SHOW = 3
+export const PostFooter = ({ post, isAuthed }: Props) => {
+  const { likesCount, isLiked, createdAt, avatarWhoLikes } = post
+
   const likers = [...new Set(avatarWhoLikes ?? [])].slice(0, MAX_SHOW)
 
-  const dateLine = new Date(createdAt).toLocaleDateString('en-US', {
+  const dateLine = new Intl.DateTimeFormat('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
-  })
+    timeZone: 'UTC',
+  }).format(new Date(createdAt))
 
   return (
     <div className={clsx(s.footer__wrap)}>
       {isAuthed && (
         <div className={s.footer__actions}>
-          <button type={'button'} className={clsx(s.footer__like)}>
-            {!isLiked && (
-              <HeartOutline className={clsx(s.heart, isLiked && s['footer__like--active'])} />
-            )}
-            {isLiked && <HeartFill className={s.heart} />}
+          <button
+            type={'button'}
+            className={s.footer__like}
+            aria-label={isLiked ? 'Unlike' : 'Like'}
+          >
+            {isLiked ? <HeartFill className={s.heart} /> : <HeartOutline className={s.heart} />}
           </button>
 
           <button type={'button'} className={clsx(s.footer__forward)}>
