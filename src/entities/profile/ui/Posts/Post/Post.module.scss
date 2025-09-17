@@ -62,14 +62,20 @@
 
 .embla__dots {
   position: absolute;
-  z-index: 1;
-  right: 0;
-  bottom: 12px;
-  left: 0;
+  z-index: 10;
+  left: 50%;
+  inset-block-end: 8px;
+  transform: translateX(-50%);
 
   display: flex;
-  gap: 6px;
+  gap: 12px;
+  align-items: center;
   justify-content: center;
+
+  padding: 8px;
+  border-radius: 2px;
+
+  background: transparent;
 }
 
 .embla__dot {
