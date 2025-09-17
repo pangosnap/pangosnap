@@ -26,6 +26,7 @@ export const postApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { description, childrenMetadata },
       }),
+      invalidatesTags: ['Profile'],
     }),
   }),
 })
