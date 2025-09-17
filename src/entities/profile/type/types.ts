@@ -12,7 +12,7 @@ export type UserMetadata = {
   publications: number
 }
 
-interface BaseProfile {
+export interface BaseProfile {
   id: number
   userName: string
   aboutMe: string

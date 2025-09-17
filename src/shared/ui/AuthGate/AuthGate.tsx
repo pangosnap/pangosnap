@@ -33,9 +33,9 @@ export const AuthGate = ({ children }: Props) => {
     setIsInitialized(true)
   }, [isLoading])
 
-  if (!isInitialized && !isPostPublic) {
-    return <div>Loading...</div>
-  }
+  // if (!isInitialized && !isPostPublic) {
+  //   return <div>Loading...</div>
+  // }
 
   return children
 }
