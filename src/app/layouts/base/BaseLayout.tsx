@@ -12,11 +12,11 @@ export function BaseLayout({ children }: { children: ReactNode }) {
   const { data } = useMeQuery()
 
   return (
-    <div className={'wrap'}>
+    <div className={clsx(s.base__wrap)}>
       <Header isAuth={!!data} />
-      <div className={clsx(s.content, 'l-container')}>
+      <div className={clsx(s.base__container, !!data && s['base__container--withSidebar'])}>
         {!!data && <Sidebar />}
-        <main className={'l-container l-centered page-public'}>{children}</main>
+        <main className={s.base__content}>{children}</main>
       </div>
     </div>
   )
