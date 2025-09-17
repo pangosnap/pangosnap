@@ -1,7 +1,6 @@
 import { ChangeEventHandler, useState } from 'react'
 
-import { profileApi } from '@/entities/profile/api/profileApi'
-import { useAppSelector } from '@/shared/hooks'
+import { useGetProfileQuery } from '@/entities/profile/api/profileApi'
 import Avatar from '@/shared/ui/Avatar/Avatar'
 import { clsx } from 'clsx'
 
@@ -14,9 +13,8 @@ type Props = {
 }
 export const PublicationPanel = ({ descriptionValue }: Props) => {
   const [text, setText] = useState<string>('')
-  const userName = useAppSelector(
-    state => profileApi.endpoints.getProfile.select()(state)?.data?.userName
-  )
+  const { data } = useGetProfileQuery()
+  const userName = data?.userName
 
   const descriptionHandler: ChangeEventHandler<HTMLTextAreaElement> = e => {
     setText(e.currentTarget.value)
