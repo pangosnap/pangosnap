@@ -13,10 +13,11 @@ import s from './Posts.module.scss'
 type PostsPropsType = {
   userId: number
   isAuthorized: boolean
+  initialItems?: any[]
 }
 
-const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
-  const [allPosts, setAllPosts] = useState<any[]>([])
+const Posts = ({ userId, isAuthorized, initialItems }: PostsPropsType) => {
+  const [allPosts, setAllPosts] = useState<any[]>(() => initialItems ?? [])
   const [showAuthAlert, setShowAuthAlert] = useState(false)
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number | undefined>(undefined)
 
@@ -39,7 +40,7 @@ const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
   const handleCloseModal = () => setShowAuthAlert(false)
 
   useEffect(() => {
-    setAllPosts([])
+    setAllPosts(initialItems ?? [])
     setLastLoadedPostId(undefined)
 
     return () => {
@@ -87,7 +88,7 @@ const Posts = ({ userId, isAuthorized }: PostsPropsType) => {
 
       return [...map.values()]
     })
-  }, [currentData, lastLoadedPostId])
+  }, [currentData])
 
   if (error) {
     return (

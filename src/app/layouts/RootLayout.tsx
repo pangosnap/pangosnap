@@ -17,7 +17,9 @@ export function RootLayout({ children, modal }: { children: ReactNode; modal: Re
     <html lang={'en'}>
       <body>
         <Providers>
-          <AuthGate>{children}</AuthGate>
+          {/*<AuthGate>*/}
+          {children}
+          {/*</AuthGate>*/}
           {modal}
         </Providers>
       </body>

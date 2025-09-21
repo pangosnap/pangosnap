@@ -1,42 +1,18 @@
 'use client'
-import { useEffect } from 'react'
 
-import { useGetPublicUserProfileQuery } from '@/entities/profile/api/profileApi'
+import { PostsProps } from '@/entities/profile/type/types'
 import { Count } from '@/entities/profile/ui/Count'
 import { Posts } from '@/entities/profile/ui/Posts'
 import { useMeQuery } from '@/features/auth/api/authRegApi'
-import { Path } from '@/shared/routes/constants'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
-import { useRouter, useSearchParams } from 'next/navigation'
 
 import s from './Profile.module.scss'
 
-export default function Profile() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const id = searchParams.get('id')
+export default function Profile({ profileData, profileId, initialPosts }: PostsProps) {
+  const { data: meClient } = useMeQuery()
 
-  const { data: user } = useMeQuery(undefined, {
-    selectFromResult: ({ data }) => ({ data }),
-
-    refetchOnMountOrArgChange: false,
-    refetchOnFocus: false,
-    refetchOnReconnect: false,
-  })
-
-  const { data: profileData } = useGetPublicUserProfileQuery(
-    { profileId: Number(id) },
-    { skip: !id }
-  )
-
-  const isProfileOwner = !!id && user?.userId && Number(id) === user.userId
-
-  useEffect(() => {
-    if (!id) {
-      router.push(Path.main)
-    }
-  }, [id, router])
+  const isProfileOwner = meClient?.userId === profileData.id
 
   return (
     <div className={s.profile}>
@@ -65,7 +41,13 @@ export default function Profile() {
           </div>
         </div>
 
-        {!!id && <Posts isAuthorized={!!user?.userId} userId={+id} />}
+        {!!profileId && (
+          <Posts
+            isAuthorized={!!profileId}
+            userId={profileData.id}
+            initialItems={initialPosts?.items}
+          />
+        )}
       </div>
     </div>
   )
