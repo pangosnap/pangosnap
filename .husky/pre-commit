@@ -1,1 +1,10 @@
+echo "🔍 Проверка на FIXME/TODO..."
+if git diff --cached --name-only | xargs grep -n "FIXME" 2>/dev/null; then
+  echo "❌ Обнаружены FIXME комментарии! Исправьте их перед коммитом."
+  exit 1
+fi
+if git diff --cached --name-only | xargs grep -n "TODO" 2>/dev/null; then
+  echo "⚠️  Обнаружены TODO комментарии. Убедитесь, что они временные."
+fi
+
 pnpm lint-staged
