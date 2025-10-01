@@ -78,3 +78,9 @@ export type PostsParams = {
   sortBy?: string
   sortDirection?: 'asc' | 'desc'
 }
+
+export type PostsProps = {
+  profileData: PublicUserProfileResponse
+  profileId: number
+  initialPosts?: PostsResponse
+}
