@@ -1,3 +1,5 @@
+import type { Post } from '@/entities/post/schemas/postSchema'
+
 export type Avatar = {
   url: string
   width: number
@@ -43,27 +45,6 @@ export type PostImage = {
   uploadId: string
 }
 
-export type PostOwner = {
-  firstName: string
-  lastName: string
-}
-
-export type Post = {
-  id: number
-  userName: string
-  description: string
-  location: string
-  images: PostImage[]
-  createdAt: string // ISO string
-  updatedAt: string // ISO string
-  ownerId: number
-  avatarOwner: string
-  owner: PostOwner
-  likesCount: number
-  isLiked: boolean
-  avatarWhoLikes: boolean
-}
-
 export type PostsResponse = {
   items: Post[]
   totalCount: number
@@ -77,10 +58,4 @@ export type PostsParams = {
   pageSize?: number
   sortBy?: string
   sortDirection?: 'asc' | 'desc'
-}
-
-export type PostsProps = {
-  profileData: PublicUserProfileResponse
-  profileId: number
-  initialPosts?: PostsResponse
 }
