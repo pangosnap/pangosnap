@@ -1,4 +1,4 @@
-import { KeyboardEvent } from 'react'
+import { type KeyboardEvent } from 'react'
 
 import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'

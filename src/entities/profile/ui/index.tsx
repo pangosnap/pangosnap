@@ -1,6 +1,6 @@
 'use client'
 
-import { PostsProps } from '@/entities/profile/type/types'
+import { type PostsProps } from '@/entities/profile/type/types'
 import { Count } from '@/entities/profile/ui/Count'
 import { Posts } from '@/entities/profile/ui/Posts'
 import { useMeQuery } from '@/features/auth/api/authRegApi'

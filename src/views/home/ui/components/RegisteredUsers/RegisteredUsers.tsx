@@ -3,13 +3,11 @@ import React, { memo } from 'react'
 import styles from './RegisteredUsers.module.scss'
 
 type RegisteredUsersProps = {
-  totalCount?: number
+  totalCount: number
 }
 
-export const RegisteredUsers = memo(({ totalCount }: RegisteredUsersProps) => {
-  const digits = String(totalCount ?? 0)
-    .padStart(6, '0')
-    .split('')
+export const RegisteredUsers = memo(({ totalCount = 0 }: RegisteredUsersProps) => {
+  const digits = String(totalCount).padStart(6, '0').split('')
 
   return (
     <section className={styles.registeredSection} aria-labelledby={'registered-title'}>
