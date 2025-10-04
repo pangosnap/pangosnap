@@ -9,8 +9,9 @@ import { UniversalModal } from '@/shared/ui/UniversalModal/UniversalModal'
 import s from '@/widgets/Sidebar/Sidebar.module.scss'
 
 export const AddPostWithPhoto = () => {
-  const [postsImage] = usePostsImageMutation()
-  const [createPost] = useCreatePostsMutation()
+  const [postsImage, { isLoading: isUploading }] = usePostsImageMutation()
+  const [createPost, { isLoading: isCreating }] = useCreatePostsMutation()
+  const isSubmitting = isUploading || isCreating
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [onCloseModal, setOnCloseModal] = useState(false)
   const addPhotoModalHandler = async (validFiles: File[], description: string) => {
@@ -47,6 +48,7 @@ export const AddPostWithPhoto = () => {
             onCloseAction={() => setOnCloseModal(true)}
             modalTitle={'Add Photo'}
             onConfirmAction={addPhotoModalHandler}
+            isSubmitting={isSubmitting}
           />
           <UniversalModal
             modalTitle={'Close'}

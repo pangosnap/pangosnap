@@ -23,12 +23,13 @@ type Props = {
   modalTitle: string
   overlayDarkClass?: string
   onConfirmAction?: (validFiles: File[], description: string) => void
+  isSubmitting: boolean
 }
 
 export type Step = 'select' | 'crop' | 'publish'
 
 export const AddPhotoModal = (props: Props) => {
-  const { modalTitle, onCloseAction, onConfirmAction, open, overlayDarkClass } = props
+  const { modalTitle, onCloseAction, onConfirmAction, open, overlayDarkClass, isSubmitting } = props
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -153,6 +154,7 @@ export const AddPhotoModal = (props: Props) => {
                 setStep('publish')
                 setStepTitle('Publish')
               }}
+              isSubmitting={isSubmitting}
               classes={{ iconButton: s.IconButton }}
             />
           </div>

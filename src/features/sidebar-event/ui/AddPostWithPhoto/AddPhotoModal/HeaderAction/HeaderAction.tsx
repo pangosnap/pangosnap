@@ -13,9 +13,17 @@ type Props = {
   classes: {
     iconButton: string
   }
+  isSubmitting: boolean
 }
 
-export const HeaderAction = ({ step, canGoNext, onPublish, onNext, classes }: Props) => {
+export const HeaderAction = ({
+  step,
+  canGoNext,
+  onPublish,
+  onNext,
+  classes,
+  isSubmitting,
+}: Props) => {
   if (!canGoNext) {
     return (
       <Dialog.Close asChild>
@@ -28,7 +36,7 @@ export const HeaderAction = ({ step, canGoNext, onPublish, onNext, classes }: Pr
 
   if (step === 'publish') {
     return (
-      <Button type={'button'} variant={'text'} onClick={onPublish}>
+      <Button disabled={isSubmitting} type={'button'} variant={'text'} onClick={onPublish}>
         Publish
       </Button>
     )
