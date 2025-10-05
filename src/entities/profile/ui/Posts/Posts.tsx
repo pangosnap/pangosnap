@@ -2,10 +2,10 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { USER_POSTS_PAGE_SIZE } from '@/constants/user.constants'
 import { useGetPostsQuery } from '@/entities/profile/api/profileApi'
 import { Post } from '@/entities/profile/ui/Posts/Post'
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll'
+import { USER_POSTS_PAGE_SIZE } from '@/shared/lib/constants/user.constants'
 import { UniversalModal } from '@/shared/ui/UniversalModal/UniversalModal'
 
 import s from './Posts.module.scss'

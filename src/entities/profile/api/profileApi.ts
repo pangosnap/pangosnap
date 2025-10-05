@@ -7,13 +7,12 @@ import {
   PublicUserProfileResponse,
   UpdateProfileInput,
 } from '@/entities/profile/type/types'
-import { BaseQueryArg } from '@reduxjs/toolkit/query'
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getProfile: builder.query<ProfileResponse, void>({
       query: () => '/users/profile',
-      // keepUnusedDataFor: 60 * 10,
+      keepUnusedDataFor: 60 * 10,
       providesTags: ['Profile'],
     }),
     updateProfile: builder.mutation<void, UpdateProfileInput>({

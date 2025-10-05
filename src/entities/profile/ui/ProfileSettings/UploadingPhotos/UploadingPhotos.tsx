@@ -3,9 +3,8 @@
 import { ChangeEventHandler, useRef, useState } from 'react'
 
 import Avatar from '../../../../../shared/ui/Avatar/Avatar'
-import { profileApi, useAddProfilePhotoMutation } from '@/entities/profile/api/profileApi'
-import { useMeQuery } from '@/features/auth/api/authRegApi'
-import { useAppSelector } from '@/shared/hooks'
+import { useAddProfilePhotoMutation, useGetProfileQuery } from '@/entities/profile/api/profileApi'
+import { MAX_SIZE_AVATAR } from '@/shared/lib/constants/user.constants'
 import { Button } from '@/shared/ui/Button/Button'
 
 import s from './UploadingPhotos.module.scss'
@@ -16,16 +15,25 @@ export const UploadingPhotos = () => {
 
   const [addProfilePhoto] = useAddProfilePhotoMutation()
 
-  // const { userId } = useMeQuery(undefined, {
-  //   selectFromResult: ({ data }) => ({ userId: data?.userId }),
-  // })
-
+  const { avatarUrl } = useGetProfileQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      avatarUrl: data?.avatars?.[0]?.url,
+    }),
+  })
   const openDialog = () => inputRef.current?.click()
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = async e => {
-    const files = Array.from(e.target.files ?? [])
+    const file = e.target.files?.[0]
 
-    const url = URL.createObjectURL(files[0])
+    if (!file) {
+      return
+    }
+    if (file.size > MAX_SIZE_AVATAR) {
+      e.currentTarget.value = ''
+
+      return
+    }
+    const url = URL.createObjectURL(file)
 
     setPreview(prev => {
       if (prev) {
@@ -34,7 +42,6 @@ export const UploadingPhotos = () => {
 
       return url
     })
-    const file = files[0]
     const form = new FormData()
 
     form.append('file', file)
@@ -47,7 +54,7 @@ export const UploadingPhotos = () => {
 
   return (
     <div className={s.UploadingPhotos}>
-      <Avatar src={preview} size={'large'} alt={'Avatar'} />
+      <Avatar src={preview || avatarUrl} size={'large'} alt={'Avatar'} />
       <Button variant={'outlined'} onClick={openDialog}>
         Add a Profile Photo
       </Button>
