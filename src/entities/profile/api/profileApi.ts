@@ -4,6 +4,7 @@ import {
   PostsResponse,
   ProfileResponse,
   PublicUserProfileResponse,
+  UpdateProfileInput,
 } from '@/entities/profile/type/types'
 
 export const profileApi = baseApi.injectEndpoints({
@@ -11,6 +12,14 @@ export const profileApi = baseApi.injectEndpoints({
     getProfile: builder.query<ProfileResponse, void>({
       query: () => '/users/profile',
       providesTags: ['Profile'],
+    }),
+    updateProfile: builder.mutation<void, UpdateProfileInput>({
+      query: body => ({
+        method: 'PUT',
+        url: '/users/profile',
+        body,
+      }),
+      invalidatesTags: ['Profile'],
     }),
     getPosts: builder.query<PostsResponse, PostsParams>({
       query: params => {
@@ -50,4 +59,9 @@ export const profileApi = baseApi.injectEndpoints({
     }),
   }),
 })
-export const { useGetProfileQuery, useGetPostsQuery, useGetPublicUserProfileQuery } = profileApi
+export const {
+  useGetProfileQuery,
+  useGetPostsQuery,
+  useGetPublicUserProfileQuery,
+  useUpdateProfileMutation,
+} = profileApi

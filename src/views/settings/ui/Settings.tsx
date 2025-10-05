@@ -1,3 +1,5 @@
+import ProfileSettings from '@/entities/profile/ui/ProfileSettings/ProfileSettings'
+
 export default function Settings() {
-  return <h1>Settings</h1>
+  return <ProfileSettings />
 }

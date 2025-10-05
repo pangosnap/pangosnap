@@ -84,3 +84,8 @@ export type PostsProps = {
   profileId: number
   initialPosts?: PostsResponse
 }
+
+export type UpdateProfileInput = Pick<
+  ProfileResponse,
+  'userName' | 'firstName' | 'lastName' | 'city' | 'country' | 'region' | 'dateOfBirth' | 'aboutMe'
+>

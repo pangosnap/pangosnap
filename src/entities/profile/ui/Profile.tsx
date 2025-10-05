@@ -6,6 +6,7 @@ import { Posts } from '@/entities/profile/ui/Posts'
 import { useMeQuery } from '@/features/auth/api/authRegApi'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
+import Link from 'next/link'
 
 import s from './Profile.module.scss'
 
@@ -23,9 +24,9 @@ export default function Profile({ profileData, profileId, initialPosts }: PostsP
             <div className={s.profile__titleContainer}>
               <div className={s.profile__title}>{profileData?.userName}</div>
               {isProfileOwner && (
-                <div>
+                <Link href={'/settings'}>
                   <Button variant={'secondary'}>Profile Settings</Button>
-                </div>
+                </Link>
               )}
             </div>
 
