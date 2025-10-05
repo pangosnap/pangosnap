@@ -24,9 +24,9 @@ export default function Profile({ profileData, profileId, initialPosts }: PostsP
             <div className={s.profile__titleContainer}>
               <div className={s.profile__title}>{profileData?.userName}</div>
               {isProfileOwner && (
-                <Link href={'/settings'}>
-                  <Button variant={'secondary'}>Profile Settings</Button>
-                </Link>
+                <Button variant={'secondary'} as={Link} href={'/settings'}>
+                  Profile Settings
+                </Button>
               )}
             </div>
 
