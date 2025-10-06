@@ -1,4 +1,17 @@
 .UploadingPhotos {
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  max-width: 256px;
+}
+
+.avatarBox {
+  position: relative;
+  display: inline-block;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 12px;
+  right: 64px;
 }

@@ -2,9 +2,14 @@
 
 import { ChangeEventHandler, useRef, useState } from 'react'
 
-import Avatar from '../../../../../shared/ui/Avatar/Avatar'
-import { useAddProfilePhotoMutation, useGetProfileQuery } from '@/entities/profile/api/profileApi'
+import {
+  useAddProfilePhotoMutation,
+  useDeleteAvatarMutation,
+  useGetProfileQuery,
+} from '@/entities/profile/api/profileApi'
+import DeleteAvatar from '@/shared/icons/deleteAvatar.svg'
 import { MAX_SIZE_AVATAR } from '@/shared/lib/constants/user.constants'
+import Avatar from '@/shared/ui/Avatar/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
 
 import s from './UploadingPhotos.module.scss'
@@ -14,7 +19,7 @@ export const UploadingPhotos = () => {
   const [preview, setPreview] = useState<string | undefined>(undefined)
 
   const [addProfilePhoto] = useAddProfilePhotoMutation()
-
+  const [deleteAvatar] = useDeleteAvatarMutation()
   const { avatarUrl } = useGetProfileQuery(undefined, {
     selectFromResult: ({ data }) => ({
       avatarUrl: data?.avatars?.[0]?.url,
@@ -51,10 +56,23 @@ export const UploadingPhotos = () => {
       console.log(e)
     }
   }
+  const handleDelete = async () => {
+    try {
+      await deleteAvatar().unwrap()
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <div className={s.UploadingPhotos}>
-      <Avatar src={preview || avatarUrl} size={'large'} alt={'Avatar'} />
+      <div className={s.avatarBox}>
+        <Avatar src={preview || avatarUrl} size={'large'} alt={'Avatar'} />
+        <Button variant={'icon'} className={s.deleteBtn} onClick={handleDelete}>
+          <DeleteAvatar />
+        </Button>
+      </div>
+
       <Button variant={'outlined'} onClick={openDialog}>
         Add a Profile Photo
       </Button>

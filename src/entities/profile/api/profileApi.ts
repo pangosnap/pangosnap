@@ -67,6 +67,13 @@ export const profileApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Profile'],
     }),
+    deleteAvatar: builder.mutation<void, void>({
+      query: () => ({
+        url: 'users/profile/avatar',
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Profile'],
+    }),
   }),
 })
 export const {
@@ -75,4 +82,5 @@ export const {
   useGetPublicUserProfileQuery,
   useUpdateProfileMutation,
   useAddProfilePhotoMutation,
+  useDeleteAvatarMutation,
 } = profileApi
