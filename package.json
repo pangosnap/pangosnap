@@ -11,7 +11,7 @@
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "lint:stylelint": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
     "lint": "pnpm run lint:eslint && pnpm run lint:stylelint",
-    "format": "prettier '**/*.{js,jsx,ts,tsx,json,css,scss,md}' --write",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "precommit": "lint-staged",
