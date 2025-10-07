@@ -27,7 +27,7 @@ export default async function ProfileSSR({
   const profileData: PublicUserProfileResponse = await profileRes.json()
 
   const postsRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}posts/user/${profileId}?pageSize=1`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}posts/user/${profileId}?pageSize=8`,
     {
       cache: 'no-store',
     }

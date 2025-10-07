@@ -139,15 +139,12 @@ export const Posts = ({ userId, isAuthorized, initialItems: initialPostsData }: 
       {postsContent}
 
       {hasMore && (
-        <div className={s.loadMoreContainer}>
-          <button
-            type={'button'}
-            onClick={loadNextPage}
-            disabled={isFetching}
-            className={s.loadMoreButton}
-          >
-            {isFetching ? 'Загрузка...' : 'Загрузить ещё'}
-          </button>
+        <div ref={sentinelRef} className={s.observerTarget}>
+          {isFetching && (
+            <div className={s.loading}>
+              <p>Loading more posts...</p>
+            </div>
+          )}
         </div>
       )}
       {showAuthAlert && (

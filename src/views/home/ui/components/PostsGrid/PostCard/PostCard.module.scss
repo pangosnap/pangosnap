@@ -1,7 +1,5 @@
 .postCard {
   overflow: hidden;
-  display: grid;
-  grid-template-rows: auto 1fr;
   border-radius: 2px;
 }
 
@@ -69,6 +67,7 @@
   font-size: 13px;
   line-height: 18px;
   color: #cbd5e1;
+  word-break: break-all;
   overflow-wrap: break-word;
   white-space: normal;
 }

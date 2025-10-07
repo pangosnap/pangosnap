@@ -1,4 +1,5 @@
 import { baseApi } from '@/app/baseApi'
+import { USER_POSTS_PAGE_SIZE } from '@/constants/user.constants'
 import {
   type PostsParams,
   type PostsResponse,
@@ -17,8 +18,7 @@ export const profileApi = baseApi.injectEndpoints({
         const {
           userId,
           endCursorPostId,
-          // pageSize = USER_POSTS_PAGE_SIZE,
-          pageSize = 2,
+          pageSize = USER_POSTS_PAGE_SIZE,
           sortBy,
           sortDirection = 'desc',
         } = params

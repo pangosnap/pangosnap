@@ -44,37 +44,6 @@
     text-align: center;
   }
 
-  .loadMoreContainer {
-    display: flex;
-    justify-content: center;
-    padding: 30px 20px;
-  }
-
-  .loadMoreButton {
-    cursor: pointer;
-
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-
-    font-size: 14px;
-    font-weight: 600;
-    color: white;
-
-    background-color: #0095f6;
-
-    transition: background-color 0.2s ease;
-
-    &:disabled {
-      cursor: not-allowed;
-      background-color: #b2dffc;
-    }
-
-    &:hover:not(:disabled) {
-      background-color: #1877f2;
-    }
-  }
-
   @media (width <= 768px) {
     padding: 0 10px;
   }
