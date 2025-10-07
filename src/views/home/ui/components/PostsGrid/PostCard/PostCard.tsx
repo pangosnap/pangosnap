@@ -1,9 +1,10 @@
-import type { Post } from '@/entities/post/schemas/postSchema'
+import type { TPost } from '@/entities/post/schemas/postSchema'
 
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import { useCarryQuery } from '@/shared/hooks/useCarryQuery'
 import { useClampTextWithSuffix } from '@/shared/hooks/useClampTextWithSuffix'
+import { Path } from '@/shared/routes/constants'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Index } from '@/shared/ui/Carousel'
 import { useTimeAgo } from '@/views/home/utils/useTimeAgo'
@@ -14,7 +15,7 @@ import styles from './PostCard.module.scss'
 export const POST_MAX_LINES_COLLAPSED = 3
 export const POST_MAX_LINES_EXPANDED = 8
 
-export function PostCard({ post }: { post: Post }) {
+export function PostCard({ post }: { post: TPost }) {
   const [expanded, setExpanded] = useState(false)
   const toggle = () => setExpanded(prev => !prev)
   const showToggle = post.description.length > 77
@@ -94,14 +95,14 @@ export function PostCard({ post }: { post: Post }) {
         </div>
       </Link>
       <div className={styles.postBody}>
-        <div className={styles.postHeader}>
+        <Link className={styles.postHeader} href={Path.profile(post.ownerId)}>
           <div className={styles.avatarStub} aria-hidden>
             <Avatar size={'small'} alt={post.userName} src={post.avatarOwner} />
           </div>
           <div className={styles.authorBlock}>
             <div className={styles.authorName}>{post.userName}</div>
           </div>
-        </div>
+        </Link>
         <div className={styles.timeAgo}>{timeAgo}</div>
         <div className={styles.descriptionContainer}>
           <p

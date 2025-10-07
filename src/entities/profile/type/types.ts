@@ -1,4 +1,4 @@
-import type { Post } from '@/entities/post/schemas/postSchema'
+import type { TPost } from '@/entities/post/schemas/postSchema'
 
 export type Avatar = {
   url: string
@@ -46,7 +46,7 @@ export type PostImage = {
 }
 
 export type PostsResponse = {
-  items: Post[]
+  items: TPost[]
   totalCount: number
   pageSize: number
   totalUsers: number
@@ -63,5 +63,5 @@ export type PostsParams = {
 export type PostsProps = {
   profileData: PublicUserProfileResponse
   profileId: number
-  initialPosts?: PostsResponse
+  initialPosts: PostsResponse
 }

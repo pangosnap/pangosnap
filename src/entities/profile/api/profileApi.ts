@@ -1,9 +1,9 @@
 import { baseApi } from '@/app/baseApi'
 import {
-  PostsParams,
-  PostsResponse,
-  ProfileResponse,
-  PublicUserProfileResponse,
+  type PostsParams,
+  type PostsResponse,
+  type ProfileResponse,
+  type PublicUserProfileResponse,
 } from '@/entities/profile/type/types'
 
 export const profileApi = baseApi.injectEndpoints({
@@ -14,7 +14,14 @@ export const profileApi = baseApi.injectEndpoints({
     }),
     getPosts: builder.query<PostsResponse, PostsParams>({
       query: params => {
-        const { userId, endCursorPostId, pageSize, sortBy, sortDirection } = params
+        const {
+          userId,
+          endCursorPostId,
+          // pageSize = USER_POSTS_PAGE_SIZE,
+          pageSize = 2,
+          sortBy,
+          sortDirection = 'desc',
+        } = params
 
         let url = `/posts/user/${userId}`
 
@@ -42,7 +49,20 @@ export const profileApi = baseApi.injectEndpoints({
           params: Object.keys(queryParams).length > 0 ? queryParams : undefined,
         }
       },
-      providesTags: ['Profile'],
+      keepUnusedDataFor: 300,
+      providesTags: ['Posts'],
+      serializeQueryArgs: ({ queryArgs, endpointName }) => {
+        return `${endpointName}-${queryArgs.userId}`
+      },
+      merge: (currentCache: PostsResponse, newData: PostsResponse, otherArgs) => {
+        const existingIds = new Set(currentCache.items.map(item => item.id))
+        const uniqueNewItems = newData.items.filter(item => !existingIds.has(item.id))
+
+        currentCache.items.push(...uniqueNewItems)
+      },
+
+      forceRefetch: ({ currentArg, previousArg }) =>
+        currentArg?.endCursorPostId !== previousArg?.endCursorPostId,
     }),
     getPublicUserProfile: builder.query<PublicUserProfileResponse, { profileId: number }>({
       query: ({ profileId }) => `public-user/profile/${profileId}`,

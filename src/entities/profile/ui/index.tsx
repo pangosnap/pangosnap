@@ -42,11 +42,7 @@ export default function Profile({ profileData, profileId, initialPosts }: PostsP
         </div>
 
         {!!profileId && (
-          <Posts
-            isAuthorized={!!profileId}
-            userId={profileData.id}
-            initialItems={initialPosts?.items}
-          />
+          <Posts isAuthorized={!!profileId} userId={profileData.id} initialItems={initialPosts} />
         )}
       </div>
     </div>

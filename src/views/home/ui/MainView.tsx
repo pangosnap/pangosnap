@@ -1,6 +1,6 @@
 'use client'
 
-import type { Post } from '@/entities/post/schemas/postSchema'
+import type { TPost } from '@/entities/post/schemas/postSchema'
 
 import { PostsGrid } from './components/PostsGrid/PostsGrid'
 import { RegisteredUsers } from './components/RegisteredUsers/RegisteredUsers'
@@ -8,7 +8,7 @@ import { RegisteredUsers } from './components/RegisteredUsers/RegisteredUsers'
 import styles from './MainPage.module.scss'
 
 type MainViewProps = {
-  posts: Post[]
+  posts: TPost[]
   registeredUsers: number
 }
 

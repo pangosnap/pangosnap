@@ -24,9 +24,13 @@
 }
 
 .postHeader {
+  cursor: pointer;
+
   display: flex;
   gap: 12px;
   align-items: center;
+
+  text-decoration: none;
 }
 
 .avatarStub {
