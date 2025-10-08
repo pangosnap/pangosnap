@@ -6,7 +6,7 @@ import { useCarryQuery } from '@/shared/hooks/useCarryQuery'
 import { useClampTextWithSuffix } from '@/shared/hooks/useClampTextWithSuffix'
 import { Path } from '@/shared/routes/constants'
 import { Avatar } from '@/shared/ui/Avatar'
-import { Index } from '@/shared/ui/Carousel'
+import { Carousel } from '@/shared/ui/Carousel'
 import { useTimeAgo } from '@/views/home/utils/useTimeAgo'
 import Link from 'next/link'
 
@@ -90,7 +90,7 @@ export function PostCard({ post }: { post: TPost }) {
           {expanded ? (
             <img src={post.images[0].url} alt={post.userName} className={styles.postImage} />
           ) : (
-            <Index images={post.images} />
+            <Carousel images={post.images} />
           )}
         </div>
       </Link>

@@ -13,7 +13,7 @@ type Props = {
   className?: string
 }
 
-export function Index({ images, className }: Props) {
+export function Carousel({ images, className }: Props) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
   const [selected, setSelected] = useState(0)
 
