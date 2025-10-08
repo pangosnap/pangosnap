@@ -1,6 +1,9 @@
+import { type KeyboardEvent } from 'react'
+
 import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import s from './Header.module.scss'
 
@@ -9,11 +12,31 @@ type Props = {
   isProcessingAuth?: boolean
 }
 export const Header = ({ isAuth, isProcessingAuth = false }: Props) => {
+  const router = useRouter()
+  const handleLogoClick = () => {
+    router.push(Path.main)
+  }
+  const handleLogoKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleLogoClick()
+    }
+  }
+
   return (
     <header className={s.header}>
       <div className={'l-container'}>
         <div className={s.content}>
-          <h1 className={'uik_typography-display-large'}>Pangosnap</h1>
+          <h1
+            className={`uik_typography-display-large ${s.logo}`}
+            onClick={handleLogoClick}
+            onKeyDown={handleLogoKeyDown}
+            tabIndex={0}
+            role={'button'}
+            aria-label={'Pangosnap - Go to homepage'}
+          >
+            Pangosnap
+          </h1>
           <div className={s.actions}>
             {/*{isAuth && (
               <div className={s.notification}>

@@ -1,6 +1,6 @@
 'use client'
 
-import { PostsProps } from '@/entities/profile/type/types'
+import { type PostsProps } from '@/entities/profile/type/types'
 import { Count } from '@/entities/profile/ui/Count'
 import { Posts } from '@/entities/profile/ui/Posts'
 import { useMeQuery } from '@/features/auth/api/authRegApi'
@@ -42,11 +42,7 @@ export default function Profile({ profileData, profileId, initialPosts }: PostsP
         </div>
 
         {!!profileId && (
-          <Posts
-            isAuthorized={!!profileId}
-            userId={profileData.id}
-            initialItems={initialPosts?.items}
-          />
+          <Posts isAuthorized={!!profileId} userId={profileData.id} initialItems={initialPosts} />
         )}
       </div>
     </div>

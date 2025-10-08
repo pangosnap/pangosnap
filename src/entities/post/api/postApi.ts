@@ -1,9 +1,9 @@
-import { PostSchema, type Post } from '../schemas/postSchema'
+import { PostSchema, type TPost } from '../schemas/postSchema'
 import { baseApi } from '@/app/baseApi'
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    getPost: build.query<Post, number>({
+    getPost: build.query<TPost, number>({
       query: postId => `/posts/id/${postId}`,
       transformResponse: (res: unknown) => PostSchema.parse(res),
       providesTags: (_res, _err, postId) => [{ type: 'Post', id: postId }],
