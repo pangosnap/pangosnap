@@ -1,5 +1,9 @@
+import type { RootState } from '@/app/store'
+import type { MeResponse } from '@/features/auth/api/lib/schemas/meSchema'
+
 import { PostSchema, type TPost } from '../schemas/postSchema'
 import { baseApi } from '@/app/baseApi'
+import { profileApi } from '@/entities/profile/api/profileApi'
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -21,7 +25,34 @@ export const postApi = baseApi.injectEndpoints({
         url: `/posts/${postId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Profile'],
+      invalidatesTags: ['ProfilePublicInfo'],
+
+      async onQueryStarted(postId, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled
+          const state = getState() as RootState
+          const authData = state.api.queries?.['me']?.data as MeResponse
+          const userId = authData?.userId
+
+          if (!postId || !userId) {
+            return
+          }
+
+          dispatch(
+            profileApi.util.updateQueryData('getPosts', { userId }, draft => {
+              if (draft && Array.isArray(draft.items)) {
+                const index = draft.items.findIndex(post => post.id === postId)
+
+                if (index !== -1) {
+                  draft.items.splice(index, 1)
+                }
+              }
+            })
+          )
+        } catch (e) {
+          console.error('❌ Не удалось удалить пост из кэша', e)
+        }
+      },
     }),
   }),
 })
