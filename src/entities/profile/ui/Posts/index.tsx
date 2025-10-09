@@ -48,6 +48,10 @@ export const Posts = ({ userId, isAuthorized, initialItems: initialPostsData }: 
   useEffect(() => {
     setLastLoadedPostId(undefined)
     userIdRef.current = userId
+
+    return () => {
+      isHydratedRef.current = false
+    }
   }, [userId])
 
   //  Гидратация данных
