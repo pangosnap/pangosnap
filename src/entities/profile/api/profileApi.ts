@@ -1,5 +1,6 @@
 import { baseApi } from '@/app/baseApi'
 import {
+  AvatarResponse,
   PostsParams,
   PostsResponse,
   ProfileResponse,
@@ -11,6 +12,7 @@ export const profileApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getProfile: builder.query<ProfileResponse, void>({
       query: () => '/users/profile',
+      keepUnusedDataFor: 60 * 10,
       providesTags: ['Profile'],
     }),
     updateProfile: builder.mutation<void, UpdateProfileInput>({
@@ -57,6 +59,21 @@ export const profileApi = baseApi.injectEndpoints({
       query: ({ profileId }) => `public-user/profile/${profileId}`,
       providesTags: ['Profile'],
     }),
+    addProfilePhoto: builder.mutation<AvatarResponse, FormData>({
+      query: form => ({
+        method: 'POST',
+        url: 'users/profile/avatar',
+        body: form,
+      }),
+      invalidatesTags: ['Profile'],
+    }),
+    deleteAvatar: builder.mutation<void, void>({
+      query: () => ({
+        url: 'users/profile/avatar',
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Profile'],
+    }),
   }),
 })
 export const {
@@ -64,4 +81,6 @@ export const {
   useGetPostsQuery,
   useGetPublicUserProfileQuery,
   useUpdateProfileMutation,
+  useAddProfilePhotoMutation,
+  useDeleteAvatarMutation,
 } = profileApi

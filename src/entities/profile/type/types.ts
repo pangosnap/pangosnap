@@ -42,6 +42,10 @@ export type PostImage = {
   createdAt: string // ISO string
   uploadId: string
 }
+export type ProfileAvatar = Omit<PostImage, 'uploadId'>
+export type AvatarResponse = {
+  avatars: ProfileAvatar[]
+}
 
 export type PostOwner = {
   firstName: string
