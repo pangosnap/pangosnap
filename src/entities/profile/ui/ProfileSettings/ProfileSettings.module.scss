@@ -13,9 +13,7 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-
     width: 740px;
-    margin-top: 35px;
   }
 
   .text {
@@ -50,4 +48,13 @@
   .country {
     margin-right: 24px;
   }
+}
+
+.inputDate input[type='date'] {
+  color-scheme: dark;
+}
+
+.inputDate input[type='date']::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  filter: brightness(0) invert(1) contrast(200%);
 }

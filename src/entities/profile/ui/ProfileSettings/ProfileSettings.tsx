@@ -1,7 +1,9 @@
 'use client'
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useGetProfileQuery, useUpdateProfileMutation } from '@/entities/profile/api/profileApi'
+import { UploadingPhotos } from '@/entities/profile/ui/ProfileSettings/UploadingPhotos/UploadingPhotos'
 import {
   ProfilePayload,
   profileSchema,
@@ -15,19 +17,35 @@ import s from './ProfileSettings.module.scss'
 export default function ProfileSettings() {
   const [apiUpdateProfile] = useUpdateProfileMutation()
   const { data } = useGetProfileQuery()
+
   const {
     register,
     handleSubmit,
-    control,
-    watch,
-    formState: { errors, isValid },
-    setError,
+    formState: { errors, isValid, isDirty, isSubmitting },
     reset,
+    trigger,
+    getValues,
   } = useForm<ProfilePayload>({
     mode: 'onChange',
     resolver: zodResolver(profileSchema),
   })
 
+  useEffect(() => {
+    if (!data) {
+      return
+    }
+    reset({
+      userName: data.userName ?? '',
+      firstName: data.firstName ?? '',
+      lastName: data.lastName ?? '',
+      dateOfBirth: data.dateOfBirth?.slice(0, 10) ?? '',
+      country: data.country ?? '',
+      city: data.city ?? '',
+      region: data.region ?? '',
+      aboutMe: data.aboutMe ?? '',
+    })
+    void trigger()
+  }, [data, reset, trigger])
   const onSubmit: SubmitHandler<ProfilePayload> = async data => {
     try {
       await apiUpdateProfile({
@@ -40,6 +58,7 @@ export default function ProfileSettings() {
         dateOfBirth: data.dateOfBirth,
         aboutMe: data.aboutMe,
       }).unwrap()
+      reset(getValues())
       alert('✅ Всё отлично! Профиль успешно обновлён.')
     } catch (err) {
       // const field = err?.data?.messages[0].field as 'email' | 'userName' | undefined
@@ -57,12 +76,12 @@ export default function ProfileSettings() {
 
   return (
     <div className={s.wrapper}>
+      <UploadingPhotos />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={s.textFields}>
           <TextField
             label={'Username'}
             required
-            defaultValue={data?.userName}
             {...register('userName')}
             errorMessage={errors.userName?.message}
           />
@@ -70,7 +89,6 @@ export default function ProfileSettings() {
             label={'First Name'}
             required
             placeholder={'Ivan'}
-            defaultValue={data?.firstName}
             {...register('firstName')}
             errorMessage={errors.firstName?.message}
           />
@@ -78,30 +96,29 @@ export default function ProfileSettings() {
             label={'Last Name'}
             required
             placeholder={'Ivanov'}
-            defaultValue={data?.lastName}
             {...register('lastName')}
             errorMessage={errors.lastName?.message}
           />
           <TextField
+            className={s.inputDate}
             label={'Date of birth'}
-            placeholder={'2001-01-21'}
-            defaultValue={data?.dateOfBirth}
+            type={'date'}
+            placeholder={'YYYY-MM-DD'}
             {...register('dateOfBirth')}
             errorMessage={errors.dateOfBirth?.message}
           />
+
           <div className={s.location}>
             <TextField
               className={s.country}
               label={'Select your country'}
               placeholder={'Belarus'}
-              defaultValue={data?.country}
               {...register('country')}
               errorMessage={errors.country?.message}
             />
             <TextField
               label={'Select your city'}
               placeholder={'Minsk'}
-              defaultValue={data?.city}
               {...register('city')}
               errorMessage={errors.city?.message}
             />
@@ -110,14 +127,17 @@ export default function ProfileSettings() {
             className={s.aboutMe}
             label={'About Me'}
             placeholder={'Write something'}
-            defaultValue={data?.aboutMe}
             {...register('aboutMe')}
             errorMessage={errors.aboutMe?.message}
           />
         </div>
         <hr className={s.divider} />
         <div className={s.buttonSave}>
-          <Button type={'submit'} variant={'primary'} disabled={!isValid}>
+          <Button
+            type={'submit'}
+            variant={'primary'}
+            disabled={!isValid || !isDirty || isSubmitting}
+          >
             Save Changes
           </Button>
         </div>
