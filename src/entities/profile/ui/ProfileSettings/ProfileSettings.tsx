@@ -2,7 +2,10 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useGetProfileQuery, useUpdateProfileMutation } from '@/entities/profile/api/profileApi'
-import { UpdateProfileInput } from '@/entities/profile/type/types'
+import {
+  ProfilePayload,
+  profileSchema,
+} from '@/entities/profile/ui/ProfileSettings/lib/profileSchema'
 import { Button } from '@/shared/ui/Button/Button'
 import { TextField } from '@/shared/ui/TextField'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -20,12 +23,12 @@ export default function ProfileSettings() {
     formState: { errors, isValid },
     setError,
     reset,
-  } = useForm<UpdateProfileInput>({
+  } = useForm<ProfilePayload>({
     mode: 'onChange',
-    // resolver: zodResolver(registrationSchema),
+    resolver: zodResolver(profileSchema),
   })
 
-  const onSubmit: SubmitHandler<UpdateProfileInput> = async data => {
+  const onSubmit: SubmitHandler<ProfilePayload> = async data => {
     try {
       await apiUpdateProfile({
         userName: data.userName,
@@ -38,7 +41,7 @@ export default function ProfileSettings() {
         aboutMe: data.aboutMe,
       }).unwrap()
       alert('✅ Всё отлично! Профиль успешно обновлён.')
-    } catch (err: any) {
+    } catch (err) {
       // const field = err?.data?.messages[0].field as 'email' | 'userName' | undefined
       // const message = err?.data?.messages[0].message ?? 'Something went wrong'
       //
@@ -48,6 +51,7 @@ export default function ProfileSettings() {
       // if (field === 'userName') {
       //   setError('userName', { type: 'server', message })
       // }
+      console.error('Profile error:', err)
     }
   }
 
