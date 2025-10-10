@@ -46,7 +46,7 @@ const baseQueryWithRefresh: BaseQueryFn = async (args, api, extraOptions) => {
 
 export const baseApi = createApi({
   reducerPath: 'api',
-  tagTypes: ['Profile', 'Authorization', 'Post', 'Posts'],
+  tagTypes: ['Profile', 'ProfilePublicInfo', 'Authorization', 'Post', 'Posts'],
   baseQuery: baseQueryWithRefresh,
   endpoints: () => ({}),
 })

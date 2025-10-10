@@ -1,4 +1,4 @@
-import { Avatar } from '@/entities/profile/type/types'
+import { type Avatar } from '@/entities/profile/type/types'
 
 export type ImageItem = Avatar & { uploadId: string }
 export type ImagesResponse = {
@@ -18,5 +18,5 @@ export type CreatePostResponse = {
   owner: Owner
   likesCount: number
   isLiked: boolean
-  avatarWhoLikes: boolean
+  avatarWhoLikes: [string]
 }

@@ -9,6 +9,7 @@ import {
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    // запрос для настроек профиля
     getProfile: builder.query<ProfileResponse, void>({
       query: () => '/users/profile',
       providesTags: ['Profile'],
@@ -54,7 +55,7 @@ export const profileApi = baseApi.injectEndpoints({
       serializeQueryArgs: ({ queryArgs, endpointName }) => {
         return `${endpointName}-${queryArgs.userId}`
       },
-      merge: (currentCache: PostsResponse, newData: PostsResponse, otherArgs) => {
+      merge: (currentCache: PostsResponse, newData: PostsResponse) => {
         const existingIds = new Set(currentCache.items.map(item => item.id))
         const uniqueNewItems = newData.items.filter(item => !existingIds.has(item.id))
 
@@ -64,9 +65,10 @@ export const profileApi = baseApi.injectEndpoints({
       forceRefetch: ({ currentArg, previousArg }) =>
         currentArg?.endCursorPostId !== previousArg?.endCursorPostId,
     }),
+    // публичный профиль с инфо которая видна всем
     getPublicUserProfile: builder.query<PublicUserProfileResponse, { profileId: number }>({
       query: ({ profileId }) => `public-user/profile/${profileId}`,
-      providesTags: ['Profile'],
+      providesTags: ['ProfilePublicInfo'],
     }),
   }),
 })
