@@ -13,7 +13,8 @@ export type TextFieldProps = {
   leftIcon?: ReactNode
   rightIcon?: ReactNode
   variant?: 'default' | 'active' | 'error' | 'hover' | 'focus' | 'disabled'
-  type?: 'text' | 'password' | 'search'
+  type?: 'text' | 'password' | 'search' | 'date'
+  required?: boolean
 } & ComponentProps<'input'>
 
 export const TextField = ({
@@ -57,7 +58,12 @@ export const TextField = ({
     <div className={clsx(s.box, className)}>
       {label && (
         <label className={clsx(s.label, isDisabled && s.disabled)} htmlFor={inputId}>
-          {label && <span className={s.labelText}>{label}</span>}
+          {label && (
+            <span className={s.labelText}>
+              {label}
+              {props.required && <span className={s.required}>*</span>}
+            </span>
+          )}
         </label>
       )}
 

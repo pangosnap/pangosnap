@@ -89,7 +89,7 @@ export type PostsProps = {
   initialPosts?: PostsResponse
 }
 
-export type UpdateProfileInput = Pick<
-  ProfileResponse,
-  'userName' | 'firstName' | 'lastName' | 'city' | 'country' | 'region' | 'dateOfBirth' | 'aboutMe'
->
+// export type UpdateProfileInput = Pick<
+//   ProfileResponse,
+//   'userName' | 'firstName' | 'lastName' | 'city' | 'country' | 'region' | 'dateOfBirth' | 'aboutMe'
+// >

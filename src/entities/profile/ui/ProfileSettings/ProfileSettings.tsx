@@ -1,7 +1,127 @@
 'use client'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { UploadingPhotos } from '@/entities/profile/ui/ProfileSettings/UploadingPhotos/UploadingPhotos'
+import { useGetProfileQuery, useUpdateProfileMutation } from '@/entities/profile/api/profileApi'
+import {
+  ProfilePayload,
+  profileSchema,
+} from '@/entities/profile/ui/ProfileSettings/lib/profileSchema'
+import { Button } from '@/shared/ui/Button/Button'
+import { TextField } from '@/shared/ui/TextField'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-export const ProfileSettings = () => {
-  return <UploadingPhotos />
+import s from './ProfileSettings.module.scss'
+
+export default function ProfileSettings() {
+  const [apiUpdateProfile] = useUpdateProfileMutation()
+  const { data } = useGetProfileQuery()
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors, isValid },
+    setError,
+    reset,
+  } = useForm<ProfilePayload>({
+    mode: 'onChange',
+    resolver: zodResolver(profileSchema),
+  })
+
+  const onSubmit: SubmitHandler<ProfilePayload> = async data => {
+    try {
+      await apiUpdateProfile({
+        userName: data.userName,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        city: data.city,
+        country: data.country,
+        region: data.region,
+        dateOfBirth: data.dateOfBirth,
+        aboutMe: data.aboutMe,
+      }).unwrap()
+      alert('✅ Всё отлично! Профиль успешно обновлён.')
+    } catch (err) {
+      // const field = err?.data?.messages[0].field as 'email' | 'userName' | undefined
+      // const message = err?.data?.messages[0].message ?? 'Something went wrong'
+      //
+      // if (field === 'email') {
+      //   setError('email', { type: 'server', message })
+      // }
+      // if (field === 'userName') {
+      //   setError('userName', { type: 'server', message })
+      // }
+      console.error('Profile error:', err)
+    }
+  }
+
+  return (
+    <div className={s.wrapper}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={s.textFields}>
+          <TextField
+            label={'Username'}
+            required
+            defaultValue={data?.userName}
+            {...register('userName')}
+            errorMessage={errors.userName?.message}
+          />
+          <TextField
+            label={'First Name'}
+            required
+            placeholder={'Ivan'}
+            defaultValue={data?.firstName}
+            {...register('firstName')}
+            errorMessage={errors.firstName?.message}
+          />
+          <TextField
+            label={'Last Name'}
+            required
+            placeholder={'Ivanov'}
+            defaultValue={data?.lastName}
+            {...register('lastName')}
+            errorMessage={errors.lastName?.message}
+          />
+          <TextField
+            label={'Date of birth'}
+            placeholder={'2001-01-21'}
+            defaultValue={data?.dateOfBirth}
+            {...register('dateOfBirth')}
+            errorMessage={errors.dateOfBirth?.message}
+          />
+          <div className={s.location}>
+            <TextField
+              className={s.country}
+              label={'Select your country'}
+              placeholder={'Belarus'}
+              defaultValue={data?.country}
+              {...register('country')}
+              errorMessage={errors.country?.message}
+            />
+            <TextField
+              label={'Select your city'}
+              placeholder={'Minsk'}
+              defaultValue={data?.city}
+              {...register('city')}
+              errorMessage={errors.city?.message}
+            />
+          </div>
+          <TextField
+            className={s.aboutMe}
+            label={'About Me'}
+            placeholder={'Write something'}
+            defaultValue={data?.aboutMe}
+            {...register('aboutMe')}
+            errorMessage={errors.aboutMe?.message}
+          />
+        </div>
+        <hr className={s.divider} />
+        <div className={s.buttonSave}>
+          <Button type={'submit'} variant={'primary'} disabled={!isValid}>
+            Save Changes
+          </Button>
+        </div>
+      </form>
+    </div>
+  )
 }
