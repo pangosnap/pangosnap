@@ -9,9 +9,10 @@ import s from './Header.module.scss'
 
 type Props = {
   isAuth: boolean
+  isLoading?: boolean
   isProcessingAuth?: boolean
 }
-export const Header = ({ isAuth, isProcessingAuth = false }: Props) => {
+export const Header = ({ isAuth, isLoading, isProcessingAuth = false }: Props) => {
   const router = useRouter()
   const handleLogoClick = () => {
     router.push(Path.main)
@@ -45,7 +46,7 @@ export const Header = ({ isAuth, isProcessingAuth = false }: Props) => {
               </div>
             )}
             <div className={s.language}>🌐 English ▼</div>*/}
-            {!isAuth && !isProcessingAuth && (
+            {!isAuth && !isProcessingAuth && !isLoading && (
               <div className={s.authLinks}>
                 <Button as={Link} href={Path.signIn} variant={'text'}>
                   Log in
