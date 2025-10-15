@@ -86,6 +86,15 @@ export const authRegApi = baseApi.injectEndpoints({
         url: '/auth/logout',
         method: 'POST',
       }),
+      invalidatesTags: ['Authorization'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+          dispatch(authRegApi.util.resetApiState())
+        } catch (error) {
+          console.error('Error during logout:', error)
+        }
+      },
     }),
     checkRecoveryCode: builder.mutation<void, { recoveryCode: string }>({
       query: body => ({

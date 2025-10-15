@@ -70,6 +70,28 @@ export const profileApi = baseApi.injectEndpoints({
       query: ({ profileId }) => `public-user/profile/${profileId}`,
       providesTags: ['ProfilePublicInfo'],
     }),
+    follow: builder.mutation<void, { selectedUserId: number }>({
+      query: data => ({
+        url: `users/following`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['ProfilePublicInfo'],
+    }),
+
+    unfollow: builder.mutation<void, { userId: number }>({
+      query: data => ({
+        url: `users/follower/${data.userId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['ProfilePublicInfo'],
+    }),
   }),
 })
-export const { useGetProfileQuery, useGetPostsQuery, useGetPublicUserProfileQuery } = profileApi
+export const {
+  useGetProfileQuery,
+  useGetPostsQuery,
+  useGetPublicUserProfileQuery,
+  useFollowMutation,
+  useUnfollowMutation,
+} = profileApi

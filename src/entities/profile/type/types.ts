@@ -34,6 +34,10 @@ export interface ProfileResponse extends BaseProfile {
 export interface PublicUserProfileResponse extends BaseProfile {
   userMetadata: UserMetadata
   hasPaymentSubscription: boolean
+
+  // приходят только для авторизованного
+  isFollowing?: boolean
+  isFollowedBy?: boolean
 }
 
 export type PostImage = {
