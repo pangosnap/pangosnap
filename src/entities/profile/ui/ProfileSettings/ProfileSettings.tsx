@@ -25,6 +25,7 @@ export default function ProfileSettings() {
     reset,
     trigger,
     getValues,
+    watch,
   } = useForm<ProfilePayload>({
     mode: 'onChange',
     resolver: zodResolver(profileSchema),
@@ -61,18 +62,30 @@ export default function ProfileSettings() {
       reset(getValues())
       alert('✅ Всё отлично! Профиль успешно обновлён.')
     } catch (err) {
-      // const field = err?.data?.messages[0].field as 'email' | 'userName' | undefined
-      // const message = err?.data?.messages[0].message ?? 'Something went wrong'
-      //
-      // if (field === 'email') {
-      //   setError('email', { type: 'server', message })
-      // }
-      // if (field === 'userName') {
-      //   setError('userName', { type: 'server', message })
-      // }
       console.error('Profile error:', err)
     }
   }
+
+  const countryOptions = [
+    { label: 'Belarus', value: 'Belarus' },
+    { label: 'Russia', value: 'Russia' },
+  ]
+
+  const cityOptionsMap: Record<string, { label: string; value: string }[]> = {
+    Belarus: [
+      { label: 'Minsk', value: 'Minsk' },
+      { label: 'Vitebsk', value: 'Vitebsk' },
+      { label: 'Brest', value: 'Brest' },
+    ],
+    Russia: [
+      { label: 'Moscow', value: 'Moscow' },
+      { label: 'Saint Petersburg', value: 'Saint Petersburg' },
+      { label: 'Krasnodar', value: 'Krasnodar' },
+    ],
+  }
+
+  const countryValue = watch('country')
+  const cityOptions = cityOptionsMap[countryValue || ''] ?? []
 
   return (
     <div className={s.wrapper}>
@@ -110,15 +123,20 @@ export default function ProfileSettings() {
 
           <div className={s.location}>
             <TextField
+              type={'select'}
               className={s.country}
               label={'Select your country'}
               placeholder={'Belarus'}
+              options={countryOptions}
               {...register('country')}
               errorMessage={errors.country?.message}
             />
             <TextField
+              type={'select'}
               label={'Select your city'}
               placeholder={'Minsk'}
+              options={cityOptions}
+              disabled={!countryValue}
               {...register('city')}
               errorMessage={errors.city?.message}
             />

@@ -7,15 +7,18 @@ import { clsx } from 'clsx'
 
 import s from './TextField.module.scss'
 
+type Option = { label: string; value: string }
+
 export type TextFieldProps = {
   errorMessage?: string
   label?: ReactNode
   leftIcon?: ReactNode
   rightIcon?: ReactNode
   variant?: 'default' | 'active' | 'error' | 'hover' | 'focus' | 'disabled'
-  type?: 'text' | 'password' | 'search' | 'date'
+  type?: 'text' | 'password' | 'search' | 'date' | 'select' // ⬅️ добавили 'select'
+  options?: Option[] // ⬅️ список опций
   required?: boolean
-} & ComponentProps<'input'>
+} & ComponentProps<'input'> // оставляем просто, без мудрёных типов
 
 export const TextField = ({
   className,
@@ -27,16 +30,16 @@ export const TextField = ({
   label,
   variant = 'default',
   disabled,
+  options,
   ...props
 }: TextFieldProps) => {
   const [showPassword, setShowPassword] = useState(false)
   const showError = Boolean(errorMessage)
   const inputId = useGetId(id)
   const isDisabled = disabled || variant === 'disabled'
+  const isSelect = type === 'select'
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword)
-  }
+  const togglePasswordVisibility = () => setShowPassword(v => !v)
 
   const getInputType = () => {
     if (type !== 'password') {
@@ -58,32 +61,61 @@ export const TextField = ({
     <div className={clsx(s.box, className)}>
       {label && (
         <label className={clsx(s.label, isDisabled && s.disabled)} htmlFor={inputId}>
-          {label && (
-            <span className={s.labelText}>
-              {label}
-              {props.required && <span className={s.required}>*</span>}
-            </span>
-          )}
+          <span className={s.labelText}>
+            {label}
+            {props.required && <span className={s.required}>*</span>}
+          </span>
         </label>
       )}
 
       <div className={s.inputWrapper}>
         {leftIcon && <span className={s.leftIcon}>{leftIcon}</span>}
-        <input
-          className={clsx(
-            s.input,
-            s[variant],
-            showError && s.error,
-            leftIcon && s.withLeftIcon,
-            (rightIcon || type === 'password') && s.withRightIcon,
-            isDisabled && s.disabled
-          )}
-          id={inputId}
-          type={getInputType()}
-          disabled={isDisabled}
-          {...props}
-        />
-        {(rightIcon || type === 'password') && (
+
+        {isSelect ? (
+          <select
+            id={inputId}
+            className={clsx(
+              s.input,
+              s[variant],
+              showError && s.error,
+              leftIcon && s.withLeftIcon,
+              rightIcon && s.withRightIcon,
+              isDisabled && s.disabled
+            )}
+            disabled={isDisabled}
+            // spread пропсов от RHF — ок для select
+            {...(props as any)}
+          >
+            {/* placeholder как disabled option, если передан */}
+            {props.placeholder && (
+              <option value={''} disabled hidden>
+                {props.placeholder as string}
+              </option>
+            )}
+            {options?.map(opt => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            id={inputId}
+            className={clsx(
+              s.input,
+              s[variant],
+              showError && s.error,
+              leftIcon && s.withLeftIcon,
+              (rightIcon || type === 'password') && s.withRightIcon,
+              isDisabled && s.disabled
+            )}
+            type={getInputType()}
+            disabled={isDisabled}
+            {...props}
+          />
+        )}
+
+        {(rightIcon || type === 'password') && !isSelect && (
           <button
             type={'button'}
             className={s.rightIcon}
