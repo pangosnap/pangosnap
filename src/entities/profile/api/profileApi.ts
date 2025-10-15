@@ -1,11 +1,12 @@
+import type { ProfilePayload } from '@/entities/profile/ui/ProfileSettings/lib/profileSchema'
+
 import { baseApi } from '@/app/baseApi'
 import {
-  AvatarResponse,
-  PostsParams,
-  PostsResponse,
-  ProfileResponse,
-  PublicUserProfileResponse,
-  UpdateProfileInput,
+  type AvatarResponse,
+  type PostsParams,
+  type PostsResponse,
+  type ProfileResponse,
+  type PublicUserProfileResponse,
 } from '@/entities/profile/type/types'
 
 export const profileApi = baseApi.injectEndpoints({
@@ -15,7 +16,7 @@ export const profileApi = baseApi.injectEndpoints({
       keepUnusedDataFor: 60 * 10,
       providesTags: ['Profile'],
     }),
-    updateProfile: builder.mutation<void, UpdateProfileInput>({
+    updateProfile: builder.mutation<void, ProfilePayload>({
       query: body => ({
         method: 'PUT',
         url: '/users/profile',
@@ -59,6 +60,22 @@ export const profileApi = baseApi.injectEndpoints({
       query: ({ profileId }) => `public-user/profile/${profileId}`,
       providesTags: ['Profile'],
     }),
+    follow: builder.mutation<void, { selectedUserId: number }>({
+      query: data => ({
+        url: `users/following`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['ProfilePublicInfo'],
+    }),
+
+    unfollow: builder.mutation<void, { userId: number }>({
+      query: data => ({
+        url: `users/follower/${data.userId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['ProfilePublicInfo'],
+    }),
     addProfilePhoto: builder.mutation<AvatarResponse, FormData>({
       query: form => ({
         method: 'POST',
@@ -83,4 +100,6 @@ export const {
   useUpdateProfileMutation,
   useAddProfilePhotoMutation,
   useDeleteAvatarMutation,
+  useFollowMutation,
+  useUnfollowMutation,
 } = profileApi
