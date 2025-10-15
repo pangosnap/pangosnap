@@ -1,11 +1,11 @@
 'use client'
 import { useEffect } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { useGetProfileQuery, useUpdateProfileMutation } from '@/entities/profile/api/profileApi'
 import { UploadingPhotos } from '@/entities/profile/ui/ProfileSettings/UploadingPhotos/UploadingPhotos'
 import {
-  ProfilePayload,
+  type ProfilePayload,
   profileSchema,
 } from '@/entities/profile/ui/ProfileSettings/lib/profileSchema'
 import { Button } from '@/shared/ui/Button/Button'

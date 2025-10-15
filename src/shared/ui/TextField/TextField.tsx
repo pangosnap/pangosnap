@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useState } from 'react'
+import { type ComponentProps, type ReactNode, useState } from 'react'
 
 import { useGetId } from '@/shared/hooks/useGetId'
 import EyeClosedIcon from '@/shared/icons/EyeClosedIcon'
