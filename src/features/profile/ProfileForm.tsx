@@ -1,6 +1,6 @@
 'use client'
 import { useMeQuery } from '@/features/auth/api/authRegApi'
-import { PublicProfile, useProfileQuery } from '@/features/profile/profileApi'
+import { useProfileQuery } from '@/features/profile/profileApi'
 
 export default function ProfileForm() {
   const { data: me } = useMeQuery()

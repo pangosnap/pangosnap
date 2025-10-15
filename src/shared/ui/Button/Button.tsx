@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementType, MouseEvent } from 'react'
+import type { ComponentPropsWithoutRef, ElementType, MouseEvent } from 'react'
 
 import { clsx } from 'clsx'
 
