@@ -1,6 +1,7 @@
+import type { RegistrationInputs } from '@/features/auth/api/lib/schemas/registrationSchema'
+
 import { baseApi } from '@/app/baseApi'
-import { MeResponse, meSchema } from '@/features/auth/api/lib/schemas/meSchema'
-import { RegistrationInputs } from '@/features/auth/api/lib/schemas/registrationSchema'
+import { type MeResponse, meSchema } from '@/features/auth/api/lib/schemas/meSchema'
 
 export const authRegApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -53,6 +54,9 @@ export const authRegApi = baseApi.injectEndpoints({
       query: () => '/auth/me',
       extraOptions: { dataSchema: meSchema },
       providesTags: ['Authorization'],
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
+      },
     }),
     recoveryPassword: builder.mutation<void, { email: string; baseUrl: string; recaptcha: string }>(
       {
@@ -82,6 +86,15 @@ export const authRegApi = baseApi.injectEndpoints({
         url: '/auth/logout',
         method: 'POST',
       }),
+      invalidatesTags: ['Authorization'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+          dispatch(authRegApi.util.resetApiState())
+        } catch (error) {
+          console.error('Error during logout:', error)
+        }
+      },
     }),
     checkRecoveryCode: builder.mutation<void, { recoveryCode: string }>({
       query: body => ({

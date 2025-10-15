@@ -1,1 +1,1 @@
-export { HomeView } from './ui/HomeView'
+export { MainView } from './ui/MainView'

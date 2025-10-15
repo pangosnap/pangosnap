@@ -1,5 +1,7 @@
+import type { CreatePostResponse, ImagesResponse } from '@/entities/post/type/types'
+
 import { baseApi } from '@/app/baseApi'
-import { CreatePostResponse, ImagesResponse } from '@/entities/post/type/types'
+import { profileApi } from '@/entities/profile/api/profileApi'
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -15,7 +17,6 @@ export const postApi = baseApi.injectEndpoints({
           body: formData,
         }
       },
-      invalidatesTags: ['Post'],
     }),
     createPosts: builder.mutation<
       CreatePostResponse,
@@ -26,7 +27,27 @@ export const postApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { description, childrenMetadata },
       }),
-      invalidatesTags: ['Profile'],
+      invalidatesTags: ['ProfilePublicInfo'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data: newPost } = await queryFulfilled
+          const userId = newPost.ownerId
+
+          if (!userId) {
+            return
+          }
+
+          dispatch(
+            profileApi.util.updateQueryData('getPosts', { userId }, draft => {
+              if (draft && Array.isArray(draft.items)) {
+                draft.items.unshift(newPost)
+              }
+            })
+          )
+        } catch (e) {
+          console.error('❌ Не удалось добавить пост в кэш', e)
+        }
+      },
     }),
   }),
 })

@@ -1,12 +1,9 @@
 'use client'
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
-import { useMeQuery } from '@/features/auth/api/authRegApi'
 import { Header } from '@/widgets/Header/Header'
 
 export function AuthLayout({ children }: { children: ReactNode }) {
-  const { data } = useMeQuery()
-
   return (
     <div className={'wrap'}>
       <Header isAuth={false} isProcessingAuth />

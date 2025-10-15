@@ -17,9 +17,9 @@ export const LogOut = () => {
 
   const logoutHandler = async () => {
     try {
+      localStorage.removeItem('access-token')
       await logout().unwrap()
       router.replace(`${Path.signIn}?from=logout`)
-      localStorage.removeItem('access-token')
     } catch (err) {
       console.error('Logout error:', err)
     }

@@ -1,3 +1,5 @@
+import type { TPost } from '@/entities/post/schemas/postSchema'
+
 export type Avatar = {
   url: string
   width: number
@@ -32,6 +34,10 @@ export interface ProfileResponse extends BaseProfile {
 export interface PublicUserProfileResponse extends BaseProfile {
   userMetadata: UserMetadata
   hasPaymentSubscription: boolean
+
+  // приходят только для авторизованного
+  isFollowing?: boolean
+  isFollowedBy?: boolean
 }
 
 export type PostImage = {
@@ -47,29 +53,8 @@ export type AvatarResponse = {
   avatars: ProfileAvatar[]
 }
 
-export type PostOwner = {
-  firstName: string
-  lastName: string
-}
-
-export type Post = {
-  id: number
-  userName: string
-  description: string
-  location: string
-  images: PostImage[]
-  createdAt: string // ISO string
-  updatedAt: string // ISO string
-  ownerId: number
-  avatarOwner: string
-  owner: PostOwner
-  likesCount: number
-  isLiked: boolean
-  avatarWhoLikes: boolean
-}
-
 export type PostsResponse = {
-  items: Post[]
+  items: TPost[]
   totalCount: number
   pageSize: number
   totalUsers: number
@@ -86,7 +71,7 @@ export type PostsParams = {
 export type PostsProps = {
   profileData: PublicUserProfileResponse
   profileId: number
-  initialPosts?: PostsResponse
+  initialPosts: PostsResponse
 }
 
 // export type UpdateProfileInput = Pick<

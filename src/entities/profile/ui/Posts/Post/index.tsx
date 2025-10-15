@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from 'react'
+import { type FC, useEffect, useState } from 'react'
 
-import { PostImage } from '@/entities/profile/type/types'
+import { type PostImage } from '@/entities/profile/type/types'
 import { useCarryQuery } from '@/shared/hooks/useCarryQuery'
 import useEmblaCarousel from 'embla-carousel-react'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ type PostType = {
   postId: number
 }
 
-const Post: FC<PostType> = ({ images, likesCount, postId }) => {
+export const Post: FC<PostType> = ({ images, likesCount, postId }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: false,
@@ -97,5 +97,3 @@ const Post: FC<PostType> = ({ images, likesCount, postId }) => {
     </Link>
   )
 }
-
-export default Post
