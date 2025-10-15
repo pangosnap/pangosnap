@@ -1,6 +1,7 @@
+import type { RegistrationInputs } from '@/features/auth/api/lib/schemas/registrationSchema'
+
 import { baseApi } from '@/app/baseApi'
-import { MeResponse, meSchema } from '@/features/auth/api/lib/schemas/meSchema'
-import { RegistrationInputs } from '@/features/auth/api/lib/schemas/registrationSchema'
+import { type MeResponse, meSchema } from '@/features/auth/api/lib/schemas/meSchema'
 
 export const authRegApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -52,17 +53,20 @@ export const authRegApi = baseApi.injectEndpoints({
     me: builder.query<MeResponse, void>({
       query: () => '/auth/me',
       extraOptions: { dataSchema: meSchema },
+      providesTags: ['Authorization'],
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
+      },
     }),
-    recoveryPassword: builder.mutation<
-      void,
-      { email: string; baseUrl: string; recaptcha?: string }
-    >({
-      query: body => ({
-        url: '/auth/password-recovery',
-        method: 'POST',
-        body,
-      }),
-    }),
+    recoveryPassword: builder.mutation<void, { email: string; baseUrl: string; recaptcha: string }>(
+      {
+        query: body => ({
+          url: '/auth/password-recovery',
+          method: 'POST',
+          body,
+        }),
+      }
+    ),
     createNewPassword: builder.mutation<void, { newPassword: string; recoveryCode: string }>({
       query: body => ({
         url: '/auth/new-password',
@@ -75,17 +79,32 @@ export const authRegApi = baseApi.injectEndpoints({
         url: '/auth/password-recovery-resending',
         method: 'POST',
         body,
-       }),
+      }),
     }),
     logout: builder.mutation<void, void>({
       query: () => ({
         url: '/auth/logout',
         method: 'POST',
       }),
+      invalidatesTags: ['Authorization'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+          dispatch(authRegApi.util.resetApiState())
+        } catch (error) {
+          console.error('Error during logout:', error)
+        }
+      },
+    }),
+    checkRecoveryCode: builder.mutation<void, { recoveryCode: string }>({
+      query: body => ({
+        url: '/auth/check-recovery-code',
+        method: 'POST',
+        body,
+      }),
     }),
   }),
 })
-
 export const {
   useRegisterMutation,
   useLoginMutation,
@@ -93,8 +112,10 @@ export const {
   useEmailResendingMutation,
   useGoogleLoginMutation,
   useMeQuery,
+  useLazyMeQuery,
   useRecoveryPasswordMutation,
   useResendRecoveryPasswordMutation,
   useCreateNewPasswordMutation,
   useLogoutMutation,
+  useCheckRecoveryCodeMutation,
 } = authRegApi

@@ -1,44 +1,50 @@
 'use client'
 
-import { useState } from 'react'
-
-import { useLogoutMutation } from '@/features/auth/api/authRegApi'
-import LogoutIcon from '@/shared/icons/logout.svg'
-import { Path } from '@/shared/routes/constants'
-import { UniversalModal } from '@/shared/ui/UniversalModal/UniversalModal'
+import { AddPostWithPhoto } from '@/features/sidebar-event/ui/AddPostWithPhoto/AddPostWithPhoto'
+import { LogOut } from '@/features/sidebar-event/ui/LogOut/LogOut'
+import { MyProfile } from '@/features/sidebar-event/ui/MyProfile/MyProfile'
 import { clsx } from 'clsx'
-import { useRouter } from 'next/navigation'
 
 import s from './Sidebar.module.scss'
 
 export const Sidebar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const router = useRouter()
-  const [logout] = useLogoutMutation()
-
-  const logoutHandler = async () => {
-    try {
-      await logout().unwrap()
-      router.replace(`${Path.signIn}?from=logout`)
-    } catch (err) {
-      console.error('Logout error:', err)
-    }
-  }
-
   return (
     <aside className={clsx(s.sidebar, 'uik_typography-body2-medium')}>
-      <nav>NAV MENU</nav>
-      <div className={s.logout} onClick={() => setIsModalOpen(true)}>
-        <LogoutIcon /> Log Out
-      </div>
-      <UniversalModal
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        modalTitle={'Confirm logout'}
-        onConfirm={logoutHandler}
-      >
-        Are you really want to log out of your account?
-      </UniversalModal>
+      <nav className={s.nav}>
+        <ul className={s.list}>
+          <li className={s.item}>
+            <span className={'uik_typography-body2-medium'}>Feed</span>
+          </li>
+
+          <li className={s.item}>
+            <AddPostWithPhoto />
+          </li>
+
+          <li className={s.item}>
+            <MyProfile />
+          </li>
+
+          <li className={s.item}>
+            <span className={'uik_typography-body2-medium'}>Messenger</span>
+          </li>
+
+          <li className={s.item}>
+            <span className={'uik_typography-body2-medium'}>Search</span>
+          </li>
+
+          <li className={s.item}>
+            <span className={'uik_typography-body2-medium'}>Statistics</span>
+          </li>
+
+          <li className={s.item}>
+            <span className={'uik_typography-body2-medium'}>Favorites</span>
+          </li>
+
+          <li className={s.item}>
+            <LogOut />
+          </li>
+        </ul>
+      </nav>
     </aside>
   )
 }

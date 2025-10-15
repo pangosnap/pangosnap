@@ -1,0 +1,6 @@
+export { PostView } from './ui/PostView'
+export * from './ui/PostHeader/PostHeader'
+export * from './ui/PostFooter/PostFooter'
+export * from './ui/PostActionsMenu/PostActionsMenu'
+export * from './ui/EditPost/EditPost'
+export * from './ui/DeletePost/DeletePost'

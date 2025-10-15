@@ -1,20 +1,48 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
-  width: 220px;
   height: calc(100vh - 60px);
-  padding-top: 72px;
-  padding-bottom: 36px;
+  padding: 72px 0 0;
   border-right: 1px solid #333;
+}
 
-  .logout {
-    cursor: pointer;
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-self: flex-end;
+.item {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  color: var(--color-light-100);
+
+  &:hover {
+    border-radius: 2px;
+    background: rgb(255 255 255 / 6%);
   }
+}
+
+.item + .item {
+  margin-top: 8px;
+}
+
+.iconBtn {
+  flex: 0 0 var(--size-icon-width-small);
+  width: var(--size-icon-width-small);
+  height: var(--size-icon-height-small);
+}
+
+.rowBtn {
+  cursor: pointer;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
 }

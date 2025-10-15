@@ -1,0 +1,51 @@
+.profile {
+  /* padding: 40px 10%; */
+
+  &__container {
+    width: 100%;
+  }
+
+  &__header {
+    display: flex;
+    width: 100%;
+  }
+
+  &__info {
+    width: 100%;
+    margin-left: 40px;
+  }
+
+  &__titleContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 36px;
+  }
+
+  &__stats {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    width: 50%;
+    margin-bottom: 25px;
+  }
+
+  &__description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

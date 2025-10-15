@@ -1,0 +1,88 @@
+.Root {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 15px;
+}
+
+.Viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.Container {
+  touch-action: pan-y pinch-zoom;
+  display: flex; // КЛЮЧЕВОЕ
+}
+
+.Slide {
+  position: relative;
+
+  display: flex;
+  flex: 0 0 100%; // КЛЮЧЕВОЕ: ширина одного слайда = ширина вьюпорта
+  justify-content: center;
+
+  min-width: 0;
+}
+
+.Image {
+  display: block;
+
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 420px;
+  margin-inline: auto;
+  border-radius: 12px;
+
+  object-fit: contain;
+}
+
+.Controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+
+  &.single {
+    justify-content: center;
+  }
+}
+
+.NavButton {
+  cursor: pointer;
+
+  flex: 0 0 auto;
+
+  padding: 6px 10px;
+  border-radius: 8px;
+
+  font-size: 24px;
+  line-height: 1;
+
+  background: transparent;
+}
+
+.Dots {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 8px;
+  justify-content: center;
+
+  min-width: 0;
+}
+
+.Dot {
+  cursor: pointer;
+
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 50%;
+
+  background: #c8c8c8;
+
+  &.active {
+    background: var(--color-accent-500);
+  }
+}

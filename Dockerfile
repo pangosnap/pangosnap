@@ -25,6 +25,7 @@ COPY . .
 # Копируем node_modules из предыдущего этапа
 COPY --from=dependencies /app/node_modules ./node_modules
 
+
 # Билдим проект
 RUN pnpm run build:production
 
@@ -38,6 +39,7 @@ RUN npm install -g pnpm@10.13.1
 
 # Копируем всё из билдера
 COPY --from=builder /app .
+
 
 # Порт приложения
 EXPOSE 3000

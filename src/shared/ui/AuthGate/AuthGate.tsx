@@ -3,8 +3,8 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 
 import { useMeQuery } from '@/features/auth/api/authRegApi'
-import { setIsLoggedIn } from '@/features/auth/slice/authSlice'
 import { useAppDispatch } from '@/shared/hooks'
+import { useSelectedLayoutSegments } from 'next/navigation'
 
 type Props = {
   children: ReactNode
@@ -12,28 +12,28 @@ type Props = {
 
 export const AuthGate = ({ children }: Props) => {
   const [isInitialized, setIsInitialized] = useState(false)
-  const token = typeof window !== 'undefined' ? localStorage.getItem('access-token') : null
-  const skip = useMemo(() => !token, [token])
+  // const token = typeof window !== 'undefined' ? localStorage.getItem('access-token') : null
+  // const skip = useMemo(() => !token, [token])
 
   const dispatch = useAppDispatch()
   // RTK Query вызовется только если skip === false
   const { data, isLoading, isFetching, isError } = useMeQuery(undefined, {
-    skip,
+    // skip,
     refetchOnFocus: false,
     refetchOnReconnect: false,
   })
+  const segments = useSelectedLayoutSegments()
+  const root = segments[0] ?? ''
+  const isPostPublic = root === 'post'
 
   useEffect(() => {
     if (isLoading) {
       return
     }
     setIsInitialized(true)
-    if (data) {
-      dispatch(setIsLoggedIn({ isLoggedIn: true }))
-    }
-  }, [isLoading, data, dispatch])
+  }, [isLoading])
 
-  if (!isInitialized) {
+  if (!isInitialized && !isPostPublic) {
     return <div>Loading...</div>
   }
 

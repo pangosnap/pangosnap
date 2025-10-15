@@ -1,0 +1,31 @@
+.Description {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  color: var(--color-light-900);
+}
+
+.info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.userName {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-size-m);
+  line-height: 24px;
+}
+
+.label {
+  color: var(--color-light-900);
+}
+
+.textarea {
+  min-height: 120px;
+  color: var(--color-light-900);
+}
+
+.counter {
+  text-align: end;
+}

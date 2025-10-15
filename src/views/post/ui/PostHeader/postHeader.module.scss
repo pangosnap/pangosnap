@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  width: 100%;
+  padding: 12px 24px;
+}
+
+.top {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.avatarWrap {
+  /* position: relative;
+
+  overflow: hidden; */
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.avatar {
+  display: block;
+  object-fit: cover;
+}
+
+.description {
+  padding-left: 48px;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+}

@@ -2,14 +2,12 @@
 
 import { useEffect } from 'react'
 
-import { useGoogleLoginMutation } from '@/features/auth/api/authRegApi'
-import { setIsLoggedIn } from '@/features/auth/slice/authSlice'
-import { useAppDispatch } from '@/shared/hooks'
+import { useGoogleLoginMutation, useLazyMeQuery } from '@/features/auth/api/authRegApi'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export function GoogleAuth() {
   const [googleLogin] = useGoogleLoginMutation()
-  const dispatch = useAppDispatch()
+  const [fetchMe] = useLazyMeQuery()
 
   const router = useRouter()
   const pathname = usePathname()
@@ -26,13 +24,13 @@ export function GoogleAuth() {
         const { accessToken } = await googleLogin({ code }).unwrap()
 
         localStorage.setItem('access-token', accessToken)
+        await fetchMe().unwrap()
         router.replace(pathname)
-        dispatch(setIsLoggedIn({ isLoggedIn: true }))
       } catch (e) {
         // console.error(e)
       }
     })()
-  }, [code, googleLogin, pathname, router])
+  }, [code])
 
   return null
 }

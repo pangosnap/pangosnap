@@ -16,8 +16,18 @@
 }
 
 .logo {
-  font-size: 20px;
-  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .actions {

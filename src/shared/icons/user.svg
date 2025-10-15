@@ -1,0 +1,16 @@
+<!-- User placeholder avatar. Scales via viewBox and theming via CSS variables. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="User placeholder">
+    <style>
+        .bg { fill: var(--avatar-bg, #EEF1F5); }  /* фон круга */
+        .fg { fill: var(--avatar-fg, #94A3B8); }  /* силуэт */
+    </style>
+
+    <!-- Фон -->
+    <circle cx="32" cy="32" r="30" class="bg"/>
+
+    <!-- Голова -->
+    <circle cx="32" cy="24" r="10" class="fg"/>
+
+    <!-- Плечи/туловище -->
+    <path class="fg" d="M12 50c2.2-9.4 10.95-15 20-15s17.8 5.6 20 15H12z"/>
+</svg>

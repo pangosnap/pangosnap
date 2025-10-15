@@ -1,9 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { useCreateNewPasswordMutation } from '@/features/auth/api/authRegApi'
+import {
+  useCheckRecoveryCodeMutation,
+  useCreateNewPasswordMutation,
+} from '@/features/auth/api/authRegApi'
 import {
   CreateNewPasswordInputs,
   createNewPasswordSchema,
@@ -18,11 +21,30 @@ import s from '../ForgotPasswordForm/ForgotPassword.module.scss'
 
 export default function CreateNewPasswordForm() {
   const [createNewPassword] = useCreateNewPasswordMutation()
+  const [checkRecoveryCode, { isLoading }] = useCheckRecoveryCodeMutation()
   const searchParams = useSearchParams()
   const recoveryCode = searchParams.get('code')
   const router = useRouter()
 
   const [serverError, setServerError] = useState<undefined | string>(undefined)
+
+  useEffect(() => {
+    const verifyRecoveryCode = async () => {
+      if (recoveryCode) {
+        try {
+          await checkRecoveryCode({ recoveryCode }).unwrap()
+        } catch (err: any) {
+          if (err.data.messages[0].message === 'Code is not valid') {
+            router.push('/password-recovery/link-expired')
+          } else {
+            alert(err)
+          }
+        }
+      }
+    }
+
+    verifyRecoveryCode()
+  }, [recoveryCode])
 
   const {
     register,
@@ -50,6 +72,10 @@ export default function CreateNewPasswordForm() {
         setServerError('An unknown error occurred')
       }
     }
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (

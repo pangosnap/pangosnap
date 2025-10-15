@@ -1,13 +1,10 @@
 'use client'
 
-import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useLoginMutation } from '@/features/auth/api/authRegApi'
 import { LoginInputs, loginSchema } from '@/features/auth/api/lib/schemas/loginSchema'
-import { setIsLoggedIn } from '@/features/auth/slice/authSlice'
-import { GoogleAuth } from '@/features/auth/ui/LoginForm/GoogleAuth/GoogleAuth'
-import { useAppDispatch } from '@/shared/hooks'
+import { GoogleLoginButton } from '@/features/auth/ui/LoginForm/GoogleLoginButton/GoogleLoginButton'
 import GitHubIcon from '@/shared/icons/github.svg'
 import { Path } from '@/shared/routes/constants'
 import { Button } from '@/shared/ui/Button/Button'
@@ -16,22 +13,13 @@ import { TextField } from '@/shared/ui/TextField'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import s from './LoginForm.module.scss'
 
 export const LoginForm = () => {
   const router = useRouter()
-  const search = useSearchParams()
-  const dispatch = useAppDispatch()
   const [login] = useLoginMutation()
-
-  useEffect(() => {
-    if (search.get('from') === 'logout') {
-      localStorage.removeItem('access-token')
-      dispatch(setIsLoggedIn({ isLoggedIn: false }))
-    }
-  }, [dispatch, search])
 
   const {
     register,
@@ -52,7 +40,6 @@ export const LoginForm = () => {
     try {
       const response = await login(data).unwrap()
 
-      dispatch(setIsLoggedIn({ isLoggedIn: true }))
       localStorage.setItem('access-token', response.accessToken)
       reset()
       router.push(Path.main)
@@ -65,7 +52,7 @@ export const LoginForm = () => {
     <div className={s.wrapper}>
       <Card title={'Sign In'}>
         <div className={s.oAuthIcons}>
-          <GoogleAuth />
+          <GoogleLoginButton />
           <GitHubIcon />
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
@@ -97,7 +84,7 @@ export const LoginForm = () => {
             />
           </div>
           <Link
-            href={'/password-recovery'}
+            href={Path.passwordRecovery}
             className={clsx('uik_typography-body2', s.forgotPasswordLink)}
           >
             Forgot Password
