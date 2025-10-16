@@ -15,6 +15,7 @@ import { useMeQuery } from '@/features/auth/api/authRegApi'
 import { useAppDispatch, useAppSelector } from '@/shared/hooks'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
+import Link from 'next/link'
 
 import s from './Profile.module.scss'
 
@@ -54,9 +55,9 @@ export default function Profile({ profileData, profileId, initialPosts }: PostsP
               <div className={s.profile__title}>{userName}</div>
               {isAuthorized &&
                 (isProfileOwner ? (
-                  <div>
-                    <Button variant={'secondary'}>Profile Settings</Button>
-                  </div>
+                  <Button variant={'secondary'} as={Link} href={'/settings'}>
+                    Profile Settings
+                  </Button>
                 ) : (
                   <div className={s.profile__buttons}>
                     <Button

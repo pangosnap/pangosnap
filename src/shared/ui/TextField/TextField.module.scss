@@ -96,6 +96,21 @@
   }
 }
 
+select.input,
+.select.input {
+  appearance: none;
+  appearance: none;
+  appearance: none;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>\
+  <path fill='%23A1A1A1' d='M5.5 7.5l4.5 4.5 4.5-4.5'/>\
+</svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 26px 26px;
+}
+
 /* Base icon styles */
 .leftIcon,
 .rightIcon {

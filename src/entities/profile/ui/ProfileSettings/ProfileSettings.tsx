@@ -23,7 +23,6 @@ export default function ProfileSettings() {
     handleSubmit,
     formState: { errors, isValid, isDirty, isSubmitting },
     reset,
-    trigger,
     getValues,
     watch,
   } = useForm<ProfilePayload>({
@@ -45,8 +44,7 @@ export default function ProfileSettings() {
       region: data.region ?? '',
       aboutMe: data.aboutMe ?? '',
     })
-    void trigger()
-  }, [data, reset, trigger])
+  }, [data, reset])
   const onSubmit: SubmitHandler<ProfilePayload> = async data => {
     try {
       await apiUpdateProfile({
@@ -126,7 +124,7 @@ export default function ProfileSettings() {
               type={'select'}
               className={s.country}
               label={'Select your country'}
-              placeholder={'Belarus'}
+              placeholder={'Country'}
               options={countryOptions}
               {...register('country')}
               errorMessage={errors.country?.message}
@@ -134,7 +132,7 @@ export default function ProfileSettings() {
             <TextField
               type={'select'}
               label={'Select your city'}
-              placeholder={'Minsk'}
+              placeholder={'City'}
               options={cityOptions}
               disabled={!countryValue}
               {...register('city')}

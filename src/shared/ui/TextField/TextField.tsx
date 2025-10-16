@@ -15,10 +15,10 @@ export type TextFieldProps = {
   leftIcon?: ReactNode
   rightIcon?: ReactNode
   variant?: 'default' | 'active' | 'error' | 'hover' | 'focus' | 'disabled'
-  type?: 'text' | 'password' | 'search' | 'date' | 'select' // ⬅️ добавили 'select'
-  options?: Option[] // ⬅️ список опций
+  type?: 'text' | 'password' | 'search' | 'date' | 'select'
+  options?: Option[]
   required?: boolean
-} & ComponentProps<'input'> // оставляем просто, без мудрёных типов
+} & ComponentProps<'input'>
 
 export const TextField = ({
   className,
@@ -76,6 +76,8 @@ export const TextField = ({
             id={inputId}
             className={clsx(
               s.input,
+              s.select,
+              s.withRightIcon,
               s[variant],
               showError && s.error,
               leftIcon && s.withLeftIcon,
@@ -83,10 +85,8 @@ export const TextField = ({
               isDisabled && s.disabled
             )}
             disabled={isDisabled}
-            // spread пропсов от RHF — ок для select
             {...(props as any)}
           >
-            {/* placeholder как disabled option, если передан */}
             {props.placeholder && (
               <option value={''} disabled hidden>
                 {props.placeholder as string}
