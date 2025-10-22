@@ -34,5 +34,5 @@ export const PostSchema = z.object({
   avatarWhoLikes: z.array(z.string()),
 })
 
-export type Post = z.infer<typeof PostSchema>
+export type TPost = z.infer<typeof PostSchema>
 export type PostImage = z.infer<typeof PostImageSchema>

@@ -1,18 +1,20 @@
 import { baseApi } from '@/app/baseApi'
 import {
-  AvatarResponse,
-  PostsParams,
-  PostsResponse,
-  ProfileResponse,
-  PublicUserProfileResponse,
-  UpdateProfileInput,
+  type AvatarResponse,
+  type PostsParams,
+  type PostsResponse,
+  type ProfileResponse,
+  type PublicUserProfileResponse,
+  type UpdateProfileInput,
 } from '@/entities/profile/type/types'
+import { USER_POSTS_PAGE_SIZE } from '@/shared/lib/constants/user.constants'
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    // запрос для настроек профиля
     getProfile: builder.query<ProfileResponse, void>({
       query: () => '/users/profile',
-      keepUnusedDataFor: 60 * 10,
+      keepUnusedDataFor: 600,
       providesTags: ['Profile'],
     }),
     updateProfile: builder.mutation<void, UpdateProfileInput>({
@@ -25,7 +27,13 @@ export const profileApi = baseApi.injectEndpoints({
     }),
     getPosts: builder.query<PostsResponse, PostsParams>({
       query: params => {
-        const { userId, endCursorPostId, pageSize, sortBy, sortDirection } = params
+        const {
+          userId,
+          endCursorPostId,
+          pageSize = USER_POSTS_PAGE_SIZE,
+          sortBy,
+          sortDirection = 'desc',
+        } = params
 
         let url = `/posts/user/${userId}`
 
@@ -53,11 +61,40 @@ export const profileApi = baseApi.injectEndpoints({
           params: Object.keys(queryParams).length > 0 ? queryParams : undefined,
         }
       },
-      providesTags: ['Profile'],
+      keepUnusedDataFor: 300,
+      providesTags: ['Posts'],
+      serializeQueryArgs: ({ queryArgs, endpointName }) => {
+        return `${endpointName}-${queryArgs.userId}`
+      },
+      merge: (currentCache: PostsResponse, newData: PostsResponse) => {
+        const existingIds = new Set(currentCache.items.map(item => item.id))
+        const uniqueNewItems = newData.items.filter(item => !existingIds.has(item.id))
+
+        currentCache.items.push(...uniqueNewItems)
+      },
+
+      forceRefetch: ({ currentArg, previousArg }) =>
+        currentArg?.endCursorPostId !== previousArg?.endCursorPostId,
     }),
+    // публичный профиль с инфо которая видна всем
     getPublicUserProfile: builder.query<PublicUserProfileResponse, { profileId: number }>({
       query: ({ profileId }) => `public-user/profile/${profileId}`,
-      providesTags: ['Profile'],
+      providesTags: ['ProfilePublicInfo'],
+    }),
+    follow: builder.mutation<void, { selectedUserId: number }>({
+      query: data => ({
+        url: `users/following`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['ProfilePublicInfo'],
+    }),
+    unfollow: builder.mutation<void, { userId: number }>({
+      query: data => ({
+        url: `users/follower/${data.userId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['ProfilePublicInfo'],
     }),
     addProfilePhoto: builder.mutation<AvatarResponse, FormData>({
       query: form => ({
@@ -83,4 +120,6 @@ export const {
   useUpdateProfileMutation,
   useAddProfilePhotoMutation,
   useDeleteAvatarMutation,
+  useFollowMutation,
+  useUnfollowMutation,
 } = profileApi

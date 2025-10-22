@@ -15,6 +15,21 @@
   width: 100%;
 }
 
+.logo {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
 .actions {
   display: flex;
   gap: 36px;

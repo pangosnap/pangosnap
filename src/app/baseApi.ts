@@ -1,5 +1,4 @@
-import { baseQueryWithZodValidation } from '@/shared/lib/utils/baseQueryWithZodValidation'
-import { createApi, fetchBaseQuery, BaseQueryFn } from '@reduxjs/toolkit/query/react'
+import { type BaseQueryFn, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
@@ -47,7 +46,7 @@ const baseQueryWithRefresh: BaseQueryFn = async (args, api, extraOptions) => {
 
 export const baseApi = createApi({
   reducerPath: 'api',
-  tagTypes: ['Profile', 'Authorization', 'Post'],
+  tagTypes: ['Profile', 'ProfilePublicInfo', 'Authorization', 'Post', 'Posts'],
   baseQuery: baseQueryWithRefresh,
   endpoints: () => ({}),
 })

@@ -5,7 +5,7 @@ module.exports = {
     'no-warning-comments': [
       'warn',
       {
-        terms: ['todo', 'fixme'],
+        terms: ['fixme'],
         location: 'anywhere',
       },
     ],

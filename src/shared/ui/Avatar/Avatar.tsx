@@ -1,11 +1,11 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 
 import AvatarUser from '@/shared/icons/user.svg'
 
 import s from './Avatar.module.scss'
 
 type AvatarProps = {
-  src?: string
+  src?: string | null
   alt: string
   size?: 'very_small' | 'small' | 'medium' | 'large'
   withStatus?: boolean
