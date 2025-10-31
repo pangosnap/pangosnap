@@ -13,6 +13,7 @@ import { Count } from '@/entities/profile/ui/Count'
 import { Posts } from '@/entities/profile/ui/Posts'
 import { useMeQuery } from '@/features/auth/api/authRegApi'
 import { useAppDispatch, useAppSelector } from '@/shared/hooks'
+import { Path } from '@/shared/routes/constants'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button/Button'
 import Link from 'next/link'
@@ -56,7 +57,7 @@ export default function Profile({ profileData, profileId, initialPosts }: PostsP
               {isAuthorized &&
                 (isProfileOwner ? (
                   <div>
-                    <Button variant={'secondary'} as={Link} href={'/settings'}>
+                    <Button variant={'secondary'} as={Link} href={Path.settings.main}>
                       Profile Settings
                     </Button>
                   </div>

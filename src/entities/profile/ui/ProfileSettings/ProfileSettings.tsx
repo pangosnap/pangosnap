@@ -1,165 +1,70 @@
 'use client'
-import { useEffect } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { type ReactNode, useState } from 'react'
 
-import { useGetProfileQuery, useUpdateProfileMutation } from '@/entities/profile/api/profileApi'
-import { UploadingPhotos } from '@/entities/profile/ui/ProfileSettings/UploadingPhotos/UploadingPhotos'
-import {
-  ProfilePayload,
-  profileSchema,
-} from '@/entities/profile/ui/ProfileSettings/lib/profileSchema'
-import { Button } from '@/shared/ui/Button/Button'
-import { TextField } from '@/shared/ui/TextField'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { AccountManagement } from '@/entities/profile/ui/ProfileSettings/AccountManagement'
+import { AccountDevices } from '@/entities/profile/ui/ProfileSettings/Devices/DevicesContent'
+import { GeneralInfoContent } from '@/entities/profile/ui/ProfileSettings/GeneralInfo'
+import { AccountPayments } from '@/entities/profile/ui/ProfileSettings/MyPayments'
+import { Path } from '@/shared/routes/constants'
+import clsx from 'clsx'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
-import s from './ProfileSettings.module.scss'
+import s from '../../../../app/layouts/settings/ProfileSettingsLayout.module.scss'
+
+type TabItem = {
+  id: string
+  label: string
+  content: ReactNode
+}
 
 export default function ProfileSettings() {
-  const [apiUpdateProfile] = useUpdateProfileMutation()
-  const { data } = useGetProfileQuery()
+  const params = useParams()
+  const slug = params.slug
+  const [activeTab, setActiveTab] = useState(slug?.[1] || 'general')
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid, isDirty, isSubmitting },
-    reset,
-    trigger,
-    getValues,
-    watch,
-  } = useForm<ProfilePayload>({
-    mode: 'onChange',
-    resolver: zodResolver(profileSchema),
-  })
-
-  useEffect(() => {
-    if (!data) {
-      return
-    }
-    reset({
-      userName: data.userName ?? '',
-      firstName: data.firstName ?? '',
-      lastName: data.lastName ?? '',
-      dateOfBirth: data.dateOfBirth?.slice(0, 10) ?? '',
-      country: data.country ?? '',
-      city: data.city ?? '',
-      region: data.region ?? '',
-      aboutMe: data.aboutMe ?? '',
-    })
-    void trigger()
-  }, [data, reset, trigger])
-  const onSubmit: SubmitHandler<ProfilePayload> = async data => {
-    try {
-      await apiUpdateProfile({
-        userName: data.userName,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        city: data.city,
-        country: data.country,
-        region: data.region,
-        dateOfBirth: data.dateOfBirth,
-        aboutMe: data.aboutMe,
-      }).unwrap()
-      reset(getValues())
-      alert('✅ Всё отлично! Профиль успешно обновлён.')
-    } catch (err) {
-      console.error('Profile error:', err)
-    }
-  }
-
-  const countryOptions = [
-    { label: 'Belarus', value: 'Belarus' },
-    { label: 'Russia', value: 'Russia' },
+  const tabs: TabItem[] = [
+    {
+      id: 'general',
+      label: 'General information',
+      content: <GeneralInfoContent />,
+    },
+    {
+      id: 'devices',
+      label: 'Devices',
+      content: <AccountDevices />,
+    },
+    {
+      id: 'subscriptions',
+      label: 'Account Management',
+      content: <AccountManagement />,
+    },
+    {
+      id: 'payments',
+      label: 'My payments',
+      content: <AccountPayments />,
+    },
   ]
 
-  const cityOptionsMap: Record<string, { label: string; value: string }[]> = {
-    Belarus: [
-      { label: 'Minsk', value: 'Minsk' },
-      { label: 'Vitebsk', value: 'Vitebsk' },
-      { label: 'Brest', value: 'Brest' },
-    ],
-    Russia: [
-      { label: 'Moscow', value: 'Moscow' },
-      { label: 'Saint Petersburg', value: 'Saint Petersburg' },
-      { label: 'Krasnodar', value: 'Krasnodar' },
-    ],
-  }
-
-  const countryValue = watch('country')
-  const cityOptions = cityOptionsMap[countryValue || ''] ?? []
-
   return (
-    <div className={s.wrapper}>
-      <UploadingPhotos />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={s.textFields}>
-          <TextField
-            label={'Username'}
-            required
-            {...register('userName')}
-            errorMessage={errors.userName?.message}
-          />
-          <TextField
-            label={'First Name'}
-            required
-            placeholder={'Ivan'}
-            {...register('firstName')}
-            errorMessage={errors.firstName?.message}
-          />
-          <TextField
-            label={'Last Name'}
-            required
-            placeholder={'Ivanov'}
-            {...register('lastName')}
-            errorMessage={errors.lastName?.message}
-          />
-          <TextField
-            className={s.inputDate}
-            label={'Date of birth'}
-            type={'date'}
-            placeholder={'YYYY-MM-DD'}
-            {...register('dateOfBirth')}
-            errorMessage={errors.dateOfBirth?.message}
-          />
+    <div className={s.settingsPage}>
+      <div className={s.tabList}>
+        {tabs.map(tab => {
+          const settingsKey = tab.id as keyof typeof Path.settings
 
-          <div className={s.location}>
-            <TextField
-              type={'select'}
-              className={s.country}
-              label={'Select your country'}
-              placeholder={'Belarus'}
-              options={countryOptions}
-              {...register('country')}
-              errorMessage={errors.country?.message}
-            />
-            <TextField
-              type={'select'}
-              label={'Select your city'}
-              placeholder={'Minsk'}
-              options={cityOptions}
-              disabled={!countryValue}
-              {...register('city')}
-              errorMessage={errors.city?.message}
-            />
-          </div>
-          <TextField
-            className={s.aboutMe}
-            label={'About Me'}
-            placeholder={'Write something'}
-            {...register('aboutMe')}
-            errorMessage={errors.aboutMe?.message}
-          />
-        </div>
-        <hr className={s.divider} />
-        <div className={s.buttonSave}>
-          <Button
-            type={'submit'}
-            variant={'primary'}
-            disabled={!isValid || !isDirty || isSubmitting}
-          >
-            Save Changes
-          </Button>
-        </div>
-      </form>
+          return (
+            <Link
+              href={Path.settings[settingsKey] || ''}
+              key={tab.id}
+              className={clsx(s.tabButton, activeTab === tab.id && s.tabButtonActive)}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </Link>
+          )
+        })}
+      </div>
+      <div className={s.tabContent}>{tabs.find(tab => tab.id === activeTab)?.content}</div>
     </div>
   )
 }

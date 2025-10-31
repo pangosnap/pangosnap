@@ -8,7 +8,12 @@ export const Path = {
   recallEmail: '/recall-email',
   registrationConfirmation: '/registration-confirmation',
   search: '/search',
-  settings: '/settings',
+  settings: {
+    main: '/settings',
+    subscriptions: '/settings/subscriptions',
+    devices: '/settings/devices',
+    payments: '/settings/payments',
+  },
   signIn: '/sign-in',
   signUp: '/sign-up',
   statistics: '/statistics',

@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+  color: #fff;
+}
+
+.headerRow {
+  background: #171717;
+}
+
+.headerCell {
+  padding: 16px 12px;
+  border: none;
+
+  font-weight: 600;
+  color: #fff;
+  text-align: left;
+}
+
+.dataRow {
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #171717;
+  }
+}
+
+.dataCell {
+  padding: 16px 12px;
+  border: none;
+  color: #e0e0e0;
+
+  &:last-child {
+    border-right: none;
+  }
+}

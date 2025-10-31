@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.subscriptionSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modalText {
+  margin-bottom: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 90%);
+}
+
+.agreeLabel {
+  cursor: pointer;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  padding-left: 28px;
+
+  font-size: 14px;
+  color: #fff;
+}
+
+.agreeInput {
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+}
+
+.agreeCustom {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgb(255 255 255 / 30%);
+  border-radius: 2px;
+
+  background-color: transparent;
+
+  transition: all 0.2s;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: none;
+
+    width: 8px;
+    height: 8px;
+
+    background-color: #06f;
+  }
+}
+
+.agreeInput:checked + .agreeCustom {
+  border-color: #06f;
+
+  &::after {
+    display: block;
+  }
+}

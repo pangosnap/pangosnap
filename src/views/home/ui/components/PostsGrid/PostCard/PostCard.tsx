@@ -4,10 +4,10 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 're
 
 import { useCarryQuery } from '@/shared/hooks/useCarryQuery'
 import { useClampTextWithSuffix } from '@/shared/hooks/useClampTextWithSuffix'
+import { useTimeAgo } from '@/shared/hooks/useTimeAgo'
 import { Path } from '@/shared/routes/constants'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Carousel } from '@/shared/ui/Carousel'
-import { useTimeAgo } from '@/views/home/utils/useTimeAgo'
 import Link from 'next/link'
 
 import styles from './PostCard.module.scss'

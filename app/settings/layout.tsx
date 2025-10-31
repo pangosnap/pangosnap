@@ -1,1 +1,1 @@
-export { BaseLayout as default } from '@/app/layouts/base/BaseLayout'
+export { ProfileSettingsLayout as default } from '@/app/layouts/settings/ProfileSettingsLayout'

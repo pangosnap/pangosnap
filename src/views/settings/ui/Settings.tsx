@@ -1,5 +1,5 @@
-import ProfileSettings from '@/entities/profile/ui/ProfileSettings/ProfileSettings'
+import { GeneralInfoContent } from '@/entities/profile/ui/ProfileSettings/GeneralInfo'
 
 export default function Settings() {
-  return <ProfileSettings />
+  return <GeneralInfoContent />
 }

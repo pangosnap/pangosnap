@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef } from 'react'
 
 import CloseIcon from '@/shared/icons/close-outline.svg'
 import { Button } from '@/shared/ui/Button/Button'
@@ -20,6 +20,7 @@ type Props = {
   sideButtonTitle?: string
   sideButtonOnClick?: () => void
   buttonTitle?: string
+  buttonDisabled?: boolean
 } & ComponentPropsWithoutRef<'div'>
 
 export const UniversalModal = (props: Props) => {
@@ -35,6 +36,7 @@ export const UniversalModal = (props: Props) => {
     buttonTitle = 'OK',
     sideButtonTitle,
     sideButtonOnClick,
+    buttonDisabled,
     ...rest
   } = props
   const contentClassName = clsx(s.Content, s[size], className)
@@ -64,7 +66,7 @@ export const UniversalModal = (props: Props) => {
               </Button>
             )}
             <Dialog.Close asChild>
-              <Button variant={'primary'} onClick={onConfirm}>
+              <Button variant={'primary'} onClick={onConfirm} disabled={buttonDisabled}>
                 {buttonTitle}
               </Button>
             </Dialog.Close>
